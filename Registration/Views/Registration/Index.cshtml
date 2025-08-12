@@ -1,0 +1,63 @@
+﻿@model RegistrationUser
+
+<div class="registration_style">
+	<form asp-controller="Registration" asp-action="Index" method="post">
+		<div class="box-line">
+			<label asp-for="Login" class="label-line"></label>
+			<input asp-for="Login" class="input-line" />
+			<span asp-validation-for="Login" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="FirstName" class="label-line"></label>
+			<input asp-for="FirstName" class="input-line" />
+			<span asp-validation-for="FirstName" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="LastName" class="label-line"></label>
+			<input asp-for="LastName" class="input-line" />
+			<span asp-validation-for="LastName" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="Email" class="label-line"></label>
+			<input asp-for="Email" class="input-line" />
+			<span asp-validation-for="Email" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="BirthDay" class="label-line"></label>
+			<input asp-for="BirthDay" class="input-line" />
+			<span asp-validation-for="BirthDay" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="PhoneNumber" class="label-line"></label>
+			<input asp-for="PhoneNumber" class="input-line" />
+			<span asp-validation-for="PhoneNumber" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="Password" class="label-line"></label>
+			<input asp-for="Password" class="input-line" />
+			<span asp-validation-for="Password" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="ConfirmPassword" class="label-line"></label>
+			<input asp-for="ConfirmPassword" class="input-line" />
+			<span asp-validation-for="ConfirmPassword" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="IsAgree" class="label-line"></label>
+			<input asp-for="IsAgree" class="input-line" />
+			<span asp-validation-for="IsAgree" class="validation"></span>
+		</div>
+
+		<input type="submit" value="Registration" class="btn-reg" />
+	</form>
+</div>
+
+

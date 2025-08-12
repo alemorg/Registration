@@ -1,0 +1,13 @@
+﻿.registration_style{
+    padding-top: 1%;
+    padding-left:40%;
+}
+
+.box-line{
+    display:block;
+    text-align:left
+}
+
+.label-line, input-line, validation {
+    display: block;
+}

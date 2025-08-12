@@ -1,0 +1,21 @@
+﻿/*Обнуление стилей*/
+ul,ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+/*Конец обнуления стилей*/
+
+.body{
+    background-color: bisque;
+}
