@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Registration.Context;
 using Registration.Model;
 
 namespace Registration.Controllers
@@ -19,21 +20,27 @@ namespace Registration.Controllers
         [HttpPost]
         public IActionResult Index(RegistrationUser user)
         {
-            if (ModelState.IsValid)
+            using (DBUser db = new DBUser())
             {
-                if (user != null && user.IsAgree != false)
+
+            
+                if (ModelState.IsValid)
                 {
-                    //Добавить в базу данных
-                    return View("Completed", user);
+                    if (user != null && user.IsAgree != false)
+                    {
+                        db.UserInfo.Add(user);
+                        db.SaveChanges();
+                        return View("Completed", user);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 else
                 {
-                    return NotFound();
+                    return View(user);
                 }
-            }
-            else
-            {
-                return View(user);
             }
         }
     }

@@ -1,0 +1,22 @@
+﻿@{
+	ViewBag.Title = "Contacts";
+}
+
+@model IEnumerable<Registration.Model.RegistrationUser>
+
+<table>
+	<tr>
+		<th align="center">Имя</th>
+		<th align="center">Фамилия</th>
+		<th align="center">Номер телефона</th>
+	</tr>
+
+@foreach (var item in @Model)
+{
+	<tr>
+			<td align = "center">@item.FirstName</td>
+			<td align = "center">@item.LastName</td>
+			<td align = "center">@item.PhoneNumber</td>
+	</tr>
+}
+</table>
