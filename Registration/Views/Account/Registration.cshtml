@@ -1,7 +1,10 @@
 ﻿@model RegistrationUser
+@{
+    ViewData["Title"] = "Registration";
+}
 
 <div class="registration_style">
-	<form asp-controller="Registration" asp-action="Index" method="post">
+	<form asp-controller="Account" asp-action="Registration" method="post">
 		<div class="box-line">
 			<label asp-for="Login" class="label-line"></label>
 			<input asp-for="Login" class="input-line" />
@@ -59,5 +62,4 @@
 		<input type="submit" value="Registration" class="btn-reg" />
 	</form>
 </div>
-
 

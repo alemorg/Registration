@@ -1,0 +1,20 @@
+﻿@model LoginedUser
+
+@{
+    ViewData["Title"] = "Logined";
+}
+
+<form asp-controller="Account" asp-action="Logined" method="post">
+    <div class="box-line">
+        <label asp-for="Email" class="label-line"></label>
+        <input asp-for="Email" class="input-line" />
+        <span asp-validation-for="Email" class="span-line"></span>
+    </div>
+
+    <div class="box-line">
+        <label asp-for="Password" class="label-line"></label>
+        <input asp-for="Password" class="input-line" />
+        <span asp-validation-for="Password" class="span-line"></span>
+    </div>
+</form>
+
