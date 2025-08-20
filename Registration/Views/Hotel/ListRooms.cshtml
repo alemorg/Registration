@@ -1,0 +1,29 @@
+﻿@using Registration.Model.Hotels
+@model IEnumerable<Room>
+
+@{
+    ViewData["Title"] = "ListRooms";
+}
+
+<h1>ListRooms</h1>
+
+@if (Model != null)
+{
+    @foreach (var room in Model)
+    {
+        <p>
+            @room.Id, @room.MaximumGuests @room.Square
+            <a asp-controller="Hotel" asp-action="CorrectRoom" asp-route-id="@room.Id">Редактировать комнату</a>
+            <a asp-controller="Hotel" asp-action="DeleteRoom" asp-route-id="@room.Id">Удалить комнату</a>
+        </p>
+    }
+}
+else
+{
+    <p>
+        Отсутствуют комнаты в базе
+    </p>
+}
+
+<a asp-controller="Hotel" asp-action="CreateRoom">Добавить комнату</a>
+

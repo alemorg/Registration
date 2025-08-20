@@ -11,7 +11,7 @@ using Registration.Context;
 namespace Registration.Migrations
 {
     [DbContext(typeof(BookedDB))]
-    partial class DBUserModelSnapshot : ModelSnapshot
+    partial class BookedDBModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

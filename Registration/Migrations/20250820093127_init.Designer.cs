@@ -12,7 +12,7 @@ using Registration.Context;
 namespace Registration.Migrations
 {
     [DbContext(typeof(BookedDB))]
-    [Migration("20250820073650_init")]
+    [Migration("20250820093127_init")]
     partial class init
     {
         /// <inheritdoc />
