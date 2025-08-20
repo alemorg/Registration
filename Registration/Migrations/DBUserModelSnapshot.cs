@@ -10,7 +10,7 @@ using Registration.Context;
 
 namespace Registration.Migrations
 {
-    [DbContext(typeof(DBUser))]
+    [DbContext(typeof(BookedDB))]
     partial class DBUserModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -22,7 +22,50 @@ namespace Registration.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Registration.Model.RegistrationUser", b =>
+            modelBuilder.Entity("Registration.Model.Hotels.BookedRoom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("dataBooked")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isBooked")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("BookedRoom");
+                });
+
+            modelBuilder.Entity("Registration.Model.Hotels.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MaximumGuests")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Square")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoomInfo");
+                });
+
+            modelBuilder.Entity("Registration.Model.Users.RegistrationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,6 +113,18 @@ namespace Registration.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserInfo");
+                });
+
+            modelBuilder.Entity("Registration.Model.Hotels.BookedRoom", b =>
+                {
+                    b.HasOne("Registration.Model.Hotels.Room", null)
+                        .WithMany("ListBookeds")
+                        .HasForeignKey("RoomId");
+                });
+
+            modelBuilder.Entity("Registration.Model.Hotels.Room", b =>
+                {
+                    b.Navigation("ListBookeds");
                 });
 #pragma warning restore 612, 618
         }

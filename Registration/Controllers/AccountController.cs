@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
 using Registration.Crypt;
-using Registration.Model;
+using Registration.Model.Users;
 
 namespace Registration.Controllers
 {
@@ -22,7 +22,7 @@ namespace Registration.Controllers
         {
             if (!ModelState.IsValid)
             {
-                using (DBUser db = new DBUser())
+                using (BookedDB db = new BookedDB())
                 {
                     CryptPassword cryptPassword = new CryptPassword();
                     RegistrationUser user = db.UserInfo.FirstOrDefault(x => x.Email == logUser.Email && cryptPassword.Decrypt(x.Password) == logUser.Password);
@@ -52,7 +52,7 @@ namespace Registration.Controllers
         [HttpPost]
         public IActionResult Registration(RegistrationUser user)
         {
-            using (DBUser db = new DBUser())
+            using (BookedDB db = new BookedDB())
             {
                 if (ModelState.IsValid)
                 {

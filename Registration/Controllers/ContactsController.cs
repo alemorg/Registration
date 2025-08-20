@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
-using Registration.Model;
+using Registration.Model.Users;
 
 namespace Registration.Controllers
 {
@@ -8,7 +8,7 @@ namespace Registration.Controllers
     {
         public IActionResult Index()
         {
-            using (DBUser db = new DBUser())
+            using (BookedDB db = new BookedDB())
             {
 
                 List<RegistrationUser> ListUsers = db.UserInfo.ToList();

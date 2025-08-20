@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Registration.Model
+namespace Registration.Model.Users
 {
     public class LoginedUser
     {
