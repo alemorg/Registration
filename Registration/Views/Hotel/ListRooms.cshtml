@@ -5,18 +5,30 @@
     ViewData["Title"] = "ListRooms";
 }
 
-<h1>ListRooms</h1>
+<h1>Список комнат</h1>
 
 @if (Model != null)
 {
+    <table> 
+        <tr>
+            <th>Номер комнаты</th>
+            <th>Количество гостей</th>
+            <th>Площадь</th>
+        </tr>
+    
     @foreach (var room in Model)
     {
-        <p>
-            @room.Id, @room.MaximumGuests @room.Square
-            <a asp-controller="Hotel" asp-action="CorrectRoom" asp-route-id="@room.Id">Редактировать комнату</a>
-            <a asp-controller="Hotel" asp-action="DeleteRoom" asp-route-id="@room.Id">Удалить комнату</a>
-        </p>
+        <tr>
+            <td>@room.Id</td>
+            <td>@room.MaximumGuests</td>
+            <td>@room.Square</td>
+            <td>
+                <a asp-controller="Hotel" asp-action="CorrectRoom" asp-route-id="@room.Id">Редактировать</a>
+                <a asp-controller="Hotel" asp-action="DeleteRoom" asp-route-id="@room.Id">Удалить</a>
+            </td>
+        </tr> 
     }
+    </table>
 }
 else
 {
