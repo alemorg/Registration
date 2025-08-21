@@ -7,115 +7,112 @@ namespace Registration.Controllers
 {
     public class HotelController : Controller
     {
+        public IActionResult ListHotel()
+        {
+            using (BookedDB db = new BookedDB())
+            {
+                List<Hotel> ListHotel = new List<Hotel>();
+
+                foreach (Hotel hotel in db.HotelInfo)
+                {
+                    ListHotel.Add(hotel);
+                }
+
+                if (ListHotel.Count != 0)
+                    return View(ListHotel);
+                else return View();
+            }
+        }
+
         [HttpGet]
-        public IActionResult CreateRoom()
+        public IActionResult CreateHotel()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreateRoom(Room room)
+        public IActionResult CreateHotel(Hotel hotel)
         {
             if (ModelState.IsValid)
             {
-                if (room.Square > 0 && room.MaximumGuests > 0)
+                if (hotel.Name != null)
                 {
                     using (BookedDB db = new BookedDB())
                     {
-                        db.RoomInfo.Add(room);
+                        db.HotelInfo.Add(hotel);
                         db.SaveChanges();
-                        return View("CompleteCreateRoom", room);
+                        return View("CompleteCreateHotel", hotel);
                     }
                 }
             }
-            return View(room);
+            return View(hotel);
+        }
+        public IActionResult CompleteCreateHotel(Hotel hotel)
+        {
+            return View(hotel);
         }
 
-        public IActionResult CompleteCreateRoom(Room room)
+        public IActionResult DeleteHotel(int id)
         {
-            return View(room);
-        }
-
-        public IActionResult ListRooms()
-        {
-            using (BookedDB db = new BookedDB())
-            {
-                List<Room> ListRoom = new List<Room>();
-
-                foreach (Room room in db.RoomInfo)
-                {
-                    ListRoom.Add(room);
-                }
-
-                if (ListRoom.Count != 0)
-                    return View(ListRoom);
-                else return View();
-            }
-        }
-
-        //[HttpGet("{id}")]
-        [HttpGet]
-        public IActionResult DeleteRoom(int id)
-        {
-            Room room = new Room();
+            Hotel hotel = new Hotel();
             using (BookedDB dB = new BookedDB())
             {
-
                 try
                 {
-                    room = dB.RoomInfo.FirstOrDefault(x => x.Id == id);
-                    dB.RoomInfo.Remove(room);
+                    hotel = dB.HotelInfo.FirstOrDefault(x => x.Id == id);
+                    dB.HotelInfo.Remove(hotel);
                     dB.SaveChanges();
+
+                    return View("CompleteDeleteHotel", hotel);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    return View(NotFound());
                 }
             }
+            return View(NotFound());
 
-            return View("CompleteDeleteRoom", room);
         }
 
-        public IActionResult CompleteDeleteRoom(Room room)
+        public IActionResult CompleteDeleteHotel(Hotel hotel)
         {
-            return View(room);
+            return View(hotel);
         }
 
         [HttpGet]
-        public IActionResult CorrectRoom (int id)
+        public IActionResult CorrectHotel(int id)
         {
             if (id <= 0)
-                return NotFound();
-            Room room = new Room();
+                return View(NotFound());
+            Hotel hotel = new Hotel();
             using BookedDB dB = new BookedDB();
             {
-                room = dB.RoomInfo.FirstOrDefault( x => x.Id == id);
-                return View(room);
+                hotel = dB.HotelInfo.FirstOrDefault(x => x.Id == id);
+                return View(hotel);
             }
         }
 
         [HttpPost]
-        public IActionResult CorrectRoom(int id, Room room)
+        public IActionResult CorrectHotel(int id, Hotel hotel)
         {
             if (id <= 0)
-                NotFound();
-            
+                return View (NotFound());
+
             if (ModelState.IsValid)
             {
-                if (room.Square > 0 && room.MaximumGuests > 0)
+                if (hotel.Name != null)
                 {
                     using BookedDB dB = new BookedDB();
                     {
                         try
                         {
-                            Room roomdb = dB.RoomInfo.FirstOrDefault(x => x.Id == id);
-                            roomdb.Square = room.Square;
-                            roomdb.MaximumGuests = room.MaximumGuests;
-                            dB.RoomInfo.Update(roomdb);
+                            Hotel hoteldb = dB.HotelInfo.FirstOrDefault(x => x.Id == id);
+                            hoteldb.Name = hotel.Name;
+                            hoteldb.Location = hotel.Location;
+                            dB.HotelInfo.Update(hoteldb);
                             dB.SaveChanges();
 
-                            return View("CompleteCorrectRoom", room);
+                            return View("CompleteCorrectHotel", hotel);
                         }
                         catch (Exception ex)
                         {
@@ -124,7 +121,7 @@ namespace Registration.Controllers
                     }
                 }
             }
-            return View(room);
+            return View(hotel);
         }
     }
 }

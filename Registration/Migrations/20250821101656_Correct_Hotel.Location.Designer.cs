@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Registration.Context;
 
@@ -11,9 +12,11 @@ using Registration.Context;
 namespace Registration.Migrations
 {
     [DbContext(typeof(BookedDB))]
-    partial class BookedDBModelSnapshot : ModelSnapshot
+    [Migration("20250821101656_Correct_Hotel.Location")]
+    partial class Correct_HotelLocation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace Registration.Migrations
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VisitorId")
+                    b.Property<int>("VisitorId")
                         .HasColumnType("int");
 
                     b.Property<int>("dataBooked")
@@ -153,7 +156,9 @@ namespace Registration.Migrations
 
                     b.HasOne("Registration.Model.Users.RegistrationUser", "Visitor")
                         .WithMany()
-                        .HasForeignKey("VisitorId");
+                        .HasForeignKey("VisitorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Visitor");
                 });

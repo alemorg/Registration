@@ -16,7 +16,11 @@ namespace Registration.Model.Hotels
         [Required(ErrorMessage = "Это поле обязательно для ввода")]
         public int MaximumGuests { get; set; }
 
+
+        //навигационное свойство
+        public int HotelId { get; set; }
+
         [ValidateNever]
-        public List <BookedRoom> ListBookeds { get; set; }
+        public List <BookedRoom>? ListBookeds { get; set; }
     }
 }

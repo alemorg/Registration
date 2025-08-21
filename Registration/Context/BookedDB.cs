@@ -8,6 +8,8 @@ namespace Registration.Context
     {
         public DbSet<RegistrationUser> UserInfo { get; set; }
         public DbSet<Room> RoomInfo { get; set; }
+
+        public DbSet<Hotel> HotelInfo { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BookedDB; Trusted_Connection=true");

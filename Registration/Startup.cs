@@ -23,8 +23,14 @@ namespace Registration
                 endpoints.MapControllerRoute("Default",
                     "{controller=Home}/{action=HomePage}");
 
-                endpoints.MapControllerRoute("HotelPage",
-                    "{controller}/{action}/{id?}");
+                endpoints.MapControllerRoute("AllPage",
+                    "{hotel}/{action}/{id?}");
+
+                endpoints.MapControllerRoute("RoomPage",
+                    "hotel/{hotelid}/room/{action}/{id?}");
+
+                endpoints.MapControllerRoute("BookedPage",
+                    "hotel/{hotelid}/room/{roomid}/booked/{action}/{id?}");
             });
         }
     }

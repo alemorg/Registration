@@ -6,23 +6,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Registration.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Correct_HotelLocation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "RoomInfo",
+                name: "HotelInfo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Square = table.Column<int>(type: "int", nullable: false),
-                    MaximumGuests = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomInfo", x => x.Id);
+                    table.PrimaryKey("PK_HotelInfo", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,6 +47,27 @@ namespace Registration.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RoomInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Square = table.Column<int>(type: "int", nullable: false),
+                    MaximumGuests = table.Column<int>(type: "int", nullable: false),
+                    HotelId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoomInfo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RoomInfo_HotelInfo_HotelId",
+                        column: x => x.HotelId,
+                        principalTable: "HotelInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookedRoom",
                 columns: table => new
                 {
@@ -54,6 +75,7 @@ namespace Registration.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     isBooked = table.Column<bool>(type: "bit", nullable: false),
                     dataBooked = table.Column<int>(type: "int", nullable: false),
+                    VisitorId = table.Column<int>(type: "int", nullable: false),
                     RoomId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -64,12 +86,28 @@ namespace Registration.Migrations
                         column: x => x.RoomId,
                         principalTable: "RoomInfo",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_BookedRoom_UserInfo_VisitorId",
+                        column: x => x.VisitorId,
+                        principalTable: "UserInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookedRoom_RoomId",
                 table: "BookedRoom",
                 column: "RoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookedRoom_VisitorId",
+                table: "BookedRoom",
+                column: "VisitorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoomInfo_HotelId",
+                table: "RoomInfo",
+                column: "HotelId");
         }
 
         /// <inheritdoc />
@@ -79,10 +117,13 @@ namespace Registration.Migrations
                 name: "BookedRoom");
 
             migrationBuilder.DropTable(
+                name: "RoomInfo");
+
+            migrationBuilder.DropTable(
                 name: "UserInfo");
 
             migrationBuilder.DropTable(
-                name: "RoomInfo");
+                name: "HotelInfo");
         }
     }
 }

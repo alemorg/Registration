@@ -1,0 +1,25 @@
+﻿@using Registration.Model.Hotels
+@model Hotel
+@{
+    ViewData["Title"] = "CreateHotel";
+}
+
+<h1>Создание отеля</h1>
+
+<div class="registration_style">
+	<form asp-controller="Hotel" asp-action="CreateHotel" method="post">
+		<div class="box-line">
+			<label asp-for="Name" class="label-line"></label>
+			<input asp-for="Name" class="input-line" />
+			<span asp-validation-for="Name" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="Location" class="label-line"></label>
+			<input asp-for="Location" class="input-line" />
+			<span asp-validation-for="Location" class="validation"></span>
+		</div>
+
+		<input type="submit" value="Добавить отель" class="btn-reg" />
+	</form>
+</div>

@@ -12,8 +12,8 @@ using Registration.Context;
 namespace Registration.Migrations
 {
     [DbContext(typeof(BookedDB))]
-    [Migration("20250820093127_init")]
-    partial class init
+    [Migration("20250821101930_Correct_vopros")]
+    partial class Correct_vopros
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,9 @@ namespace Registration.Migrations
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("VisitorId")
+                        .HasColumnType("int");
+
                     b.Property<int>("dataBooked")
                         .HasColumnType("int");
 
@@ -46,7 +49,29 @@ namespace Registration.Migrations
 
                     b.HasIndex("RoomId");
 
+                    b.HasIndex("VisitorId");
+
                     b.ToTable("BookedRoom");
+                });
+
+            modelBuilder.Entity("Registration.Model.Hotels.Hotel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HotelInfo");
                 });
 
             modelBuilder.Entity("Registration.Model.Hotels.Room", b =>
@@ -57,6 +82,9 @@ namespace Registration.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MaximumGuests")
                         .HasColumnType("int");
 
@@ -64,6 +92,8 @@ namespace Registration.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HotelId");
 
                     b.ToTable("RoomInfo");
                 });
@@ -123,6 +153,26 @@ namespace Registration.Migrations
                     b.HasOne("Registration.Model.Hotels.Room", null)
                         .WithMany("ListBookeds")
                         .HasForeignKey("RoomId");
+
+                    b.HasOne("Registration.Model.Users.RegistrationUser", "Visitor")
+                        .WithMany()
+                        .HasForeignKey("VisitorId");
+
+                    b.Navigation("Visitor");
+                });
+
+            modelBuilder.Entity("Registration.Model.Hotels.Room", b =>
+                {
+                    b.HasOne("Registration.Model.Hotels.Hotel", null)
+                        .WithMany("rooms")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Registration.Model.Hotels.Hotel", b =>
+                {
+                    b.Navigation("rooms");
                 });
 
             modelBuilder.Entity("Registration.Model.Hotels.Room", b =>
