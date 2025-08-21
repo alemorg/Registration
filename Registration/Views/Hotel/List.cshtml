@@ -1,7 +1,7 @@
 ﻿@using Registration.Model.Hotels
 @model IEnumerable<Hotel>
 @{
-    ViewData["Title"] = "ListHotel";
+    ViewData["Title"] = "List";
 }
 
 <h1>Список отелей</h1>
@@ -26,10 +26,10 @@
                     @hotel.Location
                 </td>
                 <td>
-                    <a asp-controller="Hotel" asp-action="DeleteHotel" asp-route-id="@hotel.Id">Удалить отель</a>
+                    <a asp-controller="Hotel" asp-action="Delete" asp-route-id="@hotel.Id">Удалить отель</a>
                 </td>
                 <td>
-                    <a asp-controller="Hotel" asp-action="CorrectHotel" asp-route-id="@hotel.Id">Изменить отель</a>
+                    <a asp-controller="Hotel" asp-action="Correct" asp-route-id="@hotel.Id">Изменить отель</a>
                 </td>
                 <td>
                     <a>добавить комнату</a>
@@ -42,5 +42,5 @@ else
 {
     <p>В базе данных отсутствуют таблицы</p>
 }
-<a asp-controller="Hotel" asp-action="CreateHotel">Добавить отель</a>
+<a asp-controller="Hotel" asp-action="Create">Добавить отель</a>
 

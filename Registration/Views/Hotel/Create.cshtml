@@ -1,13 +1,13 @@
 ﻿@using Registration.Model.Hotels
 @model Hotel
 @{
-    ViewData["Title"] = "CreateHotel";
+    ViewData["Title"] = "Create";
 }
 
 <h1>Создание отеля</h1>
 
 <div class="registration_style">
-	<form asp-controller="Hotel" asp-action="CreateHotel" method="post">
+	<form asp-controller="Hotel" asp-action="Create" method="post">
 		<div class="box-line">
 			<label asp-for="Name" class="label-line"></label>
 			<input asp-for="Name" class="input-line" />

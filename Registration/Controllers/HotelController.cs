@@ -7,7 +7,7 @@ namespace Registration.Controllers
 {
     public class HotelController : Controller
     {
-        public IActionResult ListHotel()
+        public IActionResult List()
         {
             using (BookedDB db = new BookedDB())
             {
@@ -25,13 +25,13 @@ namespace Registration.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateHotel()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreateHotel(Hotel hotel)
+        public IActionResult Create(Hotel hotel)
         {
             if (ModelState.IsValid)
             {
@@ -41,18 +41,18 @@ namespace Registration.Controllers
                     {
                         db.HotelInfo.Add(hotel);
                         db.SaveChanges();
-                        return View("CompleteCreateHotel", hotel);
+                        return View(nameof(CompleteCreate), hotel);
                     }
                 }
             }
             return View(hotel);
         }
-        public IActionResult CompleteCreateHotel(Hotel hotel)
+        public IActionResult CompleteCreate(Hotel hotel)
         {
             return View(hotel);
         }
 
-        public IActionResult DeleteHotel(int id)
+        public IActionResult Delete(int id)
         {
             Hotel hotel = new Hotel();
             using (BookedDB dB = new BookedDB())
@@ -63,7 +63,7 @@ namespace Registration.Controllers
                     dB.HotelInfo.Remove(hotel);
                     dB.SaveChanges();
 
-                    return View("CompleteDeleteHotel", hotel);
+                    return View(nameof(CompleteDelete), hotel);
                 }
                 catch (Exception ex)
                 {
@@ -74,13 +74,13 @@ namespace Registration.Controllers
 
         }
 
-        public IActionResult CompleteDeleteHotel(Hotel hotel)
+        public IActionResult CompleteDelete(Hotel hotel)
         {
             return View(hotel);
         }
 
         [HttpGet]
-        public IActionResult CorrectHotel(int id)
+        public IActionResult Correct(int id)
         {
             if (id <= 0)
                 return View(NotFound());
@@ -93,7 +93,7 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
-        public IActionResult CorrectHotel(int id, Hotel hotel)
+        public IActionResult Correct(int id, Hotel hotel)
         {
             if (id <= 0)
                 return View (NotFound());
@@ -112,7 +112,7 @@ namespace Registration.Controllers
                             dB.HotelInfo.Update(hoteldb);
                             dB.SaveChanges();
 
-                            return View("CompleteCorrectHotel", hotel);
+                            return View(nameof(CompleteCorrect), hotel);
                         }
                         catch (Exception ex)
                         {
@@ -121,6 +121,10 @@ namespace Registration.Controllers
                     }
                 }
             }
+            return View(hotel);
+        }
+        public IActionResult CompleteCorrect(Hotel hotel)
+        {
             return View(hotel);
         }
     }
