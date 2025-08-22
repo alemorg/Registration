@@ -2,10 +2,10 @@
 @model IEnumerable<Room>
 
 @{
-    ViewData["Title"] = "ListRooms";
+    ViewData["Title"] = "List";
 }
 
-<h1>Список комнат</h1>
+<h1>Список всех комнат</h1>
 
 @if (Model != null)
 {
@@ -23,8 +23,8 @@
                 <td>@room.MaximumGuests</td>
                 <td>@room.Square</td>
                 <td>
-                    <a asp-controller="Hotel" asp-action="CorrectRoom" asp-route-id="@room.Id">Редактировать</a>
-                    <a asp-controller="Hotel" asp-action="DeleteRoom" asp-route-id="@room.Id">Удалить</a>
+                    <a asp-controller="Room" asp-action="Correct" asp-route-id="@room.Id">Изменить</a>
+                    <a asp-controller="Room" asp-action="Delete" asp-route-id="@room.Id">Удалить</a>
                 </td>
             </tr>
         }
@@ -36,4 +36,5 @@ else
         Отсутствуют комнаты в базе
     </p>
 }
-
+@* <a asp-area="Hotel" asp-route-hotelId="@ViewBag.hotelId" asp-controller="Room" asp-action="Create">Добавить комнату</a> *@
+<a asp-route-hotelId="@ViewBag.hotelId" asp-controller="Room" asp-action="Create">Добавить комнату</a>

@@ -26,13 +26,13 @@
                     @hotel.Location
                 </td>
                 <td>
-                    <a asp-controller="Hotel" asp-action="Delete" asp-route-id="@hotel.Id">Удалить отель</a>
+                    <a asp-controller="Hotel" asp-action="Delete" asp-route-id="@hotel.Id">Удалить</a>
                 </td>
                 <td>
-                    <a asp-controller="Hotel" asp-action="Correct" asp-route-id="@hotel.Id">Изменить отель</a>
+                    <a asp-controller="Hotel" asp-action="Correct" asp-route-id="@hotel.Id">Изменить</a>
                 </td>
                 <td>
-                    <a>добавить комнату</a>
+                    <a asp-controller="Room" asp-action="List" asp-route-hotelId="@hotel.Id">Комнаты</a>
                 </td>
             </tr>
         }

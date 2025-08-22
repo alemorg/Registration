@@ -20,17 +20,21 @@ namespace Registration
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("Default",
-                    "{controller=Home}/{action=HomePage}");
+                endpoints.MapControllerRoute(
+                    name: "Default",
+                    pattern:"{controller=Home}/{action=HomePage}");
 
-                endpoints.MapControllerRoute("AllPage",
-                    "{hotel}/{action}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "AllPage",
+                    pattern: "{hotel}/{action}/{id?}");
 
-                endpoints.MapControllerRoute("RoomPage",
-                    "hotel/{hotelid}/room/{action}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "RoomPage",
+                    pattern: "hotel/{hotelId}/room/{action}/{id?}");
 
-                endpoints.MapControllerRoute("BookedPage",
-                    "hotel/{hotelid}/room/{roomid}/booked/{action}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "BookedPage",
+                    pattern: "hotel/{hotelId}/room/{roomid}/booked/{action}/{id?}");
             });
         }
     }
