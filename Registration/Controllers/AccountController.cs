@@ -25,7 +25,7 @@ namespace Registration.Controllers
                 using (BookedDB db = new BookedDB())
                 {
                     CryptPassword cryptPassword = new CryptPassword();
-                    RegistrationUser user = db.UserInfo.FirstOrDefault(x => x.Email == logUser.Email && cryptPassword.Decrypt(x.Password) == logUser.Password);
+                    RegistrationUser user = db.User.FirstOrDefault(x => x.Email == logUser.Email && cryptPassword.Decrypt(x.Password) == logUser.Password);
 
                     if (user != null)
                     {
@@ -61,7 +61,7 @@ namespace Registration.Controllers
                         CryptPassword crypt = new CryptPassword();
                         user.Password = crypt.Encode(user.Password);
                         user.ConfirmPassword = crypt.Encode(user.ConfirmPassword);
-                        db.UserInfo.Add(user);
+                        db.User.Add(user);
                         db.SaveChanges();
                         return View("CompletedRegistration", user);
                     }

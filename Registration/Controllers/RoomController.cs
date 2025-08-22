@@ -26,8 +26,6 @@ namespace Registration.Controllers
         //    }
         //}
 
-        //список всех комнат в отеле
-        //проверить с названием LIST возможно не потребуется новая View
         [HttpGet("hotel/{hotelId}/room/list")]
         public IActionResult List(int hotelId)
         {
@@ -38,7 +36,7 @@ namespace Registration.Controllers
                 {
                     List<Room> ListRoom = new List<Room>();
 
-                    foreach (Room room in db.RoomInfo)
+                    foreach (Room room in db.Room)
                     {
                         if (room.HotelId == hotelId)
                             ListRoom.Add(room);
@@ -57,7 +55,7 @@ namespace Registration.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("hotel/{hotelId}/room/create")]
         public IActionResult Create(int hotelId)
         {
             ViewBag.HotelId = hotelId;
@@ -75,7 +73,7 @@ namespace Registration.Controllers
                 {
                     using (BookedDB db = new BookedDB())
                     {
-                        db.RoomInfo.Add(room);
+                        db.Room.Add(room);
                         db.SaveChanges();
                         
                         return View(nameof(CompleteCreate), room);
@@ -98,8 +96,8 @@ namespace Registration.Controllers
 
                 try
                 {
-                    room = dB.RoomInfo.FirstOrDefault(x => x.Id == id);
-                    dB.RoomInfo.Remove(room);
+                    room = dB.Room.FirstOrDefault(x => x.Id == id);
+                    dB.Room.Remove(room);
                     dB.SaveChanges();
 
                     return View(nameof(CompleteDelete), room);
@@ -128,7 +126,7 @@ namespace Registration.Controllers
                 {
                     try
                     {
-                        room = dB.RoomInfo.FirstOrDefault(x => x.Id == id);
+                        room = dB.Room.FirstOrDefault(x => x.Id == id);
 
                         if (room != null)
                             return View(room);
@@ -155,10 +153,10 @@ namespace Registration.Controllers
                     {
                         try
                         {
-                            Room roomdb = dB.RoomInfo.FirstOrDefault(x => x.Id == id);
+                            Room roomdb = dB.Room.FirstOrDefault(x => x.Id == id);
                             roomdb.Square = room.Square;
                             roomdb.MaximumGuests = room.MaximumGuests;
-                            dB.RoomInfo.Update(roomdb);
+                            dB.Room.Update(roomdb);
                             dB.SaveChanges();
 
                             return View(nameof(CompleteCorrect), room);

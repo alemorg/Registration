@@ -1,0 +1,39 @@
+﻿@using Registration.Model.Hotels
+@model IEnumerable<BookedRoom>
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>Список занятых дат</h1> 
+@* ////////////////////////////////////////////////////////////////////////////////// *@
+@* Переделать этот список на вывод списка свободных дат с ссылками на их бронирование *@
+@* ////////////////////////////////////////////////////////////////////////////////// *@
+
+@if (Model!=null)
+{
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Дата</th>
+        </tr>
+
+        @foreach (BookedRoom booked in Model)
+        {
+            <tr>
+                <td>@booked.Id</td>
+                <td>@booked.dataBooked</td>
+                <td><a asp-controller="Booked" asp-action="Correct" asp-route-roomId="@booked.Id">Изменить</a></td>
+                <td><a asp-controller="Booked" asp-action="Delete" asp-route-roomId="@booked.Id">Удалить</a></td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>
+        Отсутствуют бронирования комнаты в базе
+    </p>
+}
+<a asp-route-hotelId="@ViewBag.roomId" asp-controller="Booked" asp-action="Create">Добавить бронь</a>
+
+

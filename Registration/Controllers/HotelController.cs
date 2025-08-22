@@ -13,7 +13,7 @@ namespace Registration.Controllers
             {
                 List<Hotel> ListHotel = new List<Hotel>();
 
-                foreach (Hotel hotel in db.HotelInfo)
+                foreach (Hotel hotel in db.Hotel)
                 {
                     ListHotel.Add(hotel);
                 }
@@ -39,7 +39,7 @@ namespace Registration.Controllers
                 {
                     using (BookedDB db = new BookedDB())
                     {
-                        db.HotelInfo.Add(hotel);
+                        db.Hotel.Add(hotel);
                         db.SaveChanges();
                         return View(nameof(CompleteCreate), hotel);
                     }
@@ -59,8 +59,8 @@ namespace Registration.Controllers
             {
                 try
                 {
-                    hotel = dB.HotelInfo.FirstOrDefault(x => x.Id == id);
-                    dB.HotelInfo.Remove(hotel);
+                    hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
+                    dB.Hotel.Remove(hotel);
                     dB.SaveChanges();
 
                     return View(nameof(CompleteDelete), hotel);
@@ -87,7 +87,7 @@ namespace Registration.Controllers
             Hotel hotel = new Hotel();
             using BookedDB dB = new BookedDB();
             {
-                hotel = dB.HotelInfo.FirstOrDefault(x => x.Id == id);
+                hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
                 return View(hotel);
             }
         }
@@ -106,10 +106,10 @@ namespace Registration.Controllers
                     {
                         try
                         {
-                            Hotel hoteldb = dB.HotelInfo.FirstOrDefault(x => x.Id == id);
+                            Hotel hoteldb = dB.Hotel.FirstOrDefault(x => x.Id == id);
                             hoteldb.Name = hotel.Name;
                             hoteldb.Location = hotel.Location;
-                            dB.HotelInfo.Update(hoteldb);
+                            dB.Hotel.Update(hoteldb);
                             dB.SaveChanges();
 
                             return View(nameof(CompleteCorrect), hotel);

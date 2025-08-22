@@ -22,11 +22,7 @@ namespace Registration
             {
                 endpoints.MapControllerRoute(
                     name: "Default",
-                    pattern:"{controller=Home}/{action=HomePage}");
-
-                endpoints.MapControllerRoute(
-                    name: "AllPage",
-                    pattern: "{hotel}/{action}/{id?}");
+                    pattern: "{controller=Home}/{action=HomePage}/{id?}");
 
                 endpoints.MapControllerRoute(
                     name: "RoomPage",
@@ -34,7 +30,7 @@ namespace Registration
 
                 endpoints.MapControllerRoute(
                     name: "BookedPage",
-                    pattern: "hotel/{hotelId}/room/{roomid}/booked/{action}/{id?}");
+                    pattern: "hotel/{hotelId}/room/{roomId}/booked/{action}/{id?}");
             });
         }
     }

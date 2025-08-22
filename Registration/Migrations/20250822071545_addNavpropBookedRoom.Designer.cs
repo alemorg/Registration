@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Registration.Context;
 
@@ -11,9 +12,11 @@ using Registration.Context;
 namespace Registration.Migrations
 {
     [DbContext(typeof(BookedDB))]
-    partial class BookedDBModelSnapshot : ModelSnapshot
+    [Migration("20250822071545_addNavpropBookedRoom")]
+    partial class addNavpropBookedRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
