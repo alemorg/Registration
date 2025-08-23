@@ -1,0 +1,37 @@
+﻿@using Registration.Model.Hotels
+@model IEnumerable<Room>
+@{
+    ViewData["Title"] = "AllList";
+}
+
+<h1>Список всех комнат</h1>
+
+@if (Model.Count()>0)
+{
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Номер отеля</th>
+            <th>Площадь</th>
+            <th>Макс.Гостей</th>
+        </tr>
+        @foreach (Room room in Model)
+        {
+            <tr>
+                <td>@room.Id</td>
+                <td>@room.HotelId</td>
+                <td>@room.Square</td>
+                <td>@room.MaximumGuests</td>
+                <td><a asp-controller="Room" asp-action="Correct" asp-route-id="@room.Id">изменить</a></td>
+                <td><a asp-controller="Room" asp-action="Delete" asp-route-id="@room.Id">удалить</a></td>
+                <td><a asp-controller="Booked" asp-action="List" asp-route-hotelId="@room.HotelId" asp-route-roomId="@room.Id">список броней</a></td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>В базе данных отсутсвуют комнаты</p>
+}
+
+
