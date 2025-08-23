@@ -17,7 +17,7 @@ namespace Registration.Controllers
             {
                 try
                 {
-                    List<BookedRoom> ListBookedRoom = null;
+                    List<BookedRoom> ListBookedRoom = new List<BookedRoom>();
 
                     foreach (BookedRoom booked in db.BookedRoom)
                     {
@@ -47,13 +47,14 @@ namespace Registration.Controllers
         {
             if (roomId == 0)
                 return View(NotFound());
+            ViewBag.roomId = roomId;
             if (ModelState.IsValid)
             {
                 if (booked.dataBooked > DateTime.Today)
                 {
                     using (BookedDB db = new BookedDB())
                     {
-                        BookedRoom bookedDB = db.BookedRoom.FirstOrDefault(x => x.Roomid == roomId && x.dataBooked == booked.dataBooked && x.isBooked == true);
+                        BookedRoom bookedDB = db.BookedRoom.FirstOrDefault(x => x.Roomid == roomId && x.dataBooked == booked.dataBooked);
                         if (bookedDB == null)
                         {
                             db.BookedRoom.Add(booked);
@@ -78,6 +79,107 @@ namespace Registration.Controllers
         public IActionResult CompleteCreate(BookedRoom booked)
         {
             return View();
+        }
+
+        public IActionResult Delete(int id)
+        {
+            BookedRoom booked = new BookedRoom();
+            using (BookedDB dB = new BookedDB())
+            {
+                try
+                {
+                    booked = dB.BookedRoom.FirstOrDefault(x => x.Id == id);
+                    if (booked != null)
+                    {
+                        dB.BookedRoom.Remove(booked);
+                        dB.SaveChanges();
+
+                        return View(nameof(CompleteDelete), booked);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return View(NotFound());
+        }
+
+        public IActionResult CompleteDelete(BookedRoom booked)
+        {
+            return View(booked);
+        }
+
+        [HttpGet]
+        public IActionResult Correct(int id)
+        {
+            if (id > 0)
+            {
+                ViewBag.id = id;
+                BookedRoom booked = new BookedRoom();
+                using BookedDB dB = new BookedDB();
+                {
+                    try
+                    {
+                        booked = dB.BookedRoom.FirstOrDefault(x => x.Id == id);
+
+                        if (booked != null)
+                            return View(booked);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error message: {ex.Message}");
+                    }
+                }
+            }
+            return View(NotFound());
+        }
+
+        [HttpPost]
+        public IActionResult Correct(int id, BookedRoom booked)
+        {
+            if (id <= 0)
+                return View(NotFound());
+            if (ModelState.IsValid)
+            {
+                if (booked.dataBooked > DateTime.Today)
+                {
+                    using BookedDB dB = new BookedDB();
+                    {
+                        try
+                        {
+                            BookedRoom ErrorBooked = dB.BookedRoom.FirstOrDefault(x => x.dataBooked == booked.dataBooked);
+                            if (ErrorBooked != null)
+                            {
+                                BookedRoom bookeddb = dB.BookedRoom.FirstOrDefault(x => x.Id == id);
+
+                                bookeddb.dataBooked = booked.dataBooked;
+                                dB.BookedRoom.Update(bookeddb);
+                                dB.SaveChanges();
+                                return View(nameof(CompleteCorrect), bookeddb);
+                            }
+                            else
+                            {
+                                ViewBag.Message = "Выбранная дата уже занята другим пользователем!";
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error {ex.Message}");
+                        }
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = $"Выберете дату начиная с {DateTime.Today}";
+                }
+            }
+            return View(booked);
+        }
+
+        public IActionResult CompleteCorrect(BookedRoom booked)
+        {
+            return View(booked);
         }
     }
 }

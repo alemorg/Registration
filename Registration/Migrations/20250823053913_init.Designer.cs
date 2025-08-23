@@ -12,8 +12,8 @@ using Registration.Context;
 namespace Registration.Migrations
 {
     [DbContext(typeof(BookedDB))]
-    [Migration("20250821101930_Correct_vopros")]
-    partial class Correct_vopros
+    [Migration("20250823053913_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,21 +33,21 @@ namespace Registration.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("Roomid")
                         .HasColumnType("int");
 
                     b.Property<int?>("VisitorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("dataBooked")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("dataBooked")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("isBooked")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("Roomid");
 
                     b.HasIndex("VisitorId");
 
@@ -71,7 +71,7 @@ namespace Registration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HotelInfo");
+                    b.ToTable("Hotel");
                 });
 
             modelBuilder.Entity("Registration.Model.Hotels.Room", b =>
@@ -95,7 +95,7 @@ namespace Registration.Migrations
 
                     b.HasIndex("HotelId");
 
-                    b.ToTable("RoomInfo");
+                    b.ToTable("Room");
                 });
 
             modelBuilder.Entity("Registration.Model.Users.RegistrationUser", b =>
@@ -145,14 +145,16 @@ namespace Registration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserInfo");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Registration.Model.Hotels.BookedRoom", b =>
                 {
                     b.HasOne("Registration.Model.Hotels.Room", null)
                         .WithMany("ListBookeds")
-                        .HasForeignKey("RoomId");
+                        .HasForeignKey("Roomid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Registration.Model.Users.RegistrationUser", "Visitor")
                         .WithMany()

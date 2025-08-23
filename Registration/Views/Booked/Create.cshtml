@@ -7,7 +7,7 @@
 <h1>Выбрать дату брони</h1>
 
 <div class="registration_style">
-	<form asp-route-hotelId="@ViewBag.roomId" asp-controller="Booked" asp-action="Create" method="post">
+	<form asp-route-roomId="@ViewBag.roomId" asp-controller="Booked" asp-action="Create" method="post">
 		<div class="box-line">
 			<label asp-for="dataBooked" class="label-line"></label>
 			<input asp-for="dataBooked" class="input-line"/>

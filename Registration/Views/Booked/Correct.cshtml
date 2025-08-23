@@ -1,0 +1,20 @@
+﻿@using Registration.Model.Hotels
+@model BookedRoom
+@{
+    ViewData["Title"] = "Correct";
+}
+
+<h1>Редактирование бронирования</h1>
+
+<div class="registration_style">
+	<form asp-controller="Booked" asp-action="Correct" asp-route-id="@ViewBag.id" method="post">
+		<div class="box-line">
+			<label asp-for="dataBooked" class="label-line"></label>
+			<input asp-for="dataBooked" class="input-line" />
+			<span asp-validation-for="dataBooked" class="validation"></span>
+		</div>
+		<input type="submit" value="Изменить" class="btn-reg" />
+	</form>
+</div>
+
+<p>@ViewBag.Message</p>

@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Registration.Migrations
 {
     /// <inheritdoc />
-    public partial class Correct_HotelLocation : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "HotelInfo",
+                name: "Hotel",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,11 +22,11 @@ namespace Registration.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HotelInfo", x => x.Id);
+                    table.PrimaryKey("PK_Hotel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserInfo",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,11 +43,11 @@ namespace Registration.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserInfo", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoomInfo",
+                name: "Room",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -58,11 +58,11 @@ namespace Registration.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomInfo", x => x.Id);
+                    table.PrimaryKey("PK_Room", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoomInfo_HotelInfo_HotelId",
+                        name: "FK_Room_Hotel_HotelId",
                         column: x => x.HotelId,
-                        principalTable: "HotelInfo",
+                        principalTable: "Hotel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -74,30 +74,30 @@ namespace Registration.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     isBooked = table.Column<bool>(type: "bit", nullable: false),
-                    dataBooked = table.Column<int>(type: "int", nullable: false),
-                    VisitorId = table.Column<int>(type: "int", nullable: false),
-                    RoomId = table.Column<int>(type: "int", nullable: true)
+                    dataBooked = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Roomid = table.Column<int>(type: "int", nullable: false),
+                    VisitorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BookedRoom", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BookedRoom_RoomInfo_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "RoomInfo",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_BookedRoom_UserInfo_VisitorId",
-                        column: x => x.VisitorId,
-                        principalTable: "UserInfo",
+                        name: "FK_BookedRoom_Room_Roomid",
+                        column: x => x.Roomid,
+                        principalTable: "Room",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookedRoom_User_VisitorId",
+                        column: x => x.VisitorId,
+                        principalTable: "User",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookedRoom_RoomId",
+                name: "IX_BookedRoom_Roomid",
                 table: "BookedRoom",
-                column: "RoomId");
+                column: "Roomid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookedRoom_VisitorId",
@@ -105,8 +105,8 @@ namespace Registration.Migrations
                 column: "VisitorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoomInfo_HotelId",
-                table: "RoomInfo",
+                name: "IX_Room_HotelId",
+                table: "Room",
                 column: "HotelId");
         }
 
@@ -117,13 +117,13 @@ namespace Registration.Migrations
                 name: "BookedRoom");
 
             migrationBuilder.DropTable(
-                name: "RoomInfo");
+                name: "Room");
 
             migrationBuilder.DropTable(
-                name: "UserInfo");
+                name: "User");
 
             migrationBuilder.DropTable(
-                name: "HotelInfo");
+                name: "Hotel");
         }
     }
 }

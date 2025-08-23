@@ -22,8 +22,8 @@
             <tr>
                 <td>@booked.Id</td>
                 <td>@booked.dataBooked</td>
-                <td><a asp-controller="Booked" asp-action="Correct" asp-route-roomId="@booked.Id">Изменить</a></td>
-                <td><a asp-controller="Booked" asp-action="Delete" asp-route-roomId="@booked.Id">Удалить</a></td>
+                <td><a asp-controller="Booked" asp-action="Correct" asp-route-id="@booked.Id">Изменить</a></td>
+                <td><a asp-controller="Booked" asp-action="Delete" asp-route-id="@booked.Id">Удалить</a></td>
             </tr>
         }
     </table>
@@ -34,6 +34,6 @@ else
         Отсутствуют бронирования комнаты в базе
     </p>
 }
-<a asp-route-hotelId="@ViewBag.roomId" asp-controller="Booked" asp-action="Create">Добавить бронь</a>
+<a asp-route-roomId="@ViewBag.roomId" asp-controller="Booked" asp-action="Create">Добавить бронь</a>
 
 

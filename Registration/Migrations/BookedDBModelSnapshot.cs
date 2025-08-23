@@ -36,8 +36,8 @@ namespace Registration.Migrations
                     b.Property<int?>("VisitorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("dataBooked")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("dataBooked")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("isBooked")
                         .HasColumnType("bit");

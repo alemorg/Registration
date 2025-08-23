@@ -62,7 +62,7 @@ namespace Registration.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("hotel/{hotelId}/room/create")]
         public IActionResult Create(int hotelid,Room room)
         {
             if (hotelid == 0) 
@@ -97,10 +97,13 @@ namespace Registration.Controllers
                 try
                 {
                     room = dB.Room.FirstOrDefault(x => x.Id == id);
-                    dB.Room.Remove(room);
-                    dB.SaveChanges();
+                    if (room != null)
+                    {
+                        dB.Room.Remove(room);
+                        dB.SaveChanges();
 
-                    return View(nameof(CompleteDelete), room);
+                        return View(nameof(CompleteDelete), room);
+                    }
                 }
                 catch (Exception ex)
                 {
