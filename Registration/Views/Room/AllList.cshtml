@@ -21,7 +21,7 @@
                 <td>@room.Id</td>
                 <td>@room.HotelId</td>
                 <td>@room.Square</td>
-                <td>@room.MaximumGuests</td>
+                <td>@room.Capasity</td>
                 <td><a asp-controller="Room" asp-action="Correct" asp-route-id="@room.Id">изменить</a></td>
                 <td><a asp-controller="Room" asp-action="Delete" asp-route-id="@room.Id">удалить</a></td>
                 <td><a asp-controller="Booked" asp-action="List" asp-route-hotelId="@room.HotelId" asp-route-roomId="@room.Id">список броней</a></td>

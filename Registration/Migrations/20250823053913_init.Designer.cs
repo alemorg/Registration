@@ -85,7 +85,7 @@ namespace Registration.Migrations
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaximumGuests")
+                    b.Property<int>("Capacity")
                         .HasColumnType("int");
 
                     b.Property<int>("Square")

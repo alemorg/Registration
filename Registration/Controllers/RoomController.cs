@@ -69,7 +69,7 @@ namespace Registration.Controllers
                 return View(NotFound());
             if (ModelState.IsValid)
             {
-                if (room.Square > 0 && room.MaximumGuests > 0)
+                if (room.Square > 0 && room.Capasity > 0)
                 {
                     using (BookedDB db = new BookedDB())
                     {
@@ -150,7 +150,7 @@ namespace Registration.Controllers
                 return View(NotFound());
             if (ModelState.IsValid)
             {
-                if (room.Square > 0 && room.MaximumGuests > 0)
+                if (room.Square > 0 && room.Capasity > 0)
                 {
                     using BookedDB dB = new BookedDB();
                     {
@@ -158,7 +158,7 @@ namespace Registration.Controllers
                         {
                             Room roomdb = dB.Room.FirstOrDefault(x => x.Id == id);
                             roomdb.Square = room.Square;
-                            roomdb.MaximumGuests = room.MaximumGuests;
+                            roomdb.Capasity = room.Capasity;
                             dB.Room.Update(roomdb);
                             dB.SaveChanges();
 
