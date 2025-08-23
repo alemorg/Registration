@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
 namespace Registration.Model.Hotels
@@ -30,14 +31,18 @@ namespace Registration.Model.Hotels
         public int Capasity { get; set; }
 
         [Display(Name = "Доступно для бронирования")]
-        [Required(ErrorMessage = "Это поле обязательно для ввода")]
         public bool isActivity { get; set; } = true;
 
+        [Display(Name ="Описание")]
+        [StringLength(200,ErrorMessage ="Максимальное количество символов 200")]
+        public string Discription {  get; set; }
 
-        //навигационное свойство
+
+        //навигационные свойства
         public int HotelId { get; set; }
+        public virtual ICollection<BookedRoom> ListBookeds { get; set; } = new List<BookedRoom>();
 
-        [ValidateNever]
-        public List <BookedRoom>? ListBookeds { get; set; }
+        [ForeignKey("HotelId")]
+        public virtual Hotel Hotel { get; set; }
     }
 }
