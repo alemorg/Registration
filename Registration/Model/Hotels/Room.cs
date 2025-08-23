@@ -38,8 +38,10 @@ namespace Registration.Model.Hotels
         public string Discription {  get; set; }
 
 
-        //навигационные свойства
+        //Внешний ключ
         public int HotelId { get; set; }
+
+        //Навигационное свойство
         public virtual ICollection<BookedRoom> ListBookeds { get; set; } = new List<BookedRoom>();
 
         [ForeignKey("HotelId")]
