@@ -15,6 +15,12 @@
         <tr>
             <th>Id</th>
             <th>Дата</th>
+            <th>Имя гостя</th>
+            <th>Отчество гостя</th>
+            <th>Фамилия гостя</th>
+            <th>Номер телефона</th>
+            <th>Количество гостей</th>
+            <th>Специальные пожелания</th>
         </tr>
 
         @foreach (BookedRoom booked in Model)
@@ -22,6 +28,12 @@
             <tr>
                 <td>@booked.Id</td>
                 <td>@booked.dataBooked</td>
+                <td>@booked.GuestFirstName</td>
+                <td>@booked.GuestSecondName</td>
+                <td>@booked.GuestLastName</td>
+                <td>@booked.GuestPhone</td>
+                <td>@booked.NumberGuest</td>
+                <td>@booked.SpecialRequests</td>
                 <td><a asp-controller="Booked" asp-action="Correct" asp-route-id="@booked.Id">Изменить</a></td>
                 <td><a asp-controller="Booked" asp-action="Delete" asp-route-id="@booked.Id">Удалить</a></td>
             </tr>

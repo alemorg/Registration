@@ -11,19 +11,27 @@
 {
     <table>
         <tr>
+            <th>ID</th>
             <th>Номер комнаты</th>
             <th>Количество гостей</th>
+            <th>Стоимость</th>
             <th>Площадь</th>
+            <th>Доступно для бронирования</th>
+            <th>Описание</th>
         </tr>
 
         @foreach (var room in Model)
         {
             <tr>
                 <td>@room.Id</td>
+                <td>@room.Number</td>
                 <td>@room.Capasity</td>
+                <td>@room.Price</td>
                 <td>@room.Square</td>
+                <td>@room.isActivity</td>
+                <td>@room.Discription</td>
                 <td>
-                    <a asp-controller="Booked" asp-action="List" asp-route-roomId="@room.Id" asp-route-hotelId="@ViewBag.hotelId">даты</a>
+                    <a asp-controller="Booked" asp-action="List" asp-route-roomId="@room.Id" asp-route-hotelId="@ViewBag.hotelId">Даты</a>
                     <a asp-controller="Room" asp-action="Correct" asp-route-id="@room.Id">Изменить</a>
                     <a asp-controller="Room" asp-action="Delete" asp-route-id="@room.Id">Удалить</a>
                 </td>

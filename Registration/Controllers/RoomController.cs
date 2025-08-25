@@ -65,6 +65,7 @@ namespace Registration.Controllers
         [HttpPost("hotel/{hotelId}/room/create")]
         public IActionResult Create(int hotelid,Room room)
         {
+            //добавить тонну проверок данных
             if (hotelid == 0) 
                 return View(NotFound());
             if (ModelState.IsValid)
@@ -146,6 +147,7 @@ namespace Registration.Controllers
         [HttpPost]
         public IActionResult Correct(int id, Room room)
         {
+            //добавить тонну проверок данных
             if (id <= 0)
                 return View(NotFound());
             if (ModelState.IsValid)

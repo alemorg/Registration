@@ -33,6 +33,7 @@ namespace Registration.Controllers
         [HttpPost]
         public IActionResult Create(Hotel hotel)
         {
+            // добавить тонну проверок данных
             if (ModelState.IsValid)
             {
                 if (hotel.Name != null)
@@ -54,6 +55,7 @@ namespace Registration.Controllers
 
         public IActionResult Delete(int id)
         {
+            // добавить тонну проверок данных
             Hotel hotel = new Hotel();
             using (BookedDB dB = new BookedDB())
             {
@@ -95,6 +97,7 @@ namespace Registration.Controllers
         [HttpPost]
         public IActionResult Correct(int id, Hotel hotel)
         {
+            // добавить тонну проверок данных
             if (id <= 0)
                 return View (NotFound());
 

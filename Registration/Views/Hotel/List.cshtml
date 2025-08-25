@@ -12,6 +12,9 @@
             <th>ID</th>
             <th>Name</th>
             <th>Location</th>
+            <th>Rating</th>
+            <th>Phone</th>
+            <th>Email</th>
         </tr>
         @foreach (Hotel hotel in Model)
         {
@@ -24,6 +27,15 @@
                 </td>
                 <td>
                     @hotel.Location
+                </td>
+                <td>
+                    @hotel.Rating
+                </td>
+                <td>
+                    @hotel.Phone
+                </td>
+                <td>
+                    @hotel.Email
                 </td>
                 <td>
                     <a asp-controller="Hotel" asp-action="Delete" asp-route-id="@hotel.Id">Удалить</a>

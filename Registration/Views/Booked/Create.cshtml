@@ -14,6 +14,42 @@
 			<span asp-validation-for="dataBooked" class="validation"></span>
 		</div>
 
+		<div class="box-line">
+			<label asp-for="GuestFirstName" class="label-line"></label>
+			<input asp-for="GuestFirstName" class="input-line" />
+			<span asp-validation-for="GuestFirstName" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="GuestSecondName" class="label-line"></label>
+			<input asp-for="GuestSecondName" class="input-line" />
+			<span asp-validation-for="GuestSecondName" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="GuestLastName" class="label-line"></label>
+			<input asp-for="GuestLastName" class="input-line" />
+			<span asp-validation-for="GuestLastName" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="GuestPhone" class="label-line"></label>
+			<input asp-for="GuestPhone" class="input-line" />
+			<span asp-validation-for="GuestPhone" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="NumberGuest" class="label-line"></label>
+			<input asp-for="NumberGuest" class="input-line" />
+			<span asp-validation-for="NumberGuest" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="SpecialRequests" class="label-line"></label>
+			<input asp-for="SpecialRequests" class="input-line" />
+			<span asp-validation-for="SpecialRequests" class="validation"></span>
+		</div>
+
 		<input type="submit" value="Забронировать дату" class="btn-reg" />
 	</form>
 	<p>@ViewBag.Message</p>

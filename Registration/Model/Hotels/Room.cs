@@ -44,6 +44,7 @@ namespace Registration.Model.Hotels
         //Навигационное свойство
         public virtual ICollection<BookedRoom> ListBookeds { get; set; } = new List<BookedRoom>();
 
+        [ValidateNever]
         [ForeignKey("HotelId")]
         public virtual Hotel Hotel { get; set; }
     }

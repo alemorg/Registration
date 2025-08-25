@@ -9,6 +9,18 @@
 <div class="registration_style">
 	<form asp-route-hotelId="@ViewBag.HotelId" asp-controller="Room" asp-action="Create" method="post">
 		<div class="box-line">
+			<label asp-for="Number" class="label-line"></label>
+			<input asp-for="Number" class="input-line" />
+			<span asp-validation-for="Number" class="validation"></span>
+		</div>
+		
+		<div class="box-line">
+			<label asp-for="Price" class="label-line"></label>
+			<input asp-for="Price" class="input-line" />
+			<span asp-validation-for="Price" class="validation"></span>
+		</div>
+		
+		<div class="box-line">
 			<label asp-for="Square" class="label-line"></label>
 			<input asp-for="Square" class="input-line" />
 			<span asp-validation-for="Square" class="validation"></span>
@@ -18,6 +30,18 @@
 			<label asp-for="Capasity" class="label-line"></label>
 			<input asp-for="Capasity" class="input-line" />
 			<span asp-validation-for="Capasity" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="isActivity" class="label-line"></label>
+			<input asp-for="isActivity" class="input-line" />
+			<span asp-validation-for="isActivity" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="Discription" class="label-line"></label>
+			<input asp-for="Discription" class="input-line" />
+			<span asp-validation-for="Discription" class="validation"></span>
 		</div>
 
 		<input type="submit" value="Добавить комнату" class="btn-reg" />

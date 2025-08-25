@@ -11,6 +11,7 @@ namespace Registration.Controllers
         [HttpGet("hotel/{hotelId}/room/{roomId}/booked/{action}/{id?}")]
         public IActionResult List(int hotelId, int roomId)
         {
+            //добавить тонну проверок данных
             ViewBag.hotelId = hotelId;
             ViewBag.roomId = roomId;
             using (BookedDB db = new BookedDB())
@@ -45,6 +46,7 @@ namespace Registration.Controllers
         [HttpPost]
         public IActionResult Create(int roomId, BookedRoom booked)
         {
+            //добавить тонну проверок данных
             if (roomId == 0)
                 return View(NotFound());
             ViewBag.roomId = roomId;
@@ -138,6 +140,7 @@ namespace Registration.Controllers
         [HttpPost]
         public IActionResult Correct(int id, BookedRoom booked)
         {
+            //добавить тонну проверок данных
             if (id <= 0)
                 return View(NotFound());
             if (ModelState.IsValid)

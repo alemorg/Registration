@@ -1,4 +1,5 @@
-﻿using Registration.Model.Users;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Registration.Model.Users;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
@@ -46,6 +47,7 @@ namespace Registration.Model.Hotels
         public int Roomid { get; set; }
         //навигационное свойство
 
+        [ValidateNever]
         [ForeignKey("Roomid")]
         public virtual Room Room { get; set; }
 

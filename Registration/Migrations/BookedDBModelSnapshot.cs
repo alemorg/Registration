@@ -30,23 +30,46 @@ namespace Registration.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("GuestFirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("GuestLastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("GuestPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GuestSecondName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("HotelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberGuest")
+                        .HasColumnType("int");
+
                     b.Property<int>("Roomid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VisitorId")
-                        .HasColumnType("int");
+                    b.Property<string>("SpecialRequests")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("dataBooked")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("isBooked")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Roomid");
+                    b.HasIndex("HotelId");
 
-                    b.HasIndex("VisitorId");
+                    b.HasIndex("Roomid");
 
                     b.ToTable("BookedRoom");
                 });
@@ -59,12 +82,31 @@ namespace Registration.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Location")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -79,14 +121,30 @@ namespace Registration.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Capasity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Discription")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Square")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isActivity")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -147,31 +205,35 @@ namespace Registration.Migrations
 
             modelBuilder.Entity("Registration.Model.Hotels.BookedRoom", b =>
                 {
-                    b.HasOne("Registration.Model.Hotels.Room", null)
+                    b.HasOne("Registration.Model.Hotels.Hotel", null)
+                        .WithMany("BookedRooms")
+                        .HasForeignKey("HotelId");
+
+                    b.HasOne("Registration.Model.Hotels.Room", "Room")
                         .WithMany("ListBookeds")
                         .HasForeignKey("Roomid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Registration.Model.Users.RegistrationUser", "Visitor")
-                        .WithMany()
-                        .HasForeignKey("VisitorId");
-
-                    b.Navigation("Visitor");
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Registration.Model.Hotels.Room", b =>
                 {
-                    b.HasOne("Registration.Model.Hotels.Hotel", null)
-                        .WithMany("rooms")
+                    b.HasOne("Registration.Model.Hotels.Hotel", "Hotel")
+                        .WithMany("Rooms")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Hotel");
                 });
 
             modelBuilder.Entity("Registration.Model.Hotels.Hotel", b =>
                 {
-                    b.Navigation("rooms");
+                    b.Navigation("BookedRooms");
+
+                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("Registration.Model.Hotels.Room", b =>
