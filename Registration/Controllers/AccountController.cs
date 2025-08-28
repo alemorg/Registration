@@ -1,24 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
 using Registration.Crypt;
 using Registration.Model.Users;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Registration.Controllers
 {
     public class AccountController : Controller
     {
-        RegistrationUser user = null;
-
-        //block Login
-
         [HttpGet]
-        public IActionResult Logined()
+        public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Logined(LoginedUser logUser)
+        public async Task<IActionResult> Login(LoginedUser logUser)
         {
             if (!ModelState.IsValid)
             {
@@ -29,16 +29,37 @@ namespace Registration.Controllers
 
                     if (user != null)
                     {
-                        return View("CompletedLogined", user);
+                        //Создаем информацию о пользователе
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, $"{user.FirstName} {user.FirstName}"),
+                            new Claim(ClaimTypes.Role, "Admin")                                         //Переделать при переделке класса userov
+                        };
+
+                        //Создаем пропуск
+                        var claimsIdentity = new ClaimsIdentity(claims,
+                            CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        //Выдаем пропуск
+                        await HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity));
+
+                        return View(nameof(SuccessFul), user);
                     }
                 }
             }
             return View(logUser);
         }
 
-        public IActionResult CompletedLogined(LoginedUser logUser)
+        public IActionResult SuccessFul(LoginedUser logUser)
         {
             return View(logUser);
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
         //block Registration

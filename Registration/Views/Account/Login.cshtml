@@ -2,24 +2,21 @@
 @model LoginedUser
 
 @{
-    ViewData["Title"] = "Logined";
+    ViewData["Title"] = "Login";
 }
 
-<form asp-controller="Account" asp-action="Logined" method="post">
+<form asp-controller="Account" asp-action="Login" method="post">
     <div class="box-line">
         <label asp-for="Email" class="label-line"></label>
         <input asp-for="Email" class="input-line" />
         <span asp-validation-for="Email" class="span-line"></span>
     </div>
-
     <div class="box-line">
         <label asp-for="Password" class="label-line"></label>
         <input asp-for="Password" class="input-line" />
         <span asp-validation-for="Password" class="span-line"></span>
     </div>
-
     <input type="submit" value="Авторизация" class="btn-reg" />
-
-    <a asp-controller="Account" asp-action="Registration">Регистрация</a>
 </form>
+<a asp-controller="Account" asp-action="Registration">Регистрация</a>
 
