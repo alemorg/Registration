@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
+using Registration.Model.Home;
 using Registration.Model.Hotels;
 using System.Linq;
 
@@ -23,6 +24,7 @@ namespace Registration.Controllers
                 else return View();
             }
         }
+
 
         [HttpGet]
         public IActionResult Create()
