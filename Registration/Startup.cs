@@ -56,3 +56,44 @@ namespace Registration
         }
     }
 }
+
+
+// описание API
+
+// пользователь без авторизации:
+// => Home/HomePage => Find/List => Booked/Create => Complete
+//                                                => Account/Registration => Account/Successful
+// => Home/HomePage => Account/Login
+//                  => Account/Login => Account/Registration => Account/Successful
+
+// пользователь с авторизацией (User)
+// => Home/HomePage => Find/List => Booked/Create => Complete
+// => Account/Profile => Account/Correct
+//                    => Account/Delete
+// => Booked/MyList 
+//                  => Booked/Delete
+//                  => Booked/Correct
+
+// пользователь с авторизацией (Manager)
+// => Home/HomePage => Find/List => Booked/Create => Complete
+// => Account/Profile => Account/Correct
+// => Hotel/Profile => Hotel/Correct
+// => Room/HotelList => Room/Create
+//                   => Room/Correct
+//                   => Room/Delete
+// => Booked/HotelList => Booked/Create
+//                     => Booked/Correct
+//                     => Booked/Delete
+
+// пользователь с авторизацией (Admin)
+// (...)
+// => Account/List
+// => Hotel/List => Hotel/Create
+//               => Hotel/Correct
+//               => Hotel/Delete
+// => Room/ListAll => Room/Create
+//                 => Room/Correct
+//                 => Room/Delete
+// => Booked/ListAll => Booked/Create
+//                   => Booked/Correct
+//                   => Booked/Delete
