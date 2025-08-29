@@ -6,7 +6,7 @@ using System.Data;
 
 namespace Registration.Model.Hotels
 {
-    public class BookedRoom
+    public class Booked
     {
         public int Id { get; set; }
 

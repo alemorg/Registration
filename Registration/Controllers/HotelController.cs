@@ -8,22 +8,22 @@ namespace Registration.Controllers
 {
     public class HotelController : Controller
     {
-        public IActionResult List()
-        {
-            using (BookedDB db = new BookedDB())
-            {
-                List<Hotel> ListHotel = new List<Hotel>();
+        //public IActionResult List()
+        //{
+        //    using (BookedDB db = new BookedDB())
+        //    {
+        //        List<Hotel> ListHotel = new List<Hotel>();
 
-                foreach (Hotel hotel in db.Hotel)
-                {
-                    ListHotel.Add(hotel);
-                }
+        //        foreach (Hotel hotel in db.Hotel)
+        //        {
+        //            ListHotel.Add(hotel);
+        //        }
 
-                if (ListHotel.Count != 0)
-                    return View(ListHotel);
-                else return View();
-            }
-        }
+        //        if (ListHotel.Count != 0)
+        //            return View(ListHotel);
+        //        else return View();
+        //    }
+        //}
 
 
         [HttpGet]
@@ -32,102 +32,102 @@ namespace Registration.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Create(Hotel hotel)
-        {
-            // добавить тонну проверок данных
-            if (ModelState.IsValid)
-            {
-                if (hotel.Name != null)
-                {
-                    using (BookedDB db = new BookedDB())
-                    {
-                        db.Hotel.Add(hotel);
-                        db.SaveChanges();
-                        return View(nameof(CompleteCreate), hotel);
-                    }
-                }
-            }
-            return View(hotel);
-        }
+        //[HttpPost]
+        //public IActionResult Create(Hotel hotel)
+        //{
+        //    // добавить тонну проверок данных
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (hotel.Name != null)
+        //        {
+        //            using (BookedDB db = new BookedDB())
+        //            {
+        //                db.Hotel.Add(hotel);
+        //                db.SaveChanges();
+        //                return View(nameof(CompleteCreate), hotel);
+        //            }
+        //        }
+        //    }
+        //    return View(hotel);
+        //}
         public IActionResult CompleteCreate(Hotel hotel)
         {
             return View(hotel);
         }
 
-        public IActionResult Delete(int id)
-        {
-            // добавить тонну проверок данных
-            Hotel hotel = new Hotel();
-            using (BookedDB dB = new BookedDB())
-            {
-                try
-                {
-                    hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
-                    dB.Hotel.Remove(hotel);
-                    dB.SaveChanges();
+        //public IActionResult Delete(int id)
+        //{
+        //    // добавить тонну проверок данных
+        //    Hotel hotel = new Hotel();
+        //    using (BookedDB dB = new BookedDB())
+        //    {
+        //        try
+        //        {
+        //            hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
+        //            dB.Hotel.Remove(hotel);
+        //            dB.SaveChanges();
 
-                    return View(nameof(CompleteDelete), hotel);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-            return View(NotFound());
+        //            return View(nameof(CompleteDelete), hotel);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex.Message);
+        //        }
+        //    }
+        //    return View(NotFound());
 
-        }
+        //}
 
         public IActionResult CompleteDelete(Hotel hotel)
         {
             return View(hotel);
         }
 
-        [HttpGet]
-        public IActionResult Correct(int id)
-        {
-            if (id <= 0)
-                return View(NotFound());
-            Hotel hotel = new Hotel();
-            using BookedDB dB = new BookedDB();
-            {
-                hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
-                return View(hotel);
-            }
-        }
+        //[HttpGet]
+        //public IActionResult Correct(int id)
+        //{
+        //    if (id <= 0)
+        //        return View(NotFound());
+        //    Hotel hotel = new Hotel();
+        //    using BookedDB dB = new BookedDB();
+        //    {
+        //        hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
+        //        return View(hotel);
+        //    }
+        //}
 
-        [HttpPost]
-        public IActionResult Correct(int id, Hotel hotel)
-        {
-            // добавить тонну проверок данных
-            if (id <= 0)
-                return View (NotFound());
+        //[HttpPost]
+        //public IActionResult Correct(int id, Hotel hotel)
+        //{
+        //    // добавить тонну проверок данных
+        //    if (id <= 0)
+        //        return View (NotFound());
 
-            if (ModelState.IsValid)
-            {
-                if (hotel.Name != null)
-                {
-                    using BookedDB dB = new BookedDB();
-                    {
-                        try
-                        {
-                            Hotel hoteldb = dB.Hotel.FirstOrDefault(x => x.Id == id);
-                            hoteldb.Name = hotel.Name;
-                            hoteldb.Location = hotel.Location;
-                            dB.Hotel.Update(hoteldb);
-                            dB.SaveChanges();
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (hotel.Name != null)
+        //        {
+        //            using BookedDB dB = new BookedDB();
+        //            {
+        //                try
+        //                {
+        //                    Hotel hoteldb = dB.Hotel.FirstOrDefault(x => x.Id == id);
+        //                    hoteldb.Name = hotel.Name;
+        //                    hoteldb.Location = hotel.Location;
+        //                    dB.Hotel.Update(hoteldb);
+        //                    dB.SaveChanges();
 
-                            return View(nameof(CompleteCorrect), hotel);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error {ex.Message}");
-                        }
-                    }
-                }
-            }
-            return View(hotel);
-        }
+        //                    return View(nameof(CompleteCorrect), hotel);
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Console.WriteLine($"Error {ex.Message}");
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return View(hotel);
+        //}
         public IActionResult CompleteCorrect(Hotel hotel)
         {
             return View(hotel);

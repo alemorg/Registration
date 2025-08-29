@@ -2,6 +2,8 @@
 
 namespace Registration.Model.Users
 {
+
+    // мб стоит удалить?
     public class LoginedUser
     {
         [Display(Name = "Email")]

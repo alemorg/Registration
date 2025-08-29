@@ -9,51 +9,51 @@ namespace Registration.Controllers
 
         //список всех комнат в базе данных (возможно вообще не нужна эта функция)
         //[HttpGet("room/alllist")]
-        public IActionResult AllList()
-        {
-            using (BookedDB db = new BookedDB())
-            {
-                List<Room> ListRoom = new List<Room>();
+        //public IActionResult AllList()
+        //{
+        //    using (BookedDB db = new BookedDB())
+        //    {
+        //        List<Room> ListRoom = new List<Room>();
 
-                foreach (Room room in db.Room)
-                {
-                    ListRoom.Add(room);
-                }
+        //        foreach (Room room in db.Room)
+        //        {
+        //            ListRoom.Add(room);
+        //        }
 
-                if (ListRoom.Count != 0)
-                    return View(ListRoom);
-                else return View();
-            }
-        }
+        //        if (ListRoom.Count != 0)
+        //            return View(ListRoom);
+        //        else return View();
+        //    }
+        //}
 
-        [HttpGet("hotel/{hotelId}/room/list")]
-        public IActionResult List(int hotelId)
-        {
-            ViewBag.hotelId = hotelId;
-            using (BookedDB db = new BookedDB())
-            {
-                try
-                {
-                    List<Room> ListRoom = new List<Room>();
+        //[HttpGet("hotel/{hotelId}/room/list")]
+        //public IActionResult List(int hotelId)
+        //{
+        //    ViewBag.hotelId = hotelId;
+        //    using (BookedDB db = new BookedDB())
+        //    {
+        //        try
+        //        {
+        //            List<Room> ListRoom = new List<Room>();
 
-                    foreach (Room room in db.Room)
-                    {
-                        if (room.HotelId == hotelId)
-                            ListRoom.Add(room);
-                    }
+        //            foreach (Room room in db.Room)
+        //            {
+        //                if (room.HotelId == hotelId)
+        //                    ListRoom.Add(room);
+        //            }
 
-                    if (ListRoom.Count != 0)
-                        return View(ListRoom);
-                    else return View();
-                }
-                catch (Exception ex )
-                {
-                    Console.WriteLine($"Error {ex.Message}");
-                }
-                return View(NotFound());
+        //            if (ListRoom.Count != 0)
+        //                return View(ListRoom);
+        //            else return View();
+        //        }
+        //        catch (Exception ex )
+        //        {
+        //            Console.WriteLine($"Error {ex.Message}");
+        //        }
+        //        return View(NotFound());
                 
-            }
-        }
+        //    }
+        //}
 
         [HttpGet("hotel/{hotelId}/room/create")]
         public IActionResult Create(int hotelId)
@@ -62,119 +62,119 @@ namespace Registration.Controllers
             return View();
         }
 
-        [HttpPost("hotel/{hotelId}/room/create")]
-        public IActionResult Create(int hotelid,Room room)
-        {
-            //добавить тонну проверок данных
-            if (hotelid == 0) 
-                return View(NotFound());
-            if (ModelState.IsValid)
-            {
-                if (room.Square > 0 && room.Capasity > 0)
-                {
-                    using (BookedDB db = new BookedDB())
-                    {
-                        db.Room.Add(room);
-                        db.SaveChanges();
+        //[HttpPost("hotel/{hotelId}/room/create")]
+        //public IActionResult Create(int hotelid,Room room)
+        //{
+        //    //добавить тонну проверок данных
+        //    if (hotelid == 0) 
+        //        return View(NotFound());
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (room.Square > 0 && room.Capasity > 0)
+        //        {
+        //            using (BookedDB db = new BookedDB())
+        //            {
+        //                db.Room.Add(room);
+        //                db.SaveChanges();
                         
-                        return View(nameof(CompleteCreate), room);
-                    }
-                }
-            }
-            return View(room);
-        }
+        //                return View(nameof(CompleteCreate), room);
+        //            }
+        //        }
+        //    }
+        //    return View(room);
+        //}
 
         public IActionResult CompleteCreate(Room room)
         {
             return View(room);
         }
 
-        public IActionResult Delete(int id)
-        {
-            Room room = new Room();
-            using (BookedDB dB = new BookedDB())
-            {
+        //public IActionResult Delete(int id)
+        //{
+        //    Room room = new Room();
+        //    using (BookedDB dB = new BookedDB())
+        //    {
 
-                try
-                {
-                    room = dB.Room.FirstOrDefault(x => x.Id == id);
-                    if (room != null)
-                    {
-                        dB.Room.Remove(room);
-                        dB.SaveChanges();
+        //        try
+        //        {
+        //            room = dB.Room.FirstOrDefault(x => x.Id == id);
+        //            if (room != null)
+        //            {
+        //                dB.Room.Remove(room);
+        //                dB.SaveChanges();
 
-                        return View(nameof(CompleteDelete), room);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-            return View(NotFound());
-        }
+        //                return View(nameof(CompleteDelete), room);
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex.Message);
+        //        }
+        //    }
+        //    return View(NotFound());
+        //}
 
         public IActionResult CompleteDelete(Room room)
         {
             return View(room);
         }
 
-        [HttpGet]
-        public IActionResult Correct(int id)
-        {
-            if (id > 0)
-            {
-                ViewBag.id = id;
-                Room room = new Room();
-                using BookedDB dB = new BookedDB();
-                {
-                    try
-                    {
-                        room = dB.Room.FirstOrDefault(x => x.Id == id);
+        //[HttpGet]
+        //public IActionResult Correct(int id)
+        //{
+        //    if (id > 0)
+        //    {
+        //        ViewBag.id = id;
+        //        Room room = new Room();
+        //        using BookedDB dB = new BookedDB();
+        //        {
+        //            try
+        //            {
+        //                room = dB.Room.FirstOrDefault(x => x.Id == id);
 
-                        if (room != null)
-                            return View(room);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error message: {ex.Message}");
-                    }
-                }
-            }
-            return View(NotFound());
-        }
+        //                if (room != null)
+        //                    return View(room);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Console.WriteLine($"Error message: {ex.Message}");
+        //            }
+        //        }
+        //    }
+        //    return View(NotFound());
+        //}
 
-        [HttpPost]
-        public IActionResult Correct(int id, Room room)
-        {
-            //добавить тонну проверок данных
-            if (id <= 0)
-                return View(NotFound());
-            if (ModelState.IsValid)
-            {
-                if (room.Square > 0 && room.Capasity > 0)
-                {
-                    using BookedDB dB = new BookedDB();
-                    {
-                        try
-                        {
-                            Room roomdb = dB.Room.FirstOrDefault(x => x.Id == id);
-                            roomdb.Square = room.Square;
-                            roomdb.Capasity = room.Capasity;
-                            dB.Room.Update(roomdb);
-                            dB.SaveChanges();
+        //[HttpPost]
+        //public IActionResult Correct(int id, Room room)
+        //{
+        //    //добавить тонну проверок данных
+        //    if (id <= 0)
+        //        return View(NotFound());
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (room.Square > 0 && room.Capasity > 0)
+        //        {
+        //            using BookedDB dB = new BookedDB();
+        //            {
+        //                try
+        //                {
+        //                    Room roomdb = dB.Room.FirstOrDefault(x => x.Id == id);
+        //                    roomdb.Square = room.Square;
+        //                    roomdb.Capasity = room.Capasity;
+        //                    dB.Room.Update(roomdb);
+        //                    dB.SaveChanges();
 
-                            return View(nameof(CompleteCorrect), room);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error {ex.Message}");
-                        }
-                    }
-                }
-            }
-            return View(room);
-        }
+        //                    return View(nameof(CompleteCorrect), room);
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Console.WriteLine($"Error {ex.Message}");
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return View(room);
+        //}
         public IActionResult CompleteCorrect(Room room)
         {
             return View(room);

@@ -6,15 +6,15 @@ namespace Registration.Controllers
 {
     public class ContactsController : Controller
     {
-        public IActionResult Index()
-        {
-            using (BookedDB db = new BookedDB())
-            {
+        //public IActionResult Index()
+        //{
+        //    using (BookedDB db = new BookedDB())
+        //    {
 
-                List<RegistrationUser> ListUsers = db.User.ToList();
+        //        List<RegistrationUser> ListUsers = db.User.ToList();
 
-                return View(ListUsers);
-            }
-        }
+        //        return View(ListUsers);
+        //    }
+        //}
     }
 }

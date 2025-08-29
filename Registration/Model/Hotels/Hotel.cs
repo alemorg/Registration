@@ -38,6 +38,6 @@ namespace Registration.Model.Hotels
 
         //Prop Navigate
         public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
-        public virtual ICollection<BookedRoom> BookedRooms { get; set;} = new List<BookedRoom>();
+        public virtual ICollection<Booked> BookedRooms { get; set;} = new List<Booked>();
     }
 }

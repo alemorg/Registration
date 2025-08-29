@@ -8,33 +8,33 @@ namespace Registration.Controllers
 {
     public class BookedController : Controller
     {
-        [HttpGet("hotel/{hotelId}/room/{roomId}/booked/{action}/{id?}")]
-        public IActionResult List(int hotelId, int roomId)
-        {
-            //добавить тонну проверок данных
-            ViewBag.hotelId = hotelId;
-            ViewBag.roomId = roomId;
-            using (BookedDB db = new BookedDB())
-            {
-                try
-                {
-                    List<BookedRoom> ListBookedRoom = new List<BookedRoom>();
+        //[HttpGet("hotel/{hotelId}/room/{roomId}/booked/{action}/{id?}")]
+        //public IActionResult List(int hotelId, int roomId)
+        //{
+        //    //добавить тонну проверок данных
+        //    ViewBag.hotelId = hotelId;
+        //    ViewBag.roomId = roomId;
+        //    //using (BookedDB db = new BookedDB())
+        //    //{
+        //    //    try
+        //    //    {
+        //    //        List<Booked> ListBookedRoom = new List<Booked>();
 
-                    foreach (BookedRoom booked in db.BookedRoom)
-                    {
-                        if (booked.Roomid == roomId)
-                            ListBookedRoom.Add(booked);
-                    }
-                    return View(ListBookedRoom);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error {ex.Message}");
-                }
-                return View(NotFound());
-            }
+        //    //        foreach (Booked booked in db.Booked)
+        //    //        {
+        //    //            if (booked.Roomid == roomId)
+        //    //                ListBookedRoom.Add(booked);
+        //    //        }
+        //    //        return View(ListBookedRoom);
+        //    //    }
+        //    //    catch (Exception ex)
+        //    //    {
+        //    //        Console.WriteLine($"Error {ex.Message}");
+        //    //    }
+        //    //    return View(NotFound());
+        //    //}
 
-        }
+        //}
 
         [HttpGet]
         public IActionResult Create(int roomId)
@@ -43,144 +43,144 @@ namespace Registration.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Create(int roomId, BookedRoom booked)
-        {
-            //добавить тонну проверок данных
-            if (roomId == 0)
-                return View(NotFound());
-            ViewBag.roomId = roomId;
-            if (ModelState.IsValid)
-            {
-                if (booked.dataBooked > DateTime.Today)
-                {
-                    using (BookedDB db = new BookedDB())
-                    {
-                        BookedRoom bookedDB = db.BookedRoom.FirstOrDefault(x => x.Roomid == roomId && x.dataBooked == booked.dataBooked);
-                        if (bookedDB == null)
-                        {
-                            db.BookedRoom.Add(booked);
-                            db.SaveChanges();
+        //[HttpPost]
+        //public IActionResult Create(int roomId, Booked booked)
+        //{
+        //    //добавить тонну проверок данных
+        //    if (roomId == 0)
+        //        return View(NotFound());
+        //    ViewBag.roomId = roomId;
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (booked.dataBooked > DateTime.Today)
+        //        {
+        //            using (BookedDB db = new BookedDB())
+        //            {
+        //                Booked bookedDB = db.Booked.FirstOrDefault(x => x.Roomid == roomId && x.dataBooked == booked.dataBooked);
+        //                if (bookedDB == null)
+        //                {
+        //                    db.Booked.Add(booked);
+        //                    db.SaveChanges();
 
-                            return View(nameof(CompleteCreate), booked);
-                        }
-                        else
-                        {
-                            ViewBag.Message = "Выбранная дата уже занята другим пользователем!";
-                        }
-                    }
-                }
-                else
-                {
-                    ViewBag.Message = $"Выберете дату начиная с {DateTime.Today}";
-                }
-            }
-            return View(booked);
-        }
+        //                    return View(nameof(CompleteCreate), booked);
+        //                }
+        //                else
+        //                {
+        //                    ViewBag.Message = "Выбранная дата уже занята другим пользователем!";
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Message = $"Выберете дату начиная с {DateTime.Today}";
+        //        }
+        //    }
+        //    return View(booked);
+        //}
 
-        public IActionResult CompleteCreate(BookedRoom booked)
+        public IActionResult CompleteCreate(Booked booked)
         {
             return View();
         }
 
-        public IActionResult Delete(int id)
-        {
-            BookedRoom booked = new BookedRoom();
-            using (BookedDB dB = new BookedDB())
-            {
-                try
-                {
-                    booked = dB.BookedRoom.FirstOrDefault(x => x.Id == id);
-                    if (booked != null)
-                    {
-                        dB.BookedRoom.Remove(booked);
-                        dB.SaveChanges();
+        //public IActionResult Delete(int id)
+        //{
+        //    Booked booked = new Booked();
+        //    using (BookedDB dB = new BookedDB())
+        //    {
+        //        try
+        //        {
+        //            booked = dB.Booked.FirstOrDefault(x => x.Id == id);
+        //            if (booked != null)
+        //            {
+        //                dB.Booked.Remove(booked);
+        //                dB.SaveChanges();
 
-                        return View(nameof(CompleteDelete), booked);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-            return View(NotFound());
-        }
+        //                return View(nameof(CompleteDelete), booked);
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex.Message);
+        //        }
+        //    }
+        //    return View(NotFound());
+        //}
 
-        public IActionResult CompleteDelete(BookedRoom booked)
+        public IActionResult CompleteDelete(Booked booked)
         {
             return View(booked);
         }
 
-        [HttpGet]
-        public IActionResult Correct(int id)
-        {
-            if (id > 0)
-            {
-                ViewBag.id = id;
-                BookedRoom booked = new BookedRoom();
-                using BookedDB dB = new BookedDB();
-                {
-                    try
-                    {
-                        booked = dB.BookedRoom.FirstOrDefault(x => x.Id == id);
+        //[HttpGet]
+        //public IActionResult Correct(int id)
+        //{
+        //    if (id > 0)
+        //    {
+        //        ViewBag.id = id;
+        //        Booked booked = new Booked();
+        //        using BookedDB dB = new BookedDB();
+        //        {
+        //            try
+        //            {
+        //                booked = dB.Booked.FirstOrDefault(x => x.Id == id);
 
-                        if (booked != null)
-                            return View(booked);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error message: {ex.Message}");
-                    }
-                }
-            }
-            return View(NotFound());
-        }
+        //                if (booked != null)
+        //                    return View(booked);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Console.WriteLine($"Error message: {ex.Message}");
+        //            }
+        //        }
+        //    }
+        //    return View(NotFound());
+        //}
 
-        [HttpPost]
-        public IActionResult Correct(int id, BookedRoom booked)
-        {
-            //добавить тонну проверок данных
-            if (id <= 0)
-                return View(NotFound());
-            if (ModelState.IsValid)
-            {
-                if (booked.dataBooked > DateTime.Today)
-                {
-                    using BookedDB dB = new BookedDB();
-                    {
-                        try
-                        {
-                            BookedRoom ErrorBooked = dB.BookedRoom.FirstOrDefault(x => x.dataBooked == booked.dataBooked);
-                            if (ErrorBooked != null)
-                            {
-                                BookedRoom bookeddb = dB.BookedRoom.FirstOrDefault(x => x.Id == id);
+        //[HttpPost]
+        //public IActionResult Correct(int id, Booked booked)
+        //{
+        //    //добавить тонну проверок данных
+        //    if (id <= 0)
+        //        return View(NotFound());
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (booked.dataBooked > DateTime.Today)
+        //        {
+        //            using BookedDB dB = new BookedDB();
+        //            {
+        //                try
+        //                {
+        //                    Booked ErrorBooked = dB.Booked.FirstOrDefault(x => x.dataBooked == booked.dataBooked);
+        //                    if (ErrorBooked != null)
+        //                    {
+        //                        Booked bookeddb = dB.Booked.FirstOrDefault(x => x.Id == id);
 
-                                bookeddb.dataBooked = booked.dataBooked;
-                                dB.BookedRoom.Update(bookeddb);
-                                dB.SaveChanges();
-                                return View(nameof(CompleteCorrect), bookeddb);
-                            }
-                            else
-                            {
-                                ViewBag.Message = "Выбранная дата уже занята другим пользователем!";
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error {ex.Message}");
-                        }
-                    }
-                }
-                else
-                {
-                    ViewBag.Message = $"Выберете дату начиная с {DateTime.Today}";
-                }
-            }
-            return View(booked);
-        }
+        //                        bookeddb.dataBooked = booked.dataBooked;
+        //                        dB.Booked.Update(bookeddb);
+        //                        dB.SaveChanges();
+        //                        return View(nameof(CompleteCorrect), bookeddb);
+        //                    }
+        //                    else
+        //                    {
+        //                        ViewBag.Message = "Выбранная дата уже занята другим пользователем!";
+        //                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Console.WriteLine($"Error {ex.Message}");
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Message = $"Выберете дату начиная с {DateTime.Today}";
+        //        }
+        //    }
+        //    return View(booked);
+        //}
 
-        public IActionResult CompleteCorrect(BookedRoom booked)
+        public IActionResult CompleteCorrect(Booked booked)
         {
             return View(booked);
         }

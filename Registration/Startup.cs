@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Registration.Context;
 using Registration.Controllers;
 
 namespace Registration
@@ -15,8 +17,8 @@ namespace Registration
                 {
                     options.LoginPath = "/Account/Login";
                     options.AccessDeniedPath = "/Account/AccessDenied";
-                    //options.ExpireTimeSpan = TimeSpan.FromMinutes(5); //раскоментировать когда понядобится больше времени на аутентификацию
-                    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                    //options.ExpireTimeSpan = TimeSpan.FromHours(1); //раскоментировать когда понядобится больше времени на аутентификацию
                 });
 
             services.AddAuthorization(options =>
