@@ -2,29 +2,23 @@
 using Registration.Context;
 using Registration.Model.Home;
 using Registration.Model.Hotels;
+using Registration.Model.Hotels.Repository.HotelRepository;
 using System.Linq;
 
 namespace Registration.Controllers
 {
     public class HotelController : Controller
     {
-        //public IActionResult List()
-        //{
-        //    using (BookedDB db = new BookedDB())
-        //    {
-        //        List<Hotel> ListHotel = new List<Hotel>();
-
-        //        foreach (Hotel hotel in db.Hotel)
-        //        {
-        //            ListHotel.Add(hotel);
-        //        }
-
-        //        if (ListHotel.Count != 0)
-        //            return View(ListHotel);
-        //        else return View();
-        //    }
-        //}
-
+        private readonly HotelService hotelService;
+        public HotelController(HotelService hotelService)
+        {
+            this.hotelService = hotelService;
+        }
+        public IActionResult List()
+        {
+            if (hotelService != null) return View(hotelService.List());
+            else return View();
+        }
 
         [HttpGet]
         public IActionResult Create()
@@ -32,102 +26,73 @@ namespace Registration.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult Create(Hotel hotel)
-        //{
-        //    // добавить тонну проверок данных
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (hotel.Name != null)
-        //        {
-        //            using (BookedDB db = new BookedDB())
-        //            {
-        //                db.Hotel.Add(hotel);
-        //                db.SaveChanges();
-        //                return View(nameof(CompleteCreate), hotel);
-        //            }
-        //        }
-        //    }
-        //    return View(hotel);
-        //}
+        [HttpPost]
+        public IActionResult Create(Hotel hotel)
+        {
+            if (ModelState.IsValid)
+            {
+                hotelService.Create(hotel);
+
+                return View(nameof(CompleteCreate), hotel);
+            }
+
+            return View(hotel);
+        }
         public IActionResult CompleteCreate(Hotel hotel)
         {
             return View(hotel);
         }
 
-        //public IActionResult Delete(int id)
-        //{
-        //    // добавить тонну проверок данных
-        //    Hotel hotel = new Hotel();
-        //    using (BookedDB dB = new BookedDB())
-        //    {
-        //        try
-        //        {
-        //            hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
-        //            dB.Hotel.Remove(hotel);
-        //            dB.SaveChanges();
+        public IActionResult Delete(int id)
+        {
+            if (id > 0)
+            {
+                var hotel = hotelService.Profile(id);
 
-        //            return View(nameof(CompleteDelete), hotel);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine(ex.Message);
-        //        }
-        //    }
-        //    return View(NotFound());
-
-        //}
+                if (hotel != null)
+                {
+                    hotelService.Delete(id);
+                    return RedirectToAction(nameof(CompleteDelete), hotel);
+                }
+            }
+            return NotFound();
+        }
 
         public IActionResult CompleteDelete(Hotel hotel)
         {
             return View(hotel);
         }
 
-        //[HttpGet]
-        //public IActionResult Correct(int id)
-        //{
-        //    if (id <= 0)
-        //        return View(NotFound());
-        //    Hotel hotel = new Hotel();
-        //    using BookedDB dB = new BookedDB();
-        //    {
-        //        hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
-        //        return View(hotel);
-        //    }
-        //}
+        [HttpGet]
+        public IActionResult Correct(int id)
+        {
+            if (id > 0)
+            {
+                var hotel = hotelService.Profile(id);
 
-        //[HttpPost]
-        //public IActionResult Correct(int id, Hotel hotel)
-        //{
-        //    // добавить тонну проверок данных
-        //    if (id <= 0)
-        //        return View (NotFound());
+                if (hotel != null)
+                {
+                    return View(nameof(Correct), hotel);
+                }
+            }
+            return NotFound();
+        }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (hotel.Name != null)
-        //        {
-        //            using BookedDB dB = new BookedDB();
-        //            {
-        //                try
-        //                {
-        //                    Hotel hoteldb = dB.Hotel.FirstOrDefault(x => x.Id == id);
-        //                    hoteldb.Name = hotel.Name;
-        //                    hoteldb.Location = hotel.Location;
-        //                    dB.Hotel.Update(hoteldb);
-        //                    dB.SaveChanges();
-
-        //                    return View(nameof(CompleteCorrect), hotel);
-        //                }
-        //                catch (Exception ex)
-        //                {
-        //                    Console.WriteLine($"Error {ex.Message}");
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return View(hotel);
-        //}
+        // Нужно ли здесь ID?
+        [HttpPost]
+        public IActionResult Correct(int id, Hotel hotel)
+        {
+            if (id > 0)
+            {
+                if (ModelState.IsValid)
+                {
+                    hotelService.Correct(hotel);
+                    return View(nameof(CompleteCorrect), hotel);
+                }
+                return View(hotel);
+            }
+            return NotFound();
+        }
         public IActionResult CompleteCorrect(Hotel hotel)
         {
             return View(hotel);

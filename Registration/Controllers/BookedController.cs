@@ -23,7 +23,7 @@ namespace Registration.Controllers
         //    //        foreach (Booked booked in db.Booked)
         //    //        {
         //    //            if (booked.Roomid == roomId)
-        //    //                ListBookedRoom.Add(booked);
+        //    //                ListBookedRoom.Create(booked);
         //    //        }
         //    //        return View(ListBookedRoom);
         //    //    }
@@ -52,14 +52,14 @@ namespace Registration.Controllers
         //    ViewBag.roomId = roomId;
         //    if (ModelState.IsValid)
         //    {
-        //        if (booked.dataBooked > DateTime.Today)
+        //        if (booked.DataBooked > DateTime.Today)
         //        {
         //            using (BookedDB db = new BookedDB())
         //            {
-        //                Booked bookedDB = db.Booked.FirstOrDefault(x => x.Roomid == roomId && x.dataBooked == booked.dataBooked);
+        //                Booked bookedDB = db.Booked.FirstOrDefault(x => x.Roomid == roomId && x.DataBooked == booked.DataBooked);
         //                if (bookedDB == null)
         //                {
-        //                    db.Booked.Add(booked);
+        //                    db.Booked.Create(booked);
         //                    db.SaveChanges();
 
         //                    return View(nameof(CompleteCreate), booked);
@@ -145,19 +145,19 @@ namespace Registration.Controllers
         //        return View(NotFound());
         //    if (ModelState.IsValid)
         //    {
-        //        if (booked.dataBooked > DateTime.Today)
+        //        if (booked.DataBooked > DateTime.Today)
         //        {
         //            using BookedDB dB = new BookedDB();
         //            {
         //                try
         //                {
-        //                    Booked ErrorBooked = dB.Booked.FirstOrDefault(x => x.dataBooked == booked.dataBooked);
+        //                    Booked ErrorBooked = dB.Booked.FirstOrDefault(x => x.DataBooked == booked.DataBooked);
         //                    if (ErrorBooked != null)
         //                    {
         //                        Booked bookeddb = dB.Booked.FirstOrDefault(x => x.Id == id);
 
-        //                        bookeddb.dataBooked = booked.dataBooked;
-        //                        dB.Booked.Update(bookeddb);
+        //                        bookeddb.DataBooked = booked.DataBooked;
+        //                        dB.Booked.Correct(bookeddb);
         //                        dB.SaveChanges();
         //                        return View(nameof(CompleteCorrect), bookeddb);
         //                    }

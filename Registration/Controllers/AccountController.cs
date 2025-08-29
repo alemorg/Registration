@@ -82,7 +82,7 @@ namespace Registration.Controllers
         //                CryptPassword crypt = new CryptPassword();
         //                user.Password = crypt.Encode(user.Password);
         //                user.ConfirmPassword = crypt.Encode(user.ConfirmPassword);
-        //                db.User.Add(user);
+        //                db.User.Create(user);
         //                db.SaveChanges();
         //                return View("CompletedRegistration", user);
         //            }

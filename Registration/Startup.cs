@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Registration.Context;
 using Registration.Controllers;
+using Registration.Model.Hotels;
+using Registration.Model.Hotels.Repository;
+using Registration.Model.Hotels.Repository.HotelRepository;
 
 namespace Registration
 {
@@ -11,6 +14,13 @@ namespace Registration
         public void ConfigureServices (IServiceCollection services)
         {
             services.AddMvc ();
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql("WebApiDatabase"));
+
+
+            services.AddScoped<HotelService>();
+            services.AddScoped<IRepository<Hotel>, HotelRepository>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

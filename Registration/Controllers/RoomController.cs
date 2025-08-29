@@ -17,7 +17,7 @@ namespace Registration.Controllers
 
         //        foreach (Room room in db.Room)
         //        {
-        //            ListRoom.Add(room);
+        //            ListRoom.Create(room);
         //        }
 
         //        if (ListRoom.Count != 0)
@@ -39,7 +39,7 @@ namespace Registration.Controllers
         //            foreach (Room room in db.Room)
         //            {
         //                if (room.HotelId == hotelId)
-        //                    ListRoom.Add(room);
+        //                    ListRoom.Create(room);
         //            }
 
         //            if (ListRoom.Count != 0)
@@ -74,7 +74,7 @@ namespace Registration.Controllers
         //        {
         //            using (BookedDB db = new BookedDB())
         //            {
-        //                db.Room.Add(room);
+        //                db.Room.Create(room);
         //                db.SaveChanges();
                         
         //                return View(nameof(CompleteCreate), room);
@@ -161,7 +161,7 @@ namespace Registration.Controllers
         //                    Room roomdb = dB.Room.FirstOrDefault(x => x.Id == id);
         //                    roomdb.Square = room.Square;
         //                    roomdb.Capasity = room.Capasity;
-        //                    dB.Room.Update(roomdb);
+        //                    dB.Room.Correct(roomdb);
         //                    dB.SaveChanges();
 
         //                    return View(nameof(CompleteCorrect), room);
