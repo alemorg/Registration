@@ -82,7 +82,7 @@ namespace Registration.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    dataBooked = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    dateBooked = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     GuestFirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     GuestSecondName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     GuestLastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),

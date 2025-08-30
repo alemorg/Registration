@@ -11,6 +11,7 @@ namespace Registration.Context
         public AppDbContext(IConfiguration configuration)
         {
             this.configuration = configuration;
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

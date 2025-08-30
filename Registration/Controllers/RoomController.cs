@@ -50,13 +50,17 @@ namespace Registration.Controllers
         [HttpPost("hotel/{hotelId}/room/create")]
         public IActionResult Create(int hotelid, Room room)
         {
-            if (ModelState.IsValid)
+            if (hotelid > 0)
             {
-                roomService.Create(room);
+                if (ModelState.IsValid)
+                {
+                    roomService.Create(room);
 
-                return RedirectToAction(nameof(CompleteCreate), room);
+                    return RedirectToAction(nameof(CompleteCreate), room);
+                }
+                return View(room);
             }
-            return View(room);
+            return NotFound();
         }
 
         public IActionResult CompleteCreate(Room room)
@@ -75,7 +79,7 @@ namespace Registration.Controllers
                     return RedirectToAction(nameof(CompleteDelete), room);
                 }
             }
-            return View(NotFound());
+            return NotFound();
         }
 
         public IActionResult CompleteDelete(Room room)

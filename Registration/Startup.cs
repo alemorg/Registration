@@ -5,6 +5,7 @@ using Registration.Context;
 using Registration.Controllers;
 using Registration.Model.Hotels;
 using Registration.Model.Hotels.Repository;
+using Registration.Model.Hotels.Repository.BookedRepository;
 using Registration.Model.Hotels.Repository.HotelRepository;
 using Registration.Model.Hotels.Repository.RoomRepository;
 
@@ -24,6 +25,10 @@ namespace Registration
 
             services.AddScoped<RoomService>();
             services.AddScoped<IRepository<Room>, RoomRepository>();
+
+            services.AddScoped<BookedService>();
+            services.AddScoped<IRepository<Booked>, BookedRepository>();
+
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -48,7 +53,7 @@ namespace Registration
             }
 
             app.UseStaticFiles();
-            app.UseRouting ();
+            app.UseRouting();
 
             app.UseAuthentication ();
             app.UseAuthorization ();
@@ -112,3 +117,7 @@ namespace Registration
 // => Booked/ListAll => Booked/Create
 //                   => Booked/Correct
 //                   => Booked/Delete
+
+
+// Задачи
+//- добавить проверки во все сервисы!

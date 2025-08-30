@@ -12,7 +12,7 @@ using Registration.Context;
 namespace Registration.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250829154740_init")]
+    [Migration("20250830113818_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -65,7 +65,7 @@ namespace Registration.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<DateTime>("DataBooked")
+                    b.Property<DateTime>("dateBooked")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");

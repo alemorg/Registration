@@ -62,7 +62,7 @@ namespace Registration.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<DateTime>("DataBooked")
+                    b.Property<DateTime>("dateBooked")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");

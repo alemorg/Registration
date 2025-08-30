@@ -13,7 +13,7 @@ namespace Registration.Model.Hotels
         [Required(ErrorMessage ="Обязательное поле для ввода")]
         [Display(Name = "Дата бронирования")]
         [DataType(DataType.Date)]
-        public DateTime DataBooked { get; set; }
+        public DateTime dateBooked { get; set; } = DateTime.UtcNow;
 
         [Required(ErrorMessage = "Обязательное поле для ввода")]
         [Display(Name = "Имя гостя")]

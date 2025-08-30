@@ -34,9 +34,6 @@ namespace Registration.Model.Hotels.Repository.RoomRepository
         {
             if (room != null)
             {
-                //context.Room.Attach(room);
-                //context.Entry(room).State = EntityState.Modified;
-
                 var roomdb = context.Room.Find(room.Id);
                 if (roomdb != null) 
                 {
@@ -50,7 +47,6 @@ namespace Registration.Model.Hotels.Repository.RoomRepository
                     context.Room.Attach(roomdb);
                     context.SaveChanges();
                 }
-                
             }
         }
         public Room GetById(int id)
