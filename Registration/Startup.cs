@@ -6,6 +6,7 @@ using Registration.Controllers;
 using Registration.Model.Hotels;
 using Registration.Model.Hotels.Repository;
 using Registration.Model.Hotels.Repository.HotelRepository;
+using Registration.Model.Hotels.Repository.RoomRepository;
 
 namespace Registration
 {
@@ -18,9 +19,11 @@ namespace Registration
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql("WebApiDatabase"));
 
-
             services.AddScoped<HotelService>();
             services.AddScoped<IRepository<Hotel>, HotelRepository>();
+
+            services.AddScoped<RoomService>();
+            services.AddScoped<IRepository<Room>, RoomRepository>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

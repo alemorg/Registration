@@ -33,7 +33,7 @@ namespace Registration.Controllers
             {
                 hotelService.Create(hotel);
 
-                return View(nameof(CompleteCreate), hotel);
+                return RedirectToAction(nameof(CompleteCreate), hotel);
             }
 
             return View(hotel);
@@ -72,7 +72,7 @@ namespace Registration.Controllers
 
                 if (hotel != null)
                 {
-                    return View(nameof(Correct), hotel);
+                    return View(hotel);
                 }
             }
             return NotFound();
