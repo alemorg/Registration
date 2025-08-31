@@ -8,6 +8,7 @@
 
 <div class="registration_style">
 	<form asp-route-hotelId="@ViewBag.HotelId" asp-controller="Room" asp-action="Create" method="post">
+		<p>@ViewBag.AllarmMessage</p>
 		<div class="box-line">
 			<label asp-for="Number" class="label-line"></label>
 			<input asp-for="Number" class="input-line" />

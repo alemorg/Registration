@@ -33,9 +33,9 @@ namespace Registration.Model.Hotels
         [Phone(ErrorMessage ="Формат телефона: 8-497-355-22-15")]
         public string Phone {  get; set; }
 
-        [Display(Name = "Email")]
-        [EmailAddress(ErrorMessage ="Формат Email: support@mysite.ru")]
-        public string Email { get; set; }
+        //[Display(Name = "Email")]
+        //[EmailAddress(ErrorMessage ="Формат Email: support@mysite.ru")]
+        //public string Email { get; set; }
 
         //Prop Navigate
         public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
