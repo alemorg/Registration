@@ -11,7 +11,7 @@ namespace Registration.Controllers
         //    using (BookedDB db = new BookedDB())
         //    {
 
-        //        List<RegistrationUser> ListUsers = db.User.ToList();
+        //        List<User> ListUsers = db.User.ToList();
 
         //        return View(ListUsers);
         //    }

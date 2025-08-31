@@ -2,7 +2,7 @@
 
 namespace Registration.Model.Users
 {
-    public class RegistrationUser
+    public class User
     {
         public int Id { get; set; }
 

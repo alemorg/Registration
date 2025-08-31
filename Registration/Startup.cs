@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Registration.Context;
+using Registration.Context.Repository;
+using Registration.Context.Repository.BookedRepository;
+using Registration.Context.Repository.HotelRepository;
+using Registration.Context.Repository.RoomRepository;
+using Registration.Context.Repository.UserRepository;
 using Registration.Controllers;
 using Registration.Model.Hotels;
-using Registration.Model.Hotels.Repository;
-using Registration.Model.Hotels.Repository.BookedRepository;
-using Registration.Model.Hotels.Repository.HotelRepository;
-using Registration.Model.Hotels.Repository.RoomRepository;
+using Registration.Model.Users;
 
 namespace Registration
 {
@@ -28,6 +30,9 @@ namespace Registration
 
             services.AddScoped<BookedService>();
             services.AddScoped<IRepository<Booked>, BookedRepository>();
+
+            services.AddScoped<UserService>();
+            services.AddScoped<IUserRepository<User>, UserRepository>();
 
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

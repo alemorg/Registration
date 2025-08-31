@@ -1,4 +1,4 @@
-﻿namespace Registration.Model.Hotels.Repository
+﻿namespace Registration.Context.Repository
 {
     public interface IRepository<T>
     {

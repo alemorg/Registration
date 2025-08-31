@@ -153,7 +153,7 @@ namespace Registration.Migrations
                     b.ToTable("Room");
                 });
 
-            modelBuilder.Entity("Registration.Model.Users.RegistrationUser", b =>
+            modelBuilder.Entity("Registration.Model.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

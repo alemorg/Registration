@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Registration.Context;
+using Registration.Context.Repository;
+using Registration.Model.Hotels;
 
-namespace Registration.Model.Hotels.Repository.BookedRepository
+namespace Registration.Context.Repository.BookedRepository
 {
     public class BookedRepository : IRepository<Booked>
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
+using Registration.Context.Repository.RoomRepository;
 using Registration.Model.Hotels;
-using Registration.Model.Hotels.Repository.RoomRepository;
 
 namespace Registration.Controllers
 {

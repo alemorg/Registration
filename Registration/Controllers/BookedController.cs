@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
+using Registration.Context.Repository.BookedRepository;
 using Registration.Model.Hotels;
-using Registration.Model.Hotels.Repository.BookedRepository;
-using Registration.Model.Hotels.Repository.RoomRepository;
 using System;
 using System.Data;
 

@@ -51,6 +51,6 @@ namespace Registration.Model.Hotels
         [ForeignKey("Roomid")]
         public virtual Room Room { get; set; }
 
-        //public RegistrationUser? Visitor { get; set; }
+        //public User? Visitor { get; set; }
     }
 }

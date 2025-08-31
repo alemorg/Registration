@@ -1,4 +1,7 @@
-﻿namespace Registration.Model.Hotels.Repository.HotelRepository
+﻿using Registration.Context.Repository;
+using Registration.Model.Hotels;
+
+namespace Registration.Context.Repository.HotelRepository
 {
     public class HotelService 
     {

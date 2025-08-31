@@ -1,8 +1,10 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Registration.Context;
+using Registration.Context.Repository;
+using Registration.Model.Hotels;
 
-namespace Registration.Model.Hotels.Repository.HotelRepository
+namespace Registration.Context.Repository.HotelRepository
 {
     public class HotelRepository : IRepository<Hotel>
     {

@@ -19,7 +19,7 @@ namespace Registration.Context
             options.UseNpgsql(configuration.GetConnectionString("WebApiDatabase"));
         }
 
-        public DbSet<RegistrationUser> User { get; set; }
+        public DbSet<User> User { get; set; }
 
 
         public DbSet<Hotel> Hotel { get; set; }

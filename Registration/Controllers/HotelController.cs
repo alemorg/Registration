@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
+using Registration.Context.Repository.HotelRepository;
 using Registration.Model.Home;
 using Registration.Model.Hotels;
-using Registration.Model.Hotels.Repository.HotelRepository;
 using System.Linq;
 
 namespace Registration.Controllers
