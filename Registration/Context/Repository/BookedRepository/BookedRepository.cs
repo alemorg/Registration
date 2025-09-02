@@ -5,7 +5,7 @@ using Registration.Model.Hotels;
 
 namespace Registration.Context.Repository.BookedRepository
 {
-    public class BookedRepository : IRepository<Booked>
+    public class BookedRepository : IBookedRepository<Booked>
     {
         private readonly AppDbContext context;
         public BookedRepository(AppDbContext context)
@@ -19,7 +19,7 @@ namespace Registration.Context.Repository.BookedRepository
         }
         public void Delete(int id)
         {
-            var booked = context.Booked.Find(id);
+            var booked = context.Bookeds.Find(id);
 
             if (booked != null)
             {
@@ -27,18 +27,29 @@ namespace Registration.Context.Repository.BookedRepository
                 context.SaveChanges();
             }
         }
-        public IEnumerable<Booked> List()
+        public IEnumerable<Booked> List(int roomId)
         {
-            return context.Booked.ToList();
+            var Booked = context.Bookeds.ToList();
+            var result = new List<Booked>();
+            if (Booked != null) 
+            {
+                foreach (var booked in Booked)
+                {
+                    if (booked.Roomid == roomId)
+                        result.Add(booked);
+                }
+            }
+            return result;
         }
         public void Correct(Booked booked)
         {
             if (booked != null)
             {
-                var bookeddb = context.Booked.Find(booked.Id);
+                var bookeddb = context.Bookeds.Find(booked.Id);
                 if (bookeddb != null)
                 {
-                    bookeddb.dateBooked = booked.dateBooked;
+                    bookeddb.dateStartBooked = booked.dateStartBooked;
+                    bookeddb.dateEndBooked = booked.dateEndBooked;
                     bookeddb.GuestFirstName = booked.GuestFirstName;
                     bookeddb.GuestSecondName = booked.GuestSecondName;
                     bookeddb.GuestLastName = booked.GuestLastName;
@@ -46,14 +57,14 @@ namespace Registration.Context.Repository.BookedRepository
                     bookeddb.NumberGuest = booked.NumberGuest;
                     bookeddb.SpecialRequests = booked.SpecialRequests;
 
-                    context.Booked.Attach(bookeddb);
+                    context.Bookeds.Attach(bookeddb);
                     context.SaveChanges();
                 }
             }
         }
         public Booked GetById(int id)
         {
-            if (id > 0) return context.Booked.Include(x => x.Room).FirstOrDefault(x => x.Id == id);
+            if (id > 0) return context.Bookeds.Include(x => x.Room).FirstOrDefault(x => x.Id == id);
             else throw new Exception("При поиске бронирования по ID, ID<=0");
         }
     }

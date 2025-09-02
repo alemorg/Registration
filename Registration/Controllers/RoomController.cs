@@ -36,7 +36,7 @@ namespace Registration.Controllers
         {
             ViewBag.hotelId = hotelId;
             
-            if (roomService != null) return View(roomService.List());
+            if (roomService != null) return View(roomService.List(hotelId));
             else return View();
         }
 

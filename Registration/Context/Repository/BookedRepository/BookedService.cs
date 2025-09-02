@@ -7,14 +7,14 @@ namespace Registration.Context.Repository.BookedRepository
 {
     public class BookedService
     {
-        private readonly IRepository<Booked> repository;
-        public BookedService(IRepository<Booked> repository)
+        private readonly IBookedRepository<Booked> repository;
+        public BookedService(IBookedRepository<Booked> repository)
         {
             this.repository = repository;
         }
-        public IEnumerable<Booked> List()
+        public IEnumerable<Booked> List(int roomid)
         {
-            return repository.List();
+            return repository.List(roomid);
         }
 
         public void Create(Booked booked)

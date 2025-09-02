@@ -1,13 +1,12 @@
-﻿using Registration.Context.Repository;
-using Registration.Model.Hotels;
+﻿using Registration.Model.Hotels;
 
 namespace Registration.Context.Repository.HotelRepository
 {
     public class HotelService 
     {
-        private readonly IRepository<Hotel> repository;
+        private readonly IHotelRepository<Hotel> repository;
 
-        public HotelService(IRepository<Hotel> repository)
+        public HotelService(IHotelRepository<Hotel> repository)
         {
             this.repository = repository;
         }

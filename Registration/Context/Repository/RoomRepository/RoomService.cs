@@ -1,20 +1,20 @@
-﻿using Registration.Context.Repository;
+﻿using Registration.Context.Repository.HotelRepository;
 using Registration.Model.Hotels;
 
 namespace Registration.Context.Repository.RoomRepository
 {
     public class RoomService
     {
-        private readonly IRepository<Room> repository;
+        private readonly IRoomRepository<Room> repository;
 
-        public RoomService(IRepository<Room> repository)
+        public RoomService(IRoomRepository<Room> repository)
         {
             this.repository = repository;
         }
 
-        public IEnumerable<Room> List()
+        public IEnumerable<Room> List(int hotelId)
         {
-            return repository.List();
+            return repository.List(hotelId);
         }
 
         public void Create(Room room)

@@ -1,0 +1,42 @@
+﻿@using Registration.Model.Home
+@model IEnumerable<FindResultModel>
+
+@{
+    ViewData["Title"] = "FindByForm";
+}
+
+<h1>Результаты по вашему запросу</h1>
+@if (ViewBag.dateStartBooked!= null)
+{
+    <p>Дата начала бронирования @ViewBag.dateStartBooked</p>
+}
+@if (ViewBag.dateEndBooked != null)
+{
+    <p>Дата окончания бронирования @ViewBag.dateEndBooked</p>
+}
+
+<table>
+     @foreach (var hotel in Model)
+     {
+         <tr>
+             <table>
+                 <tr>
+                    <td>@hotel.HotelId</td>
+                    <td>@hotel.HotelName</td>
+                    //добивить количество звезд
+                 </tr>
+                @foreach (var room in hotel.rooms)
+                {
+                    <tr>
+                        <td>@room.Id</td>
+                        <td>@room.Number</td>
+                        <td>@room.Price</td>
+                        <td>@room.Square</td>
+                        <td>@room.Discription</td>
+                    </tr>
+                }
+            </table>
+         </tr>
+     }
+</table>
+

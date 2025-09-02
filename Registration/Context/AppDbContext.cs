@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Registration.Model.Hotels;
 using Registration.Model.Users;
+using System.Configuration;
 
 namespace Registration.Context
 {
@@ -11,21 +12,26 @@ namespace Registration.Context
         public AppDbContext(IConfiguration configuration)
         {
             this.configuration = configuration;
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //{
+        //    options.UseNpgsql(configuration.GetConnectionString("PostgreSqlServer"));
+        //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseNpgsql(configuration.GetConnectionString("WebApiDatabase"));
+            options.UseSqlServer(configuration.GetConnectionString("MSSqlServer"));
         }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<User> Users { get; set; }
 
 
-        public DbSet<Hotel> Hotel { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
 
-        public DbSet<Room> Room { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
-        public DbSet<Booked> Booked { get; set; }
+        public DbSet<Booked> Bookeds { get; set; }
     }
 }

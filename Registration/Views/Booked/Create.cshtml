@@ -9,9 +9,15 @@
 <div class="registration_style">
 	<form asp-route-roomId="@ViewBag.roomId" asp-controller="Booked" asp-action="Create" method="post">
 		<div class="box-line">
-			<label asp-for="dateBooked" class="label-line"></label>
-			<input asp-for="dateBooked" class="input-line"/>
-			<span asp-validation-for="dateBooked" class="validation"></span>
+			<label asp-for="dateStartBooked" class="label-line"></label>
+			<input asp-for="dateStartBooked" class="input-line" />
+			<span asp-validation-for="dateStartBooked" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="dateEndBooked" class="label-line"></label>
+			<input asp-for="dateEndBooked" class="input-line" />
+			<span asp-validation-for="dateEndBooked" class="validation"></span>
 		</div>
 
 		<div class="box-line">

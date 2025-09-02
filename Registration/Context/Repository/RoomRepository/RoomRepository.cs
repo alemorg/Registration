@@ -1,10 +1,11 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Registration.Context.Repository.HotelRepository;
 using Registration.Model.Hotels;
 
 namespace Registration.Context.Repository.RoomRepository
 {
-    public class RoomRepository : IRepository<Room>
+    public class RoomRepository : IRoomRepository<Room>
     {
         private readonly AppDbContext context;
         public RoomRepository(AppDbContext context)
@@ -18,7 +19,7 @@ namespace Registration.Context.Repository.RoomRepository
         }
         public void Delete(int id)
         {
-            var room = context.Room.Find(id);
+            var room = context.Rooms.Find(id);
 
             if (room != null)
             {
@@ -26,15 +27,25 @@ namespace Registration.Context.Repository.RoomRepository
                 context.SaveChanges();
             }
         }
-        public IEnumerable<Room> List()
+        public IEnumerable<Room> List(int hotelId)
         {
-            return context.Room.ToList();
+            var roomsDb = context.Rooms.ToList();
+            var result = new List<Room>();
+
+            if (roomsDb != null) {
+                foreach (var room in roomsDb)
+                {
+                    if (room.HotelId == hotelId)
+                        result.Add(room);
+                }
+            }
+            return result;
         }
         public void Correct(Room room)
         {
             if (room != null)
             {
-                var roomdb = context.Room.Find(room.Id);
+                var roomdb = context.Rooms.Find(room.Id);
                 if (roomdb != null) 
                 {
                     roomdb.Number = room.Number;
@@ -44,14 +55,14 @@ namespace Registration.Context.Repository.RoomRepository
                     roomdb.isActivity = room.isActivity;
                     roomdb.Discription = room.Discription;
 
-                    context.Room.Attach(roomdb);
+                    context.Rooms.Attach(roomdb);
                     context.SaveChanges();
                 }
             }
         }
         public Room GetById(int id)
         {
-            if (id > 0) return context.Room.Include(x => x.Hotel).FirstOrDefault(x => x.Id == id);
+            if (id > 0) return context.Rooms.Include(x => x.Hotel).FirstOrDefault(x => x.Id == id);
             else throw new Exception("При поиске комнаты по ID, ID<=0");
         }
     }

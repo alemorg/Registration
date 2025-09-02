@@ -22,7 +22,7 @@ namespace Registration.Controllers
             ViewBag.hotelId = hotelId;
             ViewBag.roomId = roomId;
 
-            if (bookedService != null) return View(bookedService.List());
+            if (bookedService != null) return View(bookedService.List(roomId));
             else return View();
         }
 

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Registration.Context;
-using Registration.Context.Repository;
 using Registration.Context.Repository.BookedRepository;
+using Registration.Context.Repository.HomeRepository;
 using Registration.Context.Repository.HotelRepository;
 using Registration.Context.Repository.RoomRepository;
 using Registration.Context.Repository.UserRepository;
@@ -19,21 +19,26 @@ namespace Registration
         {
             services.AddMvc ();
 
+            //services.AddDbContext<AppDbContext>(options =>
+            //    options.UseNpgsql("WebApiDatabase"));
+
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql("WebApiDatabase"));
+                options.UseSqlServer("MSSqlServer"));
 
             services.AddScoped<HotelService>();
-            services.AddScoped<IRepository<Hotel>, HotelRepository>();
+            services.AddScoped<IHotelRepository<Hotel>, HotelRepository>();
 
             services.AddScoped<RoomService>();
-            services.AddScoped<IRepository<Room>, RoomRepository>();
+            services.AddScoped<IRoomRepository<Room>, RoomRepository>();
 
             services.AddScoped<BookedService>();
-            services.AddScoped<IRepository<Booked>, BookedRepository>();
+            services.AddScoped<IBookedRepository<Booked>, BookedRepository>();
 
             services.AddScoped<UserService>();
             services.AddScoped<IUserRepository<User>, UserRepository>();
 
+            services.AddScoped<HomeService>();
+            services.AddScoped<IHomeRepository, HomeRepository>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -62,7 +67,6 @@ namespace Registration
 
             app.UseAuthentication ();
             app.UseAuthorization ();
-
 
             app.UseEndpoints(endpoints =>
             {
