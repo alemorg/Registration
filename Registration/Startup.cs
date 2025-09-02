@@ -19,11 +19,11 @@ namespace Registration
         {
             services.AddMvc ();
 
-            //services.AddDbContext<AppDbContext>(options =>
-            //    options.UseNpgsql("WebApiDatabase"));
-
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer("MSSqlServer"));
+                options.UseNpgsql("WebApiDatabase"));
+
+            //services.AddDbContext<AppDbContext>(options =>
+            //    options.UseSqlServer("MSSqlServer"));
 
             services.AddScoped<HotelService>();
             services.AddScoped<IHotelRepository<Hotel>, HotelRepository>();

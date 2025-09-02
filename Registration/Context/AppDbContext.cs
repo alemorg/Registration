@@ -12,18 +12,18 @@ namespace Registration.Context
         public AppDbContext(IConfiguration configuration)
         {
             this.configuration = configuration;
-            //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            options.UseNpgsql(configuration.GetConnectionString("PostgreSqlServer"));
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder options)
         //{
-        //    options.UseNpgsql(configuration.GetConnectionString("PostgreSqlServer"));
+        //    options.UseSqlServer(configuration.GetConnectionString("MSSqlServer"));
         //}
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            options.UseSqlServer(configuration.GetConnectionString("MSSqlServer"));
-        }
 
         public DbSet<User> Users { get; set; }
 

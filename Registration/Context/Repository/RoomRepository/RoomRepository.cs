@@ -29,7 +29,7 @@ namespace Registration.Context.Repository.RoomRepository
         }
         public IEnumerable<Room> List(int hotelId)
         {
-            var RoomDB = context.Room.ToList();
+            var RoomDB = context.Rooms.ToList();
             var result = new List<Room>();
             foreach (var room in RoomDB)
             {
