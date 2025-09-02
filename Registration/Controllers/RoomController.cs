@@ -12,24 +12,6 @@ namespace Registration.Controllers
         {
             this.roomService = roomService;
         }
-        //список всех комнат в базе данных (возможно вообще не нужна эта функция)
-        //[HttpGet("room/alllist")]
-        //public IActionResult AllList()
-        //{
-        //    using (BookedDB db = new BookedDB())
-        //    {
-        //        List<Room> ListRoom = new List<Room>();
-
-        //        foreach (Room room in db.Room)
-        //        {
-        //            ListRoom.Create(room);
-        //        }
-
-        //        if (ListRoom.Count != 0)
-        //            return View(ListRoom);
-        //        else return View();
-        //    }
-        //}
 
         [HttpGet("hotel/{hotelId}/room/list")]
         public IActionResult List(int hotelId)

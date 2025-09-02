@@ -29,16 +29,13 @@ namespace Registration.Context.Repository.RoomRepository
         }
         public IEnumerable<Room> List(int hotelId)
         {
-            var roomsDb = context.Rooms.ToList();
+            var RoomDB = context.Room.ToList();
             var result = new List<Room>();
-
-            if (roomsDb != null) {
-                foreach (var room in roomsDb)
-                {
-                    if (room.HotelId == hotelId)
-                        result.Add(room);
-                }
+            foreach (var room in RoomDB)
+            {
+                if (room.HotelId == hotelId) result.Add(room);
             }
+
             return result;
         }
         public void Correct(Room room)
