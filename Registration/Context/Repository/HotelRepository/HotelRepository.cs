@@ -21,7 +21,7 @@ namespace Registration.Context.Repository.HotelRepository
 
         public void Delete(int id)
         {
-            var hotel = context.Hotel.Find(id);
+            var hotel = context.Hotels.Find(id);
             
             if (hotel != null)
             {
@@ -32,14 +32,14 @@ namespace Registration.Context.Repository.HotelRepository
 
         public IEnumerable<Hotel> List()
         {
-            return context.Hotel.ToList();
+            return context.Hotels.ToList();
         }
 
         public void Correct(Hotel hotel)
         {
             if (hotel != null)
             {
-                context.Hotel.Attach(hotel);
+                context.Hotels.Attach(hotel);
                 context.Entry(hotel).State = EntityState.Modified;
                 context.SaveChanges();
             }
@@ -47,7 +47,7 @@ namespace Registration.Context.Repository.HotelRepository
 
         public Hotel GetById(int id)
         {
-            if (id > 0) return context.Hotel.Find(id);
+            if (id > 0) return context.Hotels.Find(id);
             else throw new Exception("При поиске отеля по ID, ID<=0");
         }
     }

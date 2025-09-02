@@ -15,7 +15,7 @@ namespace Registration.Context.Repository.UserRepository
         {
             if (user != null)
             {
-                var userdb = context.User.Find(user.Id);
+                var userdb = context.Users.Find(user.Id);
                 if (userdb != null)
                 {
                     userdb.FirstName = user.FirstName;
@@ -24,7 +24,7 @@ namespace Registration.Context.Repository.UserRepository
                     userdb.BirthDay = user.BirthDay;
                     userdb.PhoneNumber = user.PhoneNumber;
 
-                    context.User.Attach(userdb);
+                    context.Users.Attach(userdb);
                     context.SaveChanges();
                 }
             }
@@ -38,7 +38,7 @@ namespace Registration.Context.Repository.UserRepository
 
         public void Delete(int id)
         {
-            var user = context.User.Find(id);
+            var user = context.Users.Find(id);
 
             if (user != null)
             {
@@ -51,25 +51,25 @@ namespace Registration.Context.Repository.UserRepository
 
         public User GetByEmail(string Email)
         {
-            if (!string.IsNullOrEmpty(Email)) return context.User.FirstOrDefault(x => x.Email == Email);
+            if (!string.IsNullOrEmpty(Email)) return context.Users.FirstOrDefault(x => x.Email == Email);
             else throw new Exception("При поиске Usera по Email произошла ошибка");
         }
 
         public User GetById(int id)
         {
-            if (id > 0) return context.User.FirstOrDefault(x => x.Id == id);
+            if (id > 0) return context.Users.FirstOrDefault(x => x.Id == id);
             else throw new Exception("При поиске Usera по ID произошла ошибка");
         }
 
         public User GetByLogin(string Login)
         {
-            if (!string.IsNullOrEmpty(Login)) return context.User.FirstOrDefault(x => x.Login == Login);
+            if (!string.IsNullOrEmpty(Login)) return context.Users.FirstOrDefault(x => x.Login == Login);
             else throw new Exception("При поиске Usera по Email произошла ошибка");
         }
 
         public IEnumerable<User> List()
         {
-            return context.User.ToList();
+            return context.Users.ToList();
         }
     }
 }

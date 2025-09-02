@@ -19,13 +19,13 @@ namespace Registration.Context
             options.UseNpgsql(configuration.GetConnectionString("WebApiDatabase"));
         }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<User> Users { get; set; }
 
 
-        public DbSet<Hotel> Hotel { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
 
-        public DbSet<Room> Room { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
-        public DbSet<Booked> Booked { get; set; }
+        public DbSet<Booked> Bookeds { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace Registration.Context.Repository.BookedRepository
         }
         public void Delete(int id)
         {
-            var booked = context.Booked.Find(id);
+            var booked = context.Bookeds.Find(id);
 
             if (booked != null)
             {
@@ -29,13 +29,13 @@ namespace Registration.Context.Repository.BookedRepository
         }
         public IEnumerable<Booked> List()
         {
-            return context.Booked.ToList();
+            return context.Bookeds.ToList();
         }
         public void Correct(Booked booked)
         {
             if (booked != null)
             {
-                var bookeddb = context.Booked.Find(booked.Id);
+                var bookeddb = context.Bookeds.Find(booked.Id);
                 if (bookeddb != null)
                 {
                     bookeddb.dateStartBooked = booked.dateStartBooked;
@@ -47,14 +47,14 @@ namespace Registration.Context.Repository.BookedRepository
                     bookeddb.NumberGuest = booked.NumberGuest;
                     bookeddb.SpecialRequests = booked.SpecialRequests;
 
-                    context.Booked.Attach(bookeddb);
+                    context.Bookeds.Attach(bookeddb);
                     context.SaveChanges();
                 }
             }
         }
         public Booked GetById(int id)
         {
-            if (id > 0) return context.Booked.Include(x => x.Room).FirstOrDefault(x => x.Id == id);
+            if (id > 0) return context.Bookeds.Include(x => x.Room).FirstOrDefault(x => x.Id == id);
             else throw new Exception("При поиске бронирования по ID, ID<=0");
         }
     }
