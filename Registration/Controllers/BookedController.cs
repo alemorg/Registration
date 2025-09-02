@@ -26,6 +26,8 @@ namespace Registration.Controllers
             else return View();
         }
 
+        }
+
         [HttpGet]
         public IActionResult Create(int roomId)
         {

@@ -41,21 +41,21 @@ namespace Registration.Controllers
                     new Claim(ClaimTypes.Role, "Admin")                                         //Переделать при переделке класса userov
                     };
 
-                        //Создаем пропуск
-                        var claimsIdentity = new ClaimsIdentity(claims,
-                            CookieAuthenticationDefaults.AuthenticationScheme);
+        //                //Создаем пропуск
+        //                var claimsIdentity = new ClaimsIdentity(claims,
+        //                    CookieAuthenticationDefaults.AuthenticationScheme);
 
-                        //Выдаем пропуск
-                        await HttpContext.SignInAsync(
-                            CookieAuthenticationDefaults.AuthenticationScheme,
-                            new ClaimsPrincipal(claimsIdentity));
+        //                //Выдаем пропуск
+        //                await HttpContext.SignInAsync(
+        //                    CookieAuthenticationDefaults.AuthenticationScheme,
+        //                    new ClaimsPrincipal(claimsIdentity));
 
-                        return View(nameof(SuccessFul), user);
-                    }
-                }
-            }
-            return View(logUser);
-        }
+        //                return View(nameof(SuccessFul), user);
+        //            }
+        //        }
+        //    }
+        //    return View(logUser);
+        //}
 
         public IActionResult SuccessFul(LoginedUser logUser)
         {
