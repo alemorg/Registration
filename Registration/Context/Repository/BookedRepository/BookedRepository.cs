@@ -38,7 +38,8 @@ namespace Registration.Context.Repository.BookedRepository
                 var bookeddb = context.Booked.Find(booked.Id);
                 if (bookeddb != null)
                 {
-                    bookeddb.dateBooked = booked.dateBooked;
+                    bookeddb.dateStartBooked = booked.dateStartBooked;
+                    bookeddb.dateEndBooked = booked.dateEndBooked;
                     bookeddb.GuestFirstName = booked.GuestFirstName;
                     bookeddb.GuestSecondName = booked.GuestSecondName;
                     bookeddb.GuestLastName = booked.GuestLastName;
