@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.VisualBasic;
 using Registration.Model.Users;
 using System.ComponentModel.DataAnnotations;
@@ -25,17 +26,17 @@ namespace Registration.Model.Hotels
 
         [Required(ErrorMessage = "Обязательное поле для ввода")]
         [Display(Name = "Имя гостя")]
-        [StringLength(50, ErrorMessage ="Количество сиволов не должно превышать 50")]
+        [StringLength(50, ErrorMessage ="Количество символов не должно превышать 50")]
         public string GuestFirstName { get; set; }
 
         [Required(ErrorMessage = "Обязательное поле для ввода")]
         [Display(Name = "Отчество гостя")]
-        [StringLength(50, ErrorMessage = "Количество сиволов не должно превышать 50")]
+        [StringLength(50, ErrorMessage = "Количество символов не должно превышать 50")]
         public string GuestSecondName { get; set; }
 
         [Required(ErrorMessage = "Обязательное поле для ввода")]
         [Display(Name = "Фамилия гостя")]
-        [StringLength(50, ErrorMessage = "Количество сиволов не должно превышать 50")]
+        [StringLength(50, ErrorMessage = "Количество символов не должно превышать 50")]
         public string GuestLastName { get; set; }
 
         [Display(Name = "Номер телефона")]
@@ -48,7 +49,7 @@ namespace Registration.Model.Hotels
         public int NumberGuest { get; set; }
 
         [Display(Name = "Специальные пожелания")]
-        [StringLength(200, ErrorMessage = "Количество сиволов не должно превышать 200")]
+        [StringLength(200, ErrorMessage = "Количество символов не должно превышать 200")]
         public string? SpecialRequests { get; set; }
 
 

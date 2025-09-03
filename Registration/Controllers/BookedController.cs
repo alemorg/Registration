@@ -33,18 +33,19 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(int roomId, Booked booked,DateTime? dateStartBooked, DateTime? dateEndBooked)
+        //public IActionResult Create(int roomId, Booked booked,DateTime? dateStartBooked, DateTime? dateEndBooked)
+        public IActionResult Create(int roomId, Booked booked)
         {
             ViewBag.roomId = roomId;
             if (roomId > 0)
             {
-                if (dateStartBooked.HasValue && dateEndBooked.HasValue)
-                {
-                    booked.dateStartBooked = dateStartBooked.Value;
-                    booked.dateEndBooked = dateEndBooked.Value;
+                //if (bookeddateStartBooked.HasValue && dateEndBooked.HasValue)
+                //{
+                //    booked.dateStartBooked = dateStartBooked.Value;
+                //    booked.dateEndBooked = dateEndBooked.Value;
 
-                    Console.WriteLine("booked.dateStartBooked" + booked.dateStartBooked);// удалить
-                    Console.WriteLine("booked.dateEndBooked" + booked.dateEndBooked);// удалить
+                    //Console.WriteLine("booked.dateStartBooked" + booked.dateStartBooked);// удалить
+                    //Console.WriteLine("booked.dateEndBooked" + booked.dateEndBooked);// удалить
 
                     if (ModelState.IsValid)
                     {
@@ -53,7 +54,7 @@ namespace Registration.Controllers
                         return RedirectToAction(nameof(CompleteCreate), booked);
                     }
                     
-                }
+                //}
                 return View(booked);
             }
             return NotFound();
