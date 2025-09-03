@@ -5,11 +5,6 @@
 }
 
 <h1>Выбрать дату брони</h1>
-@if (@Model != null)
-{
-	<p>@Model.dateStartBooked</p>
-	<p>@Model.dateEndBooked</p>
-}
 
 <div class="registration_style">
 	<form asp-route-roomId="@ViewBag.roomId" asp-controller="Booked" asp-action="Create" method="post">

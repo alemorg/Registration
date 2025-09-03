@@ -39,22 +39,12 @@ namespace Registration.Controllers
             ViewBag.roomId = roomId;
             if (roomId > 0)
             {
-                //if (bookeddateStartBooked.HasValue && dateEndBooked.HasValue)
-                //{
-                //    booked.dateStartBooked = dateStartBooked.Value;
-                //    booked.dateEndBooked = dateEndBooked.Value;
+                if (ModelState.IsValid)
+                {
+                    bookedService.Create(booked);
 
-                    //Console.WriteLine("booked.dateStartBooked" + booked.dateStartBooked);// удалить
-                    //Console.WriteLine("booked.dateEndBooked" + booked.dateEndBooked);// удалить
-
-                    if (ModelState.IsValid)
-                    {
-                        bookedService.Create(booked);
-
-                        return RedirectToAction(nameof(CompleteCreate), booked);
-                    }
-                    
-                //}
+                    return RedirectToAction(nameof(CompleteCreate), booked);
+                }
                 return View(booked);
             }
             return NotFound();
