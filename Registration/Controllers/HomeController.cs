@@ -2,6 +2,8 @@
 using Registration.Context.Repository.BookedRepository;
 using Registration.Context.Repository.HomeRepository;
 using Registration.Model.Home;
+using Registration.Model.Hotels;
+using System.Globalization;
 
 namespace Registration.Controllers
 {
@@ -22,6 +24,7 @@ namespace Registration.Controllers
         [HttpPost]
         public  IActionResult HomePage(HomePageModel homePageModel)
         {
+
             ViewBag.dateStartBooked = homePageModel.dateStartBooked;
             ViewBag.dateEndBooked = homePageModel.dateEndBooked;
             if (homePageModel != null) 
@@ -35,6 +38,7 @@ namespace Registration.Controllers
 
         public IActionResult FindByForm(List<FindResultModel> list)
         {
+
             return View(list);
         }
     }

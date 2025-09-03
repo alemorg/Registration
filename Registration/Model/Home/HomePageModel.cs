@@ -11,14 +11,14 @@ namespace Registration.Model.Home
         [Display(Name = "Дата заезда")]
         [Range(typeof(DateTime), "1950-01-01", "2025-12-31")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yy}", ApplyFormatInEditMode = true)]
-        public DateTime dateStartBooked { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? dateStartBooked { get; set; }
 
         [Display(Name = "Дата выезда")]
         [Range(typeof(DateTime), "1950-01-01", "2025-12-31")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yy}", ApplyFormatInEditMode = true)]
-        public DateTime dateEndBooked { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? dateEndBooked { get; set; }
 
         [Display(Name = "Количество взрослых")]
         [MinLength(1,ErrorMessage = "Количество взрослых не должно быть менее 1")]

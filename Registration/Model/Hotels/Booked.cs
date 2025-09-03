@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.VisualBasic;
 using Registration.Model.Users;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,11 +13,13 @@ namespace Registration.Model.Hotels
 
         [Required(ErrorMessage ="Обязательное поле для ввода")]
         [Display(Name = "Дата первого дня бронирования")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime dateStartBooked { get; set; } = DateTime.UtcNow;
 
         [Required(ErrorMessage = "Обязательное поле для ввода")]
         [Display(Name = "Дата последнего дня бронирования")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime dateEndBooked { get; set; } = DateTime.UtcNow;
 

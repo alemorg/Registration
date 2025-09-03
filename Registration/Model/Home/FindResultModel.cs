@@ -8,6 +8,9 @@ namespace Registration.Model.Home
         public int HotelId { get; set; }
         public string HotelName { get; set; }
         public List<RoomInfo> rooms { get; set; }
+
+        public DateTime? dateStartBooked { get; set; }
+        public DateTime? dateEndBooked { get; set; }
     }
 
     public class RoomInfo

@@ -8,11 +8,11 @@
 <h1>Результаты по вашему запросу</h1>
 @if (ViewBag.dateStartBooked!= null)
 {
-    <p>Дата начала бронирования @ViewBag.dateStartBooked</p>
+    <p>Дата заезда @ViewBag.dateStartBooked</p>
 }
 @if (ViewBag.dateEndBooked != null)
 {
-    <p>Дата окончания бронирования @ViewBag.dateEndBooked</p>
+    <p>Дата выезда @ViewBag.dateEndBooked</p>
 }
 
 <table>
@@ -21,18 +21,40 @@
          <tr>
              <table>
                  <tr>
-                    <td>@hotel.HotelId</td>
                     <td>@hotel.HotelName</td>
                     //добивить количество звезд
                  </tr>
                 @foreach (var room in hotel.rooms)
                 {
                     <tr>
-                        <td>@room.Id</td>
                         <td>@room.Number</td>
                         <td>@room.Price</td>
                         <td>@room.Square</td>
                         <td>@room.Discription</td>
+                        <td>
+                            @if (hotel.dateStartBooked == null || hotel.dateEndBooked == null)
+                            {
+                                <form method="get">
+                                    <button type="submit"
+                                            asp-controller="Booked"
+                                            asp-action="Create"
+                                            asp-route-roomId="@room.Id"
+                                    >Забронировать
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post">
+                                    <button type="submit"
+                                            asp-controller="Booked"
+                                            asp-action="Create"
+                                            asp-route-roomId="@room.Id"
+                                            asp-route-dateStartBooked="@ViewBag.dateStartBooked"
+                                            asp-route-dateEndBooked="@ViewBag.dateEndBooked">Забронировать</button>
+                                </form>
+                            }
+                        </td>
                     </tr>
                 }
             </table>

@@ -65,6 +65,8 @@ namespace Registration.Context.Repository.HomeRepository
                     {
                         HotelId = hotel.Id,
                         HotelName = hotel.Name,
+                        dateStartBooked = model.dateStartBooked,
+                        dateEndBooked = model.dateEndBooked,
                         rooms = availableRooms
                     });
                 }
@@ -74,7 +76,7 @@ namespace Registration.Context.Repository.HomeRepository
         }
 
         // Проверка доступности номера в указанные даты
-        private bool IsRoomAvailable(Room room, DateTime checkIn, DateTime checkOut)
+        private bool IsRoomAvailable(Room room, DateTime? checkIn, DateTime? checkOut)
         {
             // Логика проверки: номер не должен быть забронирован в эти даты
             var bookedRooms = context.Bookeds

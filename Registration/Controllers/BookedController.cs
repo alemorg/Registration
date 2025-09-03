@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Registration.Context;
 using Registration.Context.Repository.BookedRepository;
 using Registration.Model.Hotels;
-using System;
-using System.Data;
+using System.Globalization;
+
 
 namespace Registration.Controllers
 {
@@ -34,15 +33,26 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(int roomId, Booked booked)
+        public IActionResult Create(int roomId, Booked booked,DateTime? dateStartBooked, DateTime? dateEndBooked)
         {
+            ViewBag.roomId = roomId;
             if (roomId > 0)
             {
-                if (ModelState.IsValid)
+                if (dateStartBooked.HasValue && dateEndBooked.HasValue)
                 {
-                    bookedService.Create(booked);
+                    booked.dateStartBooked = dateStartBooked.Value;
+                    booked.dateEndBooked = dateEndBooked.Value;
 
-                    return RedirectToAction(nameof(CompleteCreate), booked);
+                    Console.WriteLine("booked.dateStartBooked" + booked.dateStartBooked);// удалить
+                    Console.WriteLine("booked.dateEndBooked" + booked.dateEndBooked);// удалить
+
+                    if (ModelState.IsValid)
+                    {
+                        bookedService.Create(booked);
+
+                        return RedirectToAction(nameof(CompleteCreate), booked);
+                    }
+                    
                 }
                 return View(booked);
             }

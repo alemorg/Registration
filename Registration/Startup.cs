@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Registration.Context;
 using Registration.Context.Repository.BookedRepository;
@@ -10,6 +11,7 @@ using Registration.Context.Repository.UserRepository;
 using Registration.Controllers;
 using Registration.Model.Hotels;
 using Registration.Model.Users;
+using System.Globalization;
 
 namespace Registration
 {
@@ -19,11 +21,11 @@ namespace Registration
         {
             services.AddMvc ();
 
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql("WebApiDatabase"));
-
             //services.AddDbContext<AppDbContext>(options =>
-            //    options.UseSqlServer("MSSqlServer"));
+            //    options.UseNpgsql("WebApiDatabase"));
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer("MSSqlServer"));
 
             services.AddScoped<HotelService>();
             services.AddScoped<IHotelRepository<Hotel>, HotelRepository>();
@@ -39,6 +41,13 @@ namespace Registration
 
             services.AddScoped<HomeService>();
             services.AddScoped<IHomeRepository, HomeRepository>();
+
+            //services.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    options.DefaultRequestCulture = new RequestCulture("ru-RU");
+            //    options.SupportedCultures = new List<CultureInfo> { new CultureInfo("ru-RU") };
+            //    options.SupportedUICultures = new List<CultureInfo> { new CultureInfo("ru-RU") };
+            //});
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -81,6 +90,10 @@ namespace Registration
                 endpoints.MapControllerRoute(
                     name: "BookedPage",
                     pattern: "hotel/{hotelId}/room/{roomId}/booked/{action}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "BookedPageCreateDate",
+                    pattern: "hotel/{hotelId}/room/{roomId}/booked/{action}/{id}/{dateStartBooked}/{dateEndBooked}");
             });
         }
     }
