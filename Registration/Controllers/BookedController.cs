@@ -34,7 +34,6 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
-        //public IActionResult Create(int roomId, Booked booked,DateTime? dateStartBooked, DateTime? dateEndBooked)
         public IActionResult Create(int roomId, Booked booked)
         {
             ViewBag.roomId = roomId;

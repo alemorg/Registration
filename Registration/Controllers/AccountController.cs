@@ -76,7 +76,7 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registration(AppUser user)
+        public IActionResult Registration(RegistrationViewModel model)
         {
             //if (ModelState.IsValid)
             //{

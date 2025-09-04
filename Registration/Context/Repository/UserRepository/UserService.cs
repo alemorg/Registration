@@ -1,4 +1,5 @@
-﻿using Registration.Model.Hotels;
+﻿using Microsoft.AspNetCore.Identity;
+using Registration.Model.Hotels;
 using Registration.Model.Users;
 
 namespace Registration.Context.Repository.UserRepository
@@ -11,40 +12,25 @@ namespace Registration.Context.Repository.UserRepository
         {
             this.repository = repository;
         }
-        public IEnumerable<AppUser> List()
+
+        public async Task<IdentityResult> Create(string Email, string Password, string Role,string FirstName, string LastName, DateTime BirthDay,bool IsAgree, string? SecondName)
         {
-            return repository.List();
+            return await repository.CreateUserAsync(Email, Password, Role, FirstName, LastName,BirthDay, IsAgree, SecondName);
         }
 
-        public void Create(AppUser user)
+        public async Task<IdentityResult> CorrectUserAsync(AppUser user)
         {
-            repository.Create(user);
+            return await repository.CorrectUserAsync(user);
         }
 
-        public void Correct(AppUser user)
+        public async Task<IdentityResult> DeleteUserAsync(string id)
         {
-            repository.Correct(user);
+            return await repository.DeleteUserAsync(id);
         }
 
-        public void Delete(int id)
+        public async Task<AppUser> GetUserByEmailAsync(string email)
         {
-            repository.Delete(id);
+            return await repository.GetUserByEmailAsync(email);
         }
-
-        //public AppUser Profile(int id)
-        //{
-        //    return repository.GetById(id);
-        //}
-
-        //public AppUser GetByEmail(string Email)
-        //{
-        //    return repository.GetByEmail(Email);
-        //}
-
-        //public AppUser GetByLogin(string Login)
-        //{
-        //    return repository.GetByEmail(Login);
-        //}
-
     }
 }

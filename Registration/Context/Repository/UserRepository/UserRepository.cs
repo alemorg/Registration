@@ -1,75 +1,72 @@
-﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Registration.Model.Users;
 
 namespace Registration.Context.Repository.UserRepository
 {
     public class UserRepository : IUserRepository<AppUser>
     {
-        private readonly AppDbContext context;
-        public UserRepository(AppDbContext context)
+        private readonly UserManager<AppUser> userManager;
+
+        public UserRepository(UserManager<AppUser> userManager)
         {
-            this.context = context;
+            this.userManager = userManager;
         }
 
-        public void Correct(AppUser user)
+        public async Task<IdentityResult> CreateUserAsync(string Email,
+                                                          string Password, 
+                                                          string Role,
+                                                          string FirstName,
+                                                          string LastName,
+                                                          DateTime BirthDay,
+                                                          bool IsAgree,
+                                                          string? SecondName)
         {
-            if (user != null)
+            var user = new AppUser {Email = Email,
+                                    FirstName = FirstName,
+                                    LastName = LastName,
+                                    BirthDay = BirthDay,
+                                    IsAgree = IsAgree};
+
+            if (!SecondName.IsNullOrEmpty())
             {
-                var userdb = context.Users.Find(user.Id);
-                if (userdb != null)
-                {
-                    userdb.FirstName = user.FirstName;
-                    userdb.LastName = user.LastName;
-                    userdb.Email = user.Email;
-                    userdb.BirthDay = user.BirthDay;
-                    userdb.PhoneNumber = user.PhoneNumber;
-
-                    context.Users.Attach(userdb);
-                    context.SaveChanges();
-                }
+                user.SecondName = SecondName;
             }
-        }
 
-        public void Create(AppUser user)
-        {
-            context.Add(user);
-            context.SaveChanges();
-        }
+            var result = await userManager.CreateAsync(user, Password);
 
-        public void Delete(int id)
-        {
-            var user = context.Users.Find(id);
-
-            if (user != null)
+            if (result.Succeeded)
             {
-                {
-                    context.Remove<AppUser>(user);
-                    context.SaveChanges();
-                }
+                await userManager.AddToRoleAsync(user, Role);
             }
+
+            return result;
         }
 
-        //public AppUser GetByEmail(string Email)
-        //{
-        //    if (!string.IsNullOrEmpty(Email)) return context.Users.FirstOrDefault(x => x.Email == Email);
-        //    else throw new Exception("При поиске Usera по Email произошла ошибка");
-        //}
-
-        //public AppUser GetById(int id)
-        //{
-        //    if (id > 0) return context.Users.FirstOrDefault(id);
-        //    else throw new Exception("При поиске Usera по ID произошла ошибка");
-        //}
-
-        //public AppUser GetByLogin(string Login)
-        //{
-        //    if (!string.IsNullOrEmpty(Login)) return context.Users.FirstOrDefault(x => x.Login == Login);
-        //    else throw new Exception("При поиске Usera по Email произошла ошибка");
-        //}
-
-        public IEnumerable<AppUser> List()
+        public async Task<IdentityResult> CorrectUserAsync(AppUser user)
         {
-            return context.Users.ToList();
+            var UserDB = await userManager.FindByIdAsync(user.Id);
+            if (UserDB == null) return IdentityResult.Failed();
+
+            UserDB.FirstName = user.FirstName;
+            UserDB.SecondName = user.SecondName;
+            UserDB.LastName = user.LastName;
+
+            return await userManager.UpdateAsync(UserDB);
+        }
+
+        public async Task<IdentityResult> DeleteUserAsync(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            if (user == null) return IdentityResult.Failed();
+
+            return await userManager.DeleteAsync(user);
+        }
+
+        public async Task<AppUser> GetUserByEmailAsync(string email)
+        {
+            return await userManager.FindByEmailAsync(email);
         }
     }
 }
