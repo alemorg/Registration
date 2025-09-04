@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Registration.Model.Users
 {
-    public class User
+    public class User : IdentityUser
     {
         public int Id { get; set; }
 
@@ -16,6 +17,11 @@ namespace Registration.Model.Users
         [Required(ErrorMessage = "Это поле обязательно для ввода")]
         [StringLength(50, ErrorMessage = "Количество символов должно быть не более 50")]
         public string FirstName { get; set; }
+
+        [Display(Name = "Отчество")]
+        [Required(ErrorMessage = "Это поле обязательно для ввода")]
+        [StringLength(50, ErrorMessage = "Количество символов должно быть не более 50")]
+        public string SecondName { get; set; }
 
         [Display(Name = "Фамилия")]
         [Required(ErrorMessage = "Это поле обязательно для ввода")]
