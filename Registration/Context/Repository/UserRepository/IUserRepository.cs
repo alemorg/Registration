@@ -8,8 +8,8 @@ namespace Registration.Context.Repository.UserRepository
         void Create(User user);
         void Correct(User user);
         void Delete(int id);
-        User GetById (int id);
-        User GetByEmail(string str);
-        User GetByLogin(string str);
+        //User GetById (int id);
+        //User GetByEmail(string str);
+        //User GetByLogin(string str);
     }
 }

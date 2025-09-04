@@ -49,23 +49,23 @@ namespace Registration.Context.Repository.UserRepository
             }
         }
 
-        public AppUser GetByEmail(string Email)
-        {
-            if (!string.IsNullOrEmpty(Email)) return context.Users.FirstOrDefault(x => x.Email == Email);
-            else throw new Exception("При поиске Usera по Email произошла ошибка");
-        }
+        //public AppUser GetByEmail(string Email)
+        //{
+        //    if (!string.IsNullOrEmpty(Email)) return context.Users.FirstOrDefault(x => x.Email == Email);
+        //    else throw new Exception("При поиске Usera по Email произошла ошибка");
+        //}
 
-        public AppUser GetById(int id)
-        {
-            if (id > 0) return context.Users.FirstOrDefault(x => x.Id == id);
-            else throw new Exception("При поиске Usera по ID произошла ошибка");
-        }
+        //public AppUser GetById(int id)
+        //{
+        //    if (id > 0) return context.Users.FirstOrDefault(id);
+        //    else throw new Exception("При поиске Usera по ID произошла ошибка");
+        //}
 
-        public AppUser GetByLogin(string Login)
-        {
-            if (!string.IsNullOrEmpty(Login)) return context.Users.FirstOrDefault(x => x.Login == Login);
-            else throw new Exception("При поиске Usera по Email произошла ошибка");
-        }
+        //public AppUser GetByLogin(string Login)
+        //{
+        //    if (!string.IsNullOrEmpty(Login)) return context.Users.FirstOrDefault(x => x.Login == Login);
+        //    else throw new Exception("При поиске Usera по Email произошла ошибка");
+        //}
 
         public IEnumerable<AppUser> List()
         {

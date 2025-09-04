@@ -22,11 +22,11 @@ namespace Registration
         {
             services.AddMvc ();
 
-            //services.AddDbContext<AppDbContext>(options =>
-            //    options.UseNpgsql("WebApiDatabase"));
-
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer("MSSqlServer"));
+                options.UseNpgsql("WebApiDatabase"));
+
+            //services.AddDbContext<AppDbContext>(options =>
+            //    options.UseSqlServer("MSSqlServer"));
 
             services.AddScoped<HotelService>();
             services.AddScoped<IHotelRepository<Hotel>, HotelRepository>();
@@ -76,11 +76,11 @@ namespace Registration
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", policy =>
+                options.AddPolicy("Admin", policy =>
                     policy.RequireRole("Admin"));
 
                 options.AddPolicy("Managers", policy =>
-                    policy.RequireRole("Manager"));
+                    policy.RequireRole("Admin", "Manager"));
 
                 options.AddPolicy("Users", policy =>
                     policy.RequireRole("Admin", "User", "Manager"));

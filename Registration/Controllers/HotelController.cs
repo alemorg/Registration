@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
 using Registration.Context.Repository.HotelRepository;
 using Registration.Model.Home;
@@ -27,12 +28,14 @@ namespace Registration.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(Hotel hotel)
         {
             if (ModelState.IsValid)
@@ -44,11 +47,14 @@ namespace Registration.Controllers
 
             return View(hotel);
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult CompleteCreate(Hotel hotel)
         {
             return View(hotel);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -64,12 +70,14 @@ namespace Registration.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult CompleteDelete(Hotel hotel)
         {
             return View(hotel);
         }
 
         [HttpGet]
+        [Authorize(Roles = "Managers")]
         public IActionResult Correct(int id)
         {
             if (id > 0)
@@ -86,6 +94,7 @@ namespace Registration.Controllers
 
         // Нужно ли здесь ID?
         [HttpPost]
+        [Authorize(Roles = "Managers")]
         public IActionResult Correct(int id, Hotel hotel)
         {
             if (id > 0)
@@ -99,6 +108,8 @@ namespace Registration.Controllers
             }
             return NotFound();
         }
+
+        [Authorize(Roles = "Managers")]
         public IActionResult CompleteCorrect(Hotel hotel)
         {
             return View(hotel);

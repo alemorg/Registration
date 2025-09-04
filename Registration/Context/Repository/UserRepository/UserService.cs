@@ -31,20 +31,20 @@ namespace Registration.Context.Repository.UserRepository
             repository.Delete(id);
         }
 
-        public AppUser Profile(int id)
-        {
-            return repository.GetById(id);
-        }
+        //public AppUser Profile(int id)
+        //{
+        //    return repository.GetById(id);
+        //}
 
-        public AppUser GetByEmail(string Email)
-        {
-            return repository.GetByEmail(Email);
-        }
+        //public AppUser GetByEmail(string Email)
+        //{
+        //    return repository.GetByEmail(Email);
+        //}
 
-        public AppUser GetByLogin(string Login)
-        {
-            return repository.GetByEmail(Login);
-        }
+        //public AppUser GetByLogin(string Login)
+        //{
+        //    return repository.GetByEmail(Login);
+        //}
 
     }
 }

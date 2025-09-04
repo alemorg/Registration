@@ -26,34 +26,34 @@ namespace Registration.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel logUser)
         {
-            if (ModelState.IsValid)
-            {
-                var user = userService.GetByEmail(logUser.Email);
-                if (user != null)
-                {
-                    CryptPassword crypt = new CryptPassword();
-                    if (crypt.Decrypt(user.Password) == logUser.Password)
-                    {
-                        //Создаем информацию о пользователе
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Name, $"{user.FirstName} {user.FirstName}"),
-                            new Claim(ClaimTypes.Role, "Admin")                                         //Переделать при переделке класса userov
-                        };
+            //if (ModelState.IsValid)
+            //{
+            //    var user = userService.GetByEmail(logUser.Email);
+            //    if (user != null)
+            //    {
+            //        CryptPassword crypt = new CryptPassword();
+            //        if (crypt.Decrypt(user.Password) == logUser.Password)
+            //        {
+            //            //Создаем информацию о пользователе
+            //            var claims = new List<Claim>
+            //            {
+            //                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.FirstName}"),
+            //                new Claim(ClaimTypes.Role, "Admin")                                         //Переделать при переделке класса userov
+            //            };
 
-                        //Создаем пропуск
-                        var claimsIdentity = new ClaimsIdentity(claims,
-                            CookieAuthenticationDefaults.AuthenticationScheme);
+            //            //Создаем пропуск
+            //            var claimsIdentity = new ClaimsIdentity(claims,
+            //                CookieAuthenticationDefaults.AuthenticationScheme);
 
-                        //Выдаем пропуск
-                        await HttpContext.SignInAsync(
-                            CookieAuthenticationDefaults.AuthenticationScheme,
-                            new ClaimsPrincipal(claimsIdentity));
+            //            //Выдаем пропуск
+            //            await HttpContext.SignInAsync(
+            //                CookieAuthenticationDefaults.AuthenticationScheme,
+            //                new ClaimsPrincipal(claimsIdentity));
 
-                        return View(nameof(SuccessFul), user);
-                    }
-                }
-            }
+            //            return View(nameof(SuccessFul), user);
+            //        }
+            //    }
+            //}
             return View(logUser);
         }
 
@@ -78,18 +78,18 @@ namespace Registration.Controllers
         [HttpPost]
         public IActionResult Registration(AppUser user)
         {
-            if (ModelState.IsValid)
-            {
-                if (user.IsAgree != false)
-                {
-                    CryptPassword crypt = new CryptPassword();
-                    user.Password = crypt.Encode(user.Password);
-                    user.ConfirmPassword = crypt.Encode(user.ConfirmPassword);
-                    userService.Create(user);
+            //if (ModelState.IsValid)
+            //{
+            //    if (user.IsAgree != false)
+            //    {
+            //        CryptPassword crypt = new CryptPassword();
+            //        user.Password = crypt.Encode(user.Password);
+            //        user.ConfirmPassword = crypt.Encode(user.ConfirmPassword);
+            //        userService.Create(user);
 
-                    return View(nameof(CompletedRegistration), user);
-                }
-            }
+            //        return View(nameof(CompletedRegistration), user);
+            //    }
+            //}
             return View(user);
         }
 

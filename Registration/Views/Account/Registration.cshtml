@@ -6,11 +6,11 @@
 
 <div class="registration_style">
 	<form asp-controller="Account" asp-action="Registration" method="post">
-		<div class="box-line">
+		@* <div class="box-line">
 			<label asp-for="Login" class="label-line"></label>
 			<input asp-for="Login" class="input-line" />
 			<span asp-validation-for="Login" class="validation"></span>
-		</div>
+		</div> *@
 
 		<div class="box-line">
 			<label asp-for="FirstName" class="label-line"></label>
@@ -48,7 +48,7 @@
 			<span asp-validation-for="PhoneNumber" class="validation"></span>
 		</div>
 
-		<div class="box-line">
+		@* <div class="box-line">
 			<label asp-for="Password" class="label-line"></label>
 			<input asp-for="Password" class="input-line" />
 			<span asp-validation-for="Password" class="validation"></span>
@@ -58,7 +58,7 @@
 			<label asp-for="ConfirmPassword" class="label-line"></label>
 			<input asp-for="ConfirmPassword" class="input-line" />
 			<span asp-validation-for="ConfirmPassword" class="validation"></span>
-		</div>
+		</div> *@
 
 		<div class="box-line">
 			<label asp-for="IsAgree" class="label-line"></label>

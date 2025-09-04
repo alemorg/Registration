@@ -11,28 +11,31 @@ namespace Registration.Context
     {
         protected readonly IConfiguration configuration;
 
-        //public AppDbContext(IConfiguration configuration)
-        //{
-        //    this.configuration = configuration;
-        //    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            options.UseNpgsql(configuration.GetConnectionString("PostgreSqlServer"));
+        }
+
+        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options)
+        {
+            this.configuration = configuration;
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder options)
         //{
-        //    options.UseNpgsql(configuration.GetConnectionString("PostgreSqlServer"));
+        //    options.UseSqlServer(configuration.GetConnectionString("MSSqlServer"));
+        //}
+
+        //public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options)
+        //{
+        //    this.configuration = configuration;
         //}
 
         public AppDbContext(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            options.UseSqlServer(configuration.GetConnectionString("MSSqlServer"));
-        }
-
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<AppUser> Users { get; set; }
 

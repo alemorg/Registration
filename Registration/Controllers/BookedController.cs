@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Registration.Context.Repository.BookedRepository;
 using Registration.Model.Hotels;
 using System.Globalization;
@@ -55,6 +56,7 @@ namespace Registration.Controllers
             return View(booked);
         }
 
+        [Authorize(Roles = "Users")]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -69,12 +71,14 @@ namespace Registration.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "Users")]
         public IActionResult CompleteDelete(Booked booked)
         {
             return View(booked);
         }
 
         [HttpGet]
+        [Authorize(Roles = "Users")]
         public IActionResult Correct(int id)
         {
             if (id > 0)
@@ -90,6 +94,7 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Users")]
         public IActionResult Correct(int id, Booked booked)
         {
             if (id > 0)
@@ -105,6 +110,7 @@ namespace Registration.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "Users")] 
         public IActionResult CompleteCorrect(Booked booked)
         {
             return View(booked);
