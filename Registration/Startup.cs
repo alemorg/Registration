@@ -37,25 +37,12 @@ namespace Registration
             services.AddScoped<IBookedRepository<Booked>, BookedRepository>();
 
             services.AddScoped<UserService>();
-            services.AddScoped<IUserRepository<User>, UserRepository>();
+            services.AddScoped<IUserRepository<AppUser>, UserRepository>();
 
             services.AddScoped<HomeService>();
             services.AddScoped<IHomeRepository, HomeRepository>();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/Account/Login";
-                    options.AccessDeniedPath = "/Account/AccessDenied";
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-                    //options.ExpireTimeSpan = TimeSpan.FromHours(1); //раскоментировать когда понядобится больше времени на аутентификацию
-                });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AdminOnly", policy =>
-                    policy.RequireRole("Admin"));
-            });
+            
         }
         public void Configure(IApplicationBuilder app,IWebHostEnvironment env)
         {
@@ -67,8 +54,7 @@ namespace Registration
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseAuthentication ();
-            app.UseAuthorization ();
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -101,7 +87,7 @@ namespace Registration
 // => Home/HomePage => Account/Login
 //                  => Account/Login => Account/Registration => Account/Successful
 
-// пользователь с авторизацией (User)
+// пользователь с авторизацией (AppUser)
 // => Home/HomePage => Find/List => Booked/Create => Complete
 // => Account/Profile => Account/Correct
 //                    => Account/Delete

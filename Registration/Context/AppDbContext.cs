@@ -30,7 +30,7 @@ namespace Registration.Context
             options.UseSqlServer(configuration.GetConnectionString("MSSqlServer"));
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<AppUser> Users { get; set; }
 
 
         public DbSet<Hotel> Hotels { get; set; }

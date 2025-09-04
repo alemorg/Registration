@@ -3,7 +3,7 @@ using Registration.Model.Users;
 
 namespace Registration.Context.Repository.UserRepository
 {
-    public class UserRepository : IUserRepository<User>
+    public class UserRepository : IUserRepository<AppUser>
     {
         private readonly AppDbContext context;
         public UserRepository(AppDbContext context)
@@ -11,7 +11,7 @@ namespace Registration.Context.Repository.UserRepository
             this.context = context;
         }
 
-        public void Correct(User user)
+        public void Correct(AppUser user)
         {
             if (user != null)
             {
@@ -30,7 +30,7 @@ namespace Registration.Context.Repository.UserRepository
             }
         }
 
-        public void Create(User user)
+        public void Create(AppUser user)
         {
             context.Add(user);
             context.SaveChanges();
@@ -43,31 +43,31 @@ namespace Registration.Context.Repository.UserRepository
             if (user != null)
             {
                 {
-                    context.Remove<User>(user);
+                    context.Remove<AppUser>(user);
                     context.SaveChanges();
                 }
             }
         }
 
-        public User GetByEmail(string Email)
+        public AppUser GetByEmail(string Email)
         {
             if (!string.IsNullOrEmpty(Email)) return context.Users.FirstOrDefault(x => x.Email == Email);
             else throw new Exception("При поиске Usera по Email произошла ошибка");
         }
 
-        public User GetById(int id)
+        public AppUser GetById(int id)
         {
             if (id > 0) return context.Users.FirstOrDefault(x => x.Id == id);
             else throw new Exception("При поиске Usera по ID произошла ошибка");
         }
 
-        public User GetByLogin(string Login)
+        public AppUser GetByLogin(string Login)
         {
             if (!string.IsNullOrEmpty(Login)) return context.Users.FirstOrDefault(x => x.Login == Login);
             else throw new Exception("При поиске Usera по Email произошла ошибка");
         }
 
-        public IEnumerable<User> List()
+        public IEnumerable<AppUser> List()
         {
             return context.Users.ToList();
         }

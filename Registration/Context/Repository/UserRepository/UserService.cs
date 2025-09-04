@@ -5,23 +5,23 @@ namespace Registration.Context.Repository.UserRepository
 {
     public class UserService
     {
-        private readonly IUserRepository<User> repository;
+        private readonly IUserRepository<AppUser> repository;
 
-        public UserService(IUserRepository<User> repository)
+        public UserService(IUserRepository<AppUser> repository)
         {
             this.repository = repository;
         }
-        public IEnumerable<User> List()
+        public IEnumerable<AppUser> List()
         {
             return repository.List();
         }
 
-        public void Create(User user)
+        public void Create(AppUser user)
         {
             repository.Create(user);
         }
 
-        public void Correct(User user)
+        public void Correct(AppUser user)
         {
             repository.Correct(user);
         }
@@ -31,17 +31,17 @@ namespace Registration.Context.Repository.UserRepository
             repository.Delete(id);
         }
 
-        public User Profile(int id)
+        public AppUser Profile(int id)
         {
             return repository.GetById(id);
         }
 
-        public User GetByEmail(string Email)
+        public AppUser GetByEmail(string Email)
         {
             return repository.GetByEmail(Email);
         }
 
-        public User GetByLogin(string Login)
+        public AppUser GetByLogin(string Login)
         {
             return repository.GetByEmail(Login);
         }

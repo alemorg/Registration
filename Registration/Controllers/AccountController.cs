@@ -24,7 +24,7 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginedUser logUser)
+        public async Task<IActionResult> Login(LoginViewModel logUser)
         {
             if (ModelState.IsValid)
             {
@@ -36,10 +36,10 @@ namespace Registration.Controllers
                     {
                         //Создаем информацию о пользователе
                         var claims = new List<Claim>
-                    {
-                    new Claim(ClaimTypes.Name, $"{user.FirstName} {user.FirstName}"),
-                    new Claim(ClaimTypes.Role, "Admin")                                         //Переделать при переделке класса userov
-                    };
+                        {
+                            new Claim(ClaimTypes.Name, $"{user.FirstName} {user.FirstName}"),
+                            new Claim(ClaimTypes.Role, "Admin")                                         //Переделать при переделке класса userov
+                        };
 
                         //Создаем пропуск
                         var claimsIdentity = new ClaimsIdentity(claims,
@@ -57,7 +57,7 @@ namespace Registration.Controllers
             return View(logUser);
         }
 
-        public IActionResult SuccessFul(LoginedUser logUser)
+        public IActionResult SuccessFul(LoginViewModel logUser)
         {
             return View(logUser);
         }
@@ -76,11 +76,11 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registration(User user)
+        public IActionResult Registration(AppUser user)
         {
             if (ModelState.IsValid)
             {
-                if (user != null && user.IsAgree != false)
+                if (user.IsAgree != false)
                 {
                     CryptPassword crypt = new CryptPassword();
                     user.Password = crypt.Encode(user.Password);
@@ -93,7 +93,7 @@ namespace Registration.Controllers
             return View(user);
         }
 
-        public IActionResult CompletedRegistration(User user)
+        public IActionResult CompletedRegistration(AppUser user)
         {
             return View(user);
         }
