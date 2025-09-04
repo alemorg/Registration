@@ -14,6 +14,12 @@ namespace Registration.Controllers
         {
             this.hotelService = hotelService;
         }
+
+        public IActionResult Profile(int id)
+        {
+            return View(hotelService.Profile(id));
+        }
+
         public IActionResult List()
         {
             if (hotelService != null) return View(hotelService.List());

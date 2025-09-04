@@ -38,7 +38,6 @@ namespace Registration.Controllers
 
         public IActionResult FindByForm(List<FindResultModel> list)
         {
-
             return View(list);
         }
     }

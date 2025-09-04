@@ -21,7 +21,7 @@
          <tr>
              <table>
                  <tr>
-                    <td>@hotel.HotelName</td>
+                    <td><a asp-controller="Hotel" asp-action="Profile" asp-route-id="@hotel.HotelId">@hotel.HotelName</a></td>
                     //добивить количество звезд
                  </tr>
                 @foreach (var room in hotel.rooms)
