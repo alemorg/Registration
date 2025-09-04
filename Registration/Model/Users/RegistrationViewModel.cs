@@ -15,6 +15,10 @@ namespace Registration.Model.Users
         [StringLength(50, ErrorMessage = "Количество символов должно быть не более 50")]
         public string FirstName { get; set; }
 
+        [Display(Name = "Отчество")]
+        [StringLength(50, ErrorMessage = "Количество символов должно быть не более 50")]
+        public string? SecondName { get; set; }
+
         [Display(Name = "Фамилия")]
         [Required(ErrorMessage = "Это поле обязательно для ввода")]
         [StringLength(50, ErrorMessage = "Количество символов должно быть не более 50")]
@@ -27,7 +31,7 @@ namespace Registration.Model.Users
         public string Email { get; set; }
 
         [Display(Name = "День рождения")]
-        //[Required(ErrorMessage = "Обязательное поле для ввода")]
+        [Required(ErrorMessage = "Обязательное поле для ввода")]
         [Range(typeof(DateTime), "1950-01-01", "2025-12-31")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yy}", ApplyFormatInEditMode = true)]

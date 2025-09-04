@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Registration.Context;
 using Registration.Context.Repository.UserRepository;
-using Registration.Crypt;
 using Registration.Model.Users;
-using System.Security.Claims;
-using System.Threading.Tasks;
+
 
 namespace Registration.Controllers
 {
@@ -17,6 +13,7 @@ namespace Registration.Controllers
         {
             this.userService = userService;
         }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -26,48 +23,26 @@ namespace Registration.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel logUser)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    var user = userService.GetByEmail(logUser.Email);
-            //    if (user != null)
-            //    {
-            //        CryptPassword crypt = new CryptPassword();
-            //        if (crypt.Decrypt(user.Password) == logUser.Password)
-            //        {
-            //            //Создаем информацию о пользователе
-            //            var claims = new List<Claim>
-            //            {
-            //                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.FirstName}"),
-            //                new Claim(ClaimTypes.Role, "Admin")                                         //Переделать при переделке класса userov
-            //            };
-
-            //            //Создаем пропуск
-            //            var claimsIdentity = new ClaimsIdentity(claims,
-            //                CookieAuthenticationDefaults.AuthenticationScheme);
-
-            //            //Выдаем пропуск
-            //            await HttpContext.SignInAsync(
-            //                CookieAuthenticationDefaults.AuthenticationScheme,
-            //                new ClaimsPrincipal(claimsIdentity));
-
-            //            return View(nameof(SuccessFul), user);
-            //        }
-            //    }
-            //}
+            if (ModelState.IsValid)
+            {
+                var user = await userService.GetUserByEmailAsync(logUser.Email);
+                if (user != null)
+                { 
+                    return View(nameof(SuccessFul));
+                }
+            }
             return View(logUser);
         }
 
-        public IActionResult SuccessFul(LoginViewModel logUser)
+        public IActionResult SuccessFul()
         {
-            return View(logUser);
+            return RedirectToAction(nameof(HomeController.HomePage), nameof(HomeController));
         }
 
         public IActionResult AccessDenied()
         {
             return View();
         }
-
-        //block Registration
 
         [HttpGet]
         public IActionResult Registration()
@@ -78,24 +53,27 @@ namespace Registration.Controllers
         [HttpPost]
         public IActionResult Registration(RegistrationViewModel model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    if (user.IsAgree != false)
-            //    {
-            //        CryptPassword crypt = new CryptPassword();
-            //        user.Password = crypt.Encode(user.Password);
-            //        user.ConfirmPassword = crypt.Encode(user.ConfirmPassword);
-            //        userService.Create(user);
+            if (ModelState.IsValid)
+            {
+                if (model.IsAgree != false)
+                {
+                    var user = userService.CreateUserAsync(model.Login,model.Email, model.Password, "User", model.FirstName, model.LastName, model.BirthDay, model.IsAgree, model.SecondName);
 
-            //        return View(nameof(CompletedRegistration), user);
-            //    }
-            //}
-            return View(user);
+                    return View(nameof(CompletedRegistration));
+                }
+            }
+            return View(model);
         }
 
-        public IActionResult CompletedRegistration(AppUser user)
+        public IActionResult CompletedRegistration()
         {
-            return View(user);
+            return RedirectToAction(nameof(HomeController.HomePage),nameof(HomeController));
+        }
+
+        public async Task<IActionResult> Logout ()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction(nameof(HomeController.HomePage),nameof(HomeController));
         }
     }
 }

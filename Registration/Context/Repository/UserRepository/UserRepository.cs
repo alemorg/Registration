@@ -14,7 +14,8 @@ namespace Registration.Context.Repository.UserRepository
             this.userManager = userManager;
         }
 
-        public async Task<IdentityResult> CreateUserAsync(string Email,
+        public async Task<IdentityResult> CreateUserAsync(string UserName, 
+                                                          string Email,
                                                           string Password, 
                                                           string Role,
                                                           string FirstName,

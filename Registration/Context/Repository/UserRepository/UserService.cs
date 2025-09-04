@@ -13,9 +13,9 @@ namespace Registration.Context.Repository.UserRepository
             this.repository = repository;
         }
 
-        public async Task<IdentityResult> Create(string Email, string Password, string Role,string FirstName, string LastName, DateTime BirthDay,bool IsAgree, string? SecondName)
+        public async Task<IdentityResult> CreateUserAsync(string UserName, string Email, string Password, string Role,string FirstName, string LastName, DateTime BirthDay,bool IsAgree, string? SecondName)
         {
-            return await repository.CreateUserAsync(Email, Password, Role, FirstName, LastName,BirthDay, IsAgree, SecondName);
+            return await repository.CreateUserAsync(UserName, Email, Password, Role, FirstName, LastName,BirthDay, IsAgree, SecondName);
         }
 
         public async Task<IdentityResult> CorrectUserAsync(AppUser user)
