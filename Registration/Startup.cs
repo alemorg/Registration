@@ -100,6 +100,19 @@ namespace Registration
             app.UseAuthentication();
             app.UseAuthorization();
 
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    IdentitySeedData.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message, "An error occurred while seeding the database.");
+                }
+            }
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
