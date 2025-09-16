@@ -4,17 +4,36 @@
 		<li>
 			<a asp-controller="Home" asp-action="HomePage">Домашняя страница</a>
 		</li>
+		@if (User.IsInRole("Admin"))
+		{
+			<li>
+				<a asp-controller="Hotel" asp-action="List">Отели</a>
+			</li> 
+			<li>
+				<a asp-controller="Room" asp-action="AllList">Комнаты</a>
+			</li>
+		}
+
+		@if (User.IsInRole("Manager"))
+		{
+			<li>
+				@* asp-route-id="" надо придумать как привязать ID отеля*@
+				<a asp-controller="Hotel" asp-action="Profile" >Комнаты</a> 
+			</li>
+		}
+		
+
+		@if (User.Identity.IsAuthenticated)
+		{
 		<li>
-			<a asp-controller="Account" asp-action="Logined">Авторизация</a>
+			<a asp-controller="Account" asp-action="Logout">Выйти</a>
 		</li>
+		}
+		else
+		{
 		<li>
-			<a asp-controller="Hotel" asp-action="List">Отели</a>
+			<a asp-controller="Account" asp-action="Login">Авторизация</a>
 		</li>
-		<li>
-			<a asp-controller="Room" asp-action="AllList">Комнаты</a>
-		</li>
-		<li>
-			<a asp-controller="About" asp-action="Index">О нас</a>
-		</li>
+		}
 	</ul>
 </nav>

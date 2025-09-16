@@ -2,7 +2,7 @@
 
 namespace Registration.Model.Users
 {
-    public class LoginedUser
+    public class LoginViewModel
     {
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Это поле обязательно для ввода")]
@@ -14,5 +14,8 @@ namespace Registration.Model.Users
         [UIHint("Password")]
         [Required(ErrorMessage = "Обязательное поле для ввода")]
         public string Password { get; set; }
+
+        [Display(Name = "Запомнить меня?")]
+        public bool RememberMe { get; set; }
     }
 }

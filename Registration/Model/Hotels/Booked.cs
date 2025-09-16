@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.VisualBasic;
 using Registration.Model.Users;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,28 +8,35 @@ using System.Data;
 
 namespace Registration.Model.Hotels
 {
-    public class BookedRoom
+    public class Booked
     {
         public int Id { get; set; }
 
         [Required(ErrorMessage ="Обязательное поле для ввода")]
-        [Display(Name = "Дата бронирования")]
+        [Display(Name = "Дата первого дня бронирования")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public DateTime dataBooked { get; set; }
+        public DateTime dateStartBooked { get; set; } = DateTime.UtcNow;
+
+        [Required(ErrorMessage = "Обязательное поле для ввода")]
+        [Display(Name = "Дата последнего дня бронирования")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public DateTime dateEndBooked { get; set; } = DateTime.UtcNow;
 
         [Required(ErrorMessage = "Обязательное поле для ввода")]
         [Display(Name = "Имя гостя")]
-        [StringLength(50, ErrorMessage ="Количество сиволов не должно превышать 50")]
+        [StringLength(50, ErrorMessage ="Количество символов не должно превышать 50")]
         public string GuestFirstName { get; set; }
 
         [Required(ErrorMessage = "Обязательное поле для ввода")]
         [Display(Name = "Отчество гостя")]
-        [StringLength(50, ErrorMessage = "Количество сиволов не должно превышать 50")]
+        [StringLength(50, ErrorMessage = "Количество символов не должно превышать 50")]
         public string GuestSecondName { get; set; }
 
         [Required(ErrorMessage = "Обязательное поле для ввода")]
         [Display(Name = "Фамилия гостя")]
-        [StringLength(50, ErrorMessage = "Количество сиволов не должно превышать 50")]
+        [StringLength(50, ErrorMessage = "Количество символов не должно превышать 50")]
         public string GuestLastName { get; set; }
 
         [Display(Name = "Номер телефона")]
@@ -40,7 +49,7 @@ namespace Registration.Model.Hotels
         public int NumberGuest { get; set; }
 
         [Display(Name = "Специальные пожелания")]
-        [StringLength(200, ErrorMessage = "Количество сиволов не должно превышать 200")]
+        [StringLength(200, ErrorMessage = "Количество символов не должно превышать 200")]
         public string? SpecialRequests { get; set; }
 
 
@@ -51,6 +60,6 @@ namespace Registration.Model.Hotels
         [ForeignKey("Roomid")]
         public virtual Room Room { get; set; }
 
-        //public RegistrationUser? Visitor { get; set; }
+        //public AppUser? Visitor { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 }
 
 <h1>Список отелей</h1>
-@if (Model!= null)
+@if (Model.Count() > 0)
 {
     <table>
         <tr>
@@ -23,7 +23,7 @@
                     @hotel.Id
                 </td>
                 <td>
-                    @hotel.Name
+                    <a asp-controller="Hotel" asp-action="Profile" asp-route-id="@hotel.Id">@hotel.Name</a>
                 </td>
                 <td>
                     @hotel.Location
@@ -34,9 +34,9 @@
                 <td>
                     @hotel.Phone
                 </td>
-                <td>
+                @* <td>
                     @hotel.Email
-                </td>
+                </td> *@
                 <td>
                     <a asp-controller="Hotel" asp-action="Delete" asp-route-id="@hotel.Id">Удалить</a>
                 </td>

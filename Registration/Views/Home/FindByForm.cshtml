@@ -1,0 +1,58 @@
+﻿@using Registration.Model.Home
+@model IEnumerable<FindResultModel>
+
+@{
+    ViewData["Title"] = "FindByForm";
+}
+
+<h1>Результаты по вашему запросу</h1>
+@if (ViewBag.dateStartBooked!= null)
+{
+    <p>Дата заезда @ViewBag.dateStartBooked</p>
+}
+@if (ViewBag.dateEndBooked != null)
+{
+    <p>Дата выезда @ViewBag.dateEndBooked</p>
+}
+
+<table>
+     @foreach (var hotel in Model)
+     {
+         <tr>
+             <table>
+                 <tr>
+                    <td><a asp-controller="Hotel" asp-action="Profile" asp-route-id="@hotel.HotelId">@hotel.HotelName</a></td>
+                    //добивить количество звезд
+                 </tr>
+                @foreach (var room in hotel.rooms)
+                {
+                    <tr>
+                        <td>@room.Number</td>
+                        <td>@room.Price</td>
+                        <td>@room.Square</td>
+                        <td>@room.Discription</td>
+                        <td>
+                            @if (hotel.dateStartBooked == null || hotel.dateEndBooked == null)
+                            {
+                                <form asp-controller="Booked" asp-action="Create" method="get">
+                                    <input type="hidden" name="roomId" value="@room.Id" />
+                                    <button type="submit">Забронировать</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-controller="Booked" asp-action="Create" method="post">
+                                    <input type="hidden" name="roomId" value="@room.Id" />
+                                    <input type="hidden" name="dateStartBooked" value="@ViewBag.dateStartBooked.ToString("yyyy-MM-dd")" />
+                                    <input type="hidden" name="dateEndBooked" value="@ViewBag.dateEndBooked.ToString("yyyy-MM-dd")" />
+                                    <button type="submit">Забронировать</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+         </tr>
+     }
+</table>
+

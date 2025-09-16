@@ -1,5 +1,5 @@
 ﻿@using Registration.Model.Hotels
-@model IEnumerable<BookedRoom>
+@model IEnumerable<Booked>
 @{
     ViewData["Title"] = "List";
 }
@@ -14,7 +14,8 @@
     <table>
         <tr>
             <th>Id</th>
-            <th>Дата</th>
+            <th>Дата заезда</th>
+            <th>Дата выезда</th>
             <th>Имя гостя</th>
             <th>Отчество гостя</th>
             <th>Фамилия гостя</th>
@@ -23,11 +24,12 @@
             <th>Специальные пожелания</th>
         </tr>
 
-        @foreach (BookedRoom booked in Model)
+        @foreach (Booked booked in Model)
         {
             <tr>
                 <td>@booked.Id</td>
-                <td>@booked.dataBooked</td>
+                <td>@booked.dateStartBooked</td>
+                <td>@booked.dateEndBooked</td>
                 <td>@booked.GuestFirstName</td>
                 <td>@booked.GuestSecondName</td>
                 <td>@booked.GuestLastName</td>

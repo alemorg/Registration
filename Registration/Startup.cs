@@ -87,7 +87,14 @@ namespace Registration
             {
                 options.AddPolicy("Admin", policy =>
                     policy.RequireRole("Admin"));
+
+                options.AddPolicy("Managers", policy =>
+                    policy.RequireRole("Admin", "Manager"));
+
+                options.AddPolicy("Users", policy =>
+                    policy.RequireRole("Admin", "User", "Manager"));
             });
+            
         }
         public void Configure(IApplicationBuilder app,IWebHostEnvironment env)
         {
@@ -146,7 +153,7 @@ namespace Registration
 // => Home/HomePage => Account/Login
 //                  => Account/Login => Account/Registration => Account/Successful
 
-// пользователь с авторизацией (User)
+// пользователь с авторизацией (AppUser)
 // => Home/HomePage => Find/List => Booked/Create => Complete
 // => Account/Profile => Account/Correct
 //                    => Account/Delete

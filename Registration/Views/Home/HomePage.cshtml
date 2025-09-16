@@ -6,21 +6,21 @@
 }
 
 <div class="registration_style">
-	<form asp-controller="Hotel" asp-action="FindList" method="post">
+	<form asp-controller="Home" asp-action="HomePage" method="post">
 		<div class="box-line">
 			<label asp-for="Location" class="label-line"></label>
 			<input asp-for="Location" class="input-line" />
 			<span asp-validation-for="Location" class="validation"></span>
 		</div>
 		<div class="box-line">
-			<label asp-for="DateOfArrival" class="label-line"></label>
-			<input asp-for="DateOfArrival" class="input-line" />
-			<span asp-validation-for="DateOfArrival" class="validation"></span>
+			<label asp-for="dateStartBooked" class="label-line"></label>
+			<input asp-for="dateStartBooked" class="input-line" />
+			<span asp-validation-for="dateStartBooked" class="validation"></span>
 		</div>
 		<div class="box-line">
-			<label asp-for="DepartureDate" class="label-line"></label>
-			<input asp-for="DepartureDate" class="input-line" />
-			<span asp-validation-for="DepartureDate" class="validation"></span>
+			<label asp-for="dateStartBooked" class="label-line"></label>
+			<input asp-for="dateEndBooked" class="input-line" />
+			<span asp-validation-for="dateStartBooked" class="validation"></span>
 		</div>
 		<div class="box-line">
 			<label asp-for="Grownup" class="label-line"></label>
@@ -37,7 +37,7 @@
 			<input asp-for="IsAnimal" class="input-line" />
 			<span asp-validation-for="IsAnimal" class="validation"></span>
 		</div>
-		<input type="submit" value="Найти отель" class="btn-reg" />
+		<input type="submit" value="Найти отели" class="btn-reg" />
 	</form>
 </div>
 

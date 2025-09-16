@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Registration.Model.Hotels
 {
@@ -32,12 +33,12 @@ namespace Registration.Model.Hotels
         [Phone(ErrorMessage ="Формат телефона: 8-497-355-22-15")]
         public string Phone {  get; set; }
 
-        [Display(Name = "Email")]
-        [EmailAddress(ErrorMessage ="Формат Email: support@mysite.ru")]
-        public string Email { get; set; }
+        //[Display(Name = "Email")]
+        //[EmailAddress(ErrorMessage ="Формат Email: support@mysite.ru")]
+        //public string Email { get; set; }
 
         //Prop Navigate
         public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
-        public virtual ICollection<BookedRoom> BookedRooms { get; set;} = new List<BookedRoom>();
+        public virtual ICollection<Booked> BookedRooms { get; set;} = new List<Booked>();
     }
 }

@@ -1,61 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
+using Registration.Context.Repository.RoomRepository;
 using Registration.Model.Hotels;
 
 namespace Registration.Controllers
 {
     public class RoomController : Controller
     {
-
-        //список всех комнат в базе данных (возможно вообще не нужна эта функция)
-        //[HttpGet("room/alllist")]
-        public IActionResult AllList()
+        private readonly RoomService roomService;
+        public RoomController(RoomService roomService)
         {
-            using (BookedDB db = new BookedDB())
-            {
-                List<Room> ListRoom = new List<Room>();
-
-                foreach (Room room in db.Room)
-                {
-                    ListRoom.Add(room);
-                }
-
-                if (ListRoom.Count != 0)
-                    return View(ListRoom);
-                else return View();
-            }
+            this.roomService = roomService;
         }
 
         [HttpGet("hotel/{hotelId}/room/list")]
         public IActionResult List(int hotelId)
         {
             ViewBag.hotelId = hotelId;
-            using (BookedDB db = new BookedDB())
-            {
-                try
-                {
-                    List<Room> ListRoom = new List<Room>();
-
-                    foreach (Room room in db.Room)
-                    {
-                        if (room.HotelId == hotelId)
-                            ListRoom.Add(room);
-                    }
-
-                    if (ListRoom.Count != 0)
-                        return View(ListRoom);
-                    else return View();
-                }
-                catch (Exception ex )
-                {
-                    Console.WriteLine($"Error {ex.Message}");
-                }
-                return View(NotFound());
-                
-            }
+            
+            if (roomService != null) return View(roomService.List(hotelId));
+            else return View();
         }
 
         [HttpGet("hotel/{hotelId}/room/create")]
+        [Authorize(Roles = "Managers")]
         public IActionResult Create(int hotelId)
         {
             ViewBag.HotelId = hotelId;
@@ -63,118 +32,86 @@ namespace Registration.Controllers
         }
 
         [HttpPost("hotel/{hotelId}/room/create")]
-        public IActionResult Create(int hotelid,Room room)
+        [Authorize(Roles = "Managers")]
+        public IActionResult Create(int hotelid, Room room)
         {
-            //добавить тонну проверок данных
-            if (hotelid == 0) 
-                return View(NotFound());
-            if (ModelState.IsValid)
+            if (hotelid > 0)
             {
-                if (room.Square > 0 && room.Capasity > 0)
+                if (ModelState.IsValid)
                 {
-                    using (BookedDB db = new BookedDB())
-                    {
-                        db.Room.Add(room);
-                        db.SaveChanges();
-                        
-                        return View(nameof(CompleteCreate), room);
-                    }
+                    roomService.Create(room);
+
+                    return RedirectToAction(nameof(CompleteCreate), room);
                 }
+                return View(room);
             }
-            return View(room);
+            return NotFound();
         }
 
+        [Authorize(Roles = "Managers")]
         public IActionResult CompleteCreate(Room room)
         {
             return View(room);
         }
 
+        [Authorize(Roles = "Managers")]
         public IActionResult Delete(int id)
         {
-            Room room = new Room();
-            using (BookedDB dB = new BookedDB())
+            if (id > 0)
             {
-
-                try
+                var room = roomService.Profile(id);
+                if (room != null)
                 {
-                    room = dB.Room.FirstOrDefault(x => x.Id == id);
-                    if (room != null)
-                    {
-                        dB.Room.Remove(room);
-                        dB.SaveChanges();
-
-                        return View(nameof(CompleteDelete), room);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
+                    roomService.Delete(id);
+                    return RedirectToAction(nameof(CompleteDelete), room);
                 }
             }
-            return View(NotFound());
+            return NotFound();
         }
 
+        [Authorize(Roles = "Managers")]
         public IActionResult CompleteDelete(Room room)
         {
             return View(room);
         }
 
+        [Authorize(Roles = "Managers")]
         [HttpGet]
         public IActionResult Correct(int id)
         {
             if (id > 0)
             {
                 ViewBag.id = id;
-                Room room = new Room();
-                using BookedDB dB = new BookedDB();
-                {
-                    try
-                    {
-                        room = dB.Room.FirstOrDefault(x => x.Id == id);
+                
+                var room = roomService.Profile(id);
 
-                        if (room != null)
-                            return View(room);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error message: {ex.Message}");
-                    }
+                if (room != null)
+                {
+                    return View(room);
                 }
             }
             return View(NotFound());
         }
 
+        // Нужно ли здесь ID?
         [HttpPost]
+        [Authorize(Roles = "Managers")]
         public IActionResult Correct(int id, Room room)
         {
-            //добавить тонну проверок данных
-            if (id <= 0)
-                return View(NotFound());
-            if (ModelState.IsValid)
+            if (id > 0)
             {
-                if (room.Square > 0 && room.Capasity > 0)
+                if (ModelState.IsValid)
                 {
-                    using BookedDB dB = new BookedDB();
-                    {
-                        try
-                        {
-                            Room roomdb = dB.Room.FirstOrDefault(x => x.Id == id);
-                            roomdb.Square = room.Square;
-                            roomdb.Capasity = room.Capasity;
-                            dB.Room.Update(roomdb);
-                            dB.SaveChanges();
-
-                            return View(nameof(CompleteCorrect), room);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error {ex.Message}");
-                        }
-                    }
+                    roomService.Correct(room);
+                    return View(nameof(CompleteCorrect),room);
                 }
+                return View(room);
             }
-            return View(room);
+            return NotFound();
+            
         }
+
+        [Authorize(Roles = "Managers")]
         public IActionResult CompleteCorrect(Room room)
         {
             return View(room);

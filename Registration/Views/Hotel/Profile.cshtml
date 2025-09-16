@@ -1,0 +1,15 @@
+﻿@using Registration.Model.Hotels
+@model Hotel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+
+<p>@Model.Name</p>
+<p>@Model.Location</p>
+<p>@Model.Rating</p>
+<p>@Model.Description</p>
+<a asp-controller="Room" asp-action="List" asp-route-hotelId="@Model.Id">Комнаты</a>
+

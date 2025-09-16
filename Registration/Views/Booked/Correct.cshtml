@@ -1,5 +1,5 @@
 ﻿@using Registration.Model.Hotels
-@model BookedRoom
+@model Booked
 @{
     ViewData["Title"] = "Correct";
 }
@@ -9,9 +9,15 @@
 <div class="registration_style">
 	<form asp-controller="Booked" asp-action="Correct" asp-route-id="@ViewBag.id" method="post">
 		<div class="box-line">
-			<label asp-for="dataBooked" class="label-line"></label>
-			<input asp-for="dataBooked" class="input-line" />
-			<span asp-validation-for="dataBooked" class="validation"></span>
+			<label asp-for="dateStartBooked" class="label-line"></label>
+			<input asp-for="dateStartBooked" class="input-line" />
+			<span asp-validation-for="dateStartBooked" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="dateEndBooked" class="label-line"></label>
+			<input asp-for="dateEndBooked" class="input-line" />
+			<span asp-validation-for="dateEndBooked" class="validation"></span>
 		</div>
 
 		<div class="box-line">

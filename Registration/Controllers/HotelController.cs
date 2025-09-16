@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Registration.Context;
+using Registration.Context.Repository.HotelRepository;
 using Registration.Model.Home;
 using Registration.Model.Hotels;
 using System.Linq;
@@ -8,126 +10,106 @@ namespace Registration.Controllers
 {
     public class HotelController : Controller
     {
-        public IActionResult List()
+        private readonly HotelService hotelService;
+        public HotelController(HotelService hotelService)
         {
-            using (BookedDB db = new BookedDB())
-            {
-                List<Hotel> ListHotel = new List<Hotel>();
-
-                foreach (Hotel hotel in db.Hotel)
-                {
-                    ListHotel.Add(hotel);
-                }
-
-                if (ListHotel.Count != 0)
-                    return View(ListHotel);
-                else return View();
-            }
+            this.hotelService = hotelService;
         }
 
+        public IActionResult Profile(int id)
+        {
+            return View(hotelService.Profile(id));
+        }
+
+        public IActionResult List()
+        {
+            if (hotelService != null) return View(hotelService.List());
+            else return View();
+        }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(Hotel hotel)
         {
-            // добавить тонну проверок данных
             if (ModelState.IsValid)
             {
-                if (hotel.Name != null)
-                {
-                    using (BookedDB db = new BookedDB())
-                    {
-                        db.Hotel.Add(hotel);
-                        db.SaveChanges();
-                        return View(nameof(CompleteCreate), hotel);
-                    }
-                }
+                hotelService.Create(hotel);
+
+                return RedirectToAction(nameof(CompleteCreate), hotel);
             }
+
             return View(hotel);
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult CompleteCreate(Hotel hotel)
         {
             return View(hotel);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
-            // добавить тонну проверок данных
-            Hotel hotel = new Hotel();
-            using (BookedDB dB = new BookedDB())
+            if (id > 0)
             {
-                try
-                {
-                    hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
-                    dB.Hotel.Remove(hotel);
-                    dB.SaveChanges();
+                var hotel = hotelService.Profile(id);
 
-                    return View(nameof(CompleteDelete), hotel);
-                }
-                catch (Exception ex)
+                if (hotel != null)
                 {
-                    Console.WriteLine(ex.Message);
+                    hotelService.Delete(id);
+                    return RedirectToAction(nameof(CompleteDelete), hotel);
                 }
             }
-            return View(NotFound());
-
+            return NotFound();
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult CompleteDelete(Hotel hotel)
         {
             return View(hotel);
         }
 
         [HttpGet]
+        [Authorize(Roles = "Managers")]
         public IActionResult Correct(int id)
         {
-            if (id <= 0)
-                return View(NotFound());
-            Hotel hotel = new Hotel();
-            using BookedDB dB = new BookedDB();
+            if (id > 0)
             {
-                hotel = dB.Hotel.FirstOrDefault(x => x.Id == id);
-                return View(hotel);
-            }
-        }
+                var hotel = hotelService.Profile(id);
 
-        [HttpPost]
-        public IActionResult Correct(int id, Hotel hotel)
-        {
-            // добавить тонну проверок данных
-            if (id <= 0)
-                return View (NotFound());
-
-            if (ModelState.IsValid)
-            {
-                if (hotel.Name != null)
+                if (hotel != null)
                 {
-                    using BookedDB dB = new BookedDB();
-                    {
-                        try
-                        {
-                            Hotel hoteldb = dB.Hotel.FirstOrDefault(x => x.Id == id);
-                            hoteldb.Name = hotel.Name;
-                            hoteldb.Location = hotel.Location;
-                            dB.Hotel.Update(hoteldb);
-                            dB.SaveChanges();
-
-                            return View(nameof(CompleteCorrect), hotel);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error {ex.Message}");
-                        }
-                    }
+                    return View(hotel);
                 }
             }
-            return View(hotel);
+            return NotFound();
         }
+
+        // Нужно ли здесь ID?
+        [HttpPost]
+        [Authorize(Roles = "Managers")]
+        public IActionResult Correct(int id, Hotel hotel)
+        {
+            if (id > 0)
+            {
+                if (ModelState.IsValid)
+                {
+                    hotelService.Correct(hotel);
+                    return View(nameof(CompleteCorrect), hotel);
+                }
+                return View(hotel);
+            }
+            return NotFound();
+        }
+
+        [Authorize(Roles = "Managers")]
         public IActionResult CompleteCorrect(Hotel hotel)
         {
             return View(hotel);

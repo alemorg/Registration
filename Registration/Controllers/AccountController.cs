@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Registration.Context;
-using Registration.Crypt;
+using Registration.Context.Repository.UserRepository;
 using Registration.Model.Users;
-using System.Security.Claims;
-using System.Threading.Tasks;
+
 
 namespace Registration.Controllers
 {
@@ -29,9 +27,9 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginedUser logUser)
+        public async Task<IActionResult> Login(LoginViewModel logUser)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var user = await userService.GetUserByEmailAsync(logUser.Email);
                 if (user != null)
@@ -49,7 +47,7 @@ namespace Registration.Controllers
             return View(logUser);
         }
 
-        public IActionResult SuccessFul(LoginedUser logUser)
+        public IActionResult SuccessFul()
         {
             return RedirectToAction(nameof(HomeController.HomePage), "Home");
         }
@@ -58,8 +56,6 @@ namespace Registration.Controllers
         {
             return View();
         }
-
-        //block Registration
 
         [HttpGet]
         public IActionResult Registration()

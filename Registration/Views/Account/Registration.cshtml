@@ -1,5 +1,5 @@
 ﻿@using Registration.Model.Users
-@model RegistrationUser
+@model RegistrationViewModel
 @{
     ViewData["Title"] = "Registration";
 }
@@ -16,6 +16,12 @@
 			<label asp-for="FirstName" class="label-line"></label>
 			<input asp-for="FirstName" class="input-line" />
 			<span asp-validation-for="FirstName" class="validation"></span>
+		</div>
+
+		<div class="box-line">
+			<label asp-for="SecondName" class="label-line"></label>
+			<input asp-for="SecondName" class="input-line" />
+			<span asp-validation-for="SecondName" class="validation"></span>
 		</div>
 
 		<div class="box-line">
