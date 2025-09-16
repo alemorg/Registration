@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Registration.Context.Repository.UserRepository;
 using Registration.Model.Users;
@@ -9,17 +9,6 @@ namespace Registration.Controllers
 {
     public class AccountController : Controller
     {
-
-        private readonly UserService userService;
-        private readonly UserManager<AppUser> userManager;
-        private readonly SignInManager<AppUser> signInManager;
-        public AccountController(UserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
-        {
-            this.userService = userService;
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-        }
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -31,17 +20,31 @@ namespace Registration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userService.GetUserByEmailAsync(logUser.Email);
-                if (user != null)
+                using (BookedDB db = new BookedDB())
                 {
-                    var result = await userManager.CheckPasswordAsync(user, logUser.Password);
-                    if (result) 
-                    {
-                        await signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction(nameof(SuccessFul));
-                    }
+                    CryptPassword cryptPassword = new CryptPassword();
+                    RegistrationUser user = db.User.FirstOrDefault(x => x.Email == logUser.Email && cryptPassword.Decrypt(x.Password) == logUser.Password);
 
-                    return View(nameof(SuccessFul));
+                    if (user != null)
+                    {
+                        //Создаем информацию о пользователе
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, $"{user.FirstName} {user.FirstName}"),
+                            new Claim(ClaimTypes.Role, "Admin")                                         //Переделать при переделке класса userov
+                        };
+
+                        //Создаем пропуск
+                        var claimsIdentity = new ClaimsIdentity(claims,
+                            CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        //Выдаем пропуск
+                        await HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity));
+
+                        return View(nameof(SuccessFul), user);
+                    }
                 }
             }
             return View(logUser);
@@ -49,7 +52,7 @@ namespace Registration.Controllers
 
         public IActionResult SuccessFul()
         {
-            return RedirectToAction(nameof(HomeController.HomePage), "Home");
+            return View(logUser);
         }
 
         public IActionResult AccessDenied()
@@ -64,30 +67,36 @@ namespace Registration.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registration(RegistrationViewModel model)
+        public IActionResult Registration(RegistrationUser user)
         {
-            if (ModelState.IsValid)
+            using (BookedDB db = new BookedDB())
             {
-                if (model.IsAgree != false)
+                if (ModelState.IsValid)
                 {
-                    var user = userService.CreateUserAsync(model.Login,model.Email, model.Password, "User", model.FirstName, model.LastName, model.BirthDay, model.IsAgree, model.SecondName);
-
-                    return View(nameof(CompletedRegistration));
+                    if (user != null && user.IsAgree != false)
+                    {
+                        CryptPassword crypt = new CryptPassword();
+                        user.Password = crypt.Encode(user.Password);
+                        user.ConfirmPassword = crypt.Encode(user.ConfirmPassword);
+                        db.User.Add(user);
+                        db.SaveChanges();
+                        return View("CompletedRegistration", user);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                else
+                {
+                    return View(user);
                 }
             }
-            return View(model);
         }
 
-        public IActionResult CompletedRegistration()
+        public IActionResult CompletedRegistration(RegistrationUser user)
         {
-            return RedirectToAction(nameof(Login));
-        }
-
-        public async Task<IActionResult> Logout()
-        {
-            await signInManager.SignOutAsync();
-            
-            return RedirectToAction(nameof(HomeController.HomePage),"Home");
+            return View(user);
         }
     }
 }
