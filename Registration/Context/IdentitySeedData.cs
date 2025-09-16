@@ -34,6 +34,7 @@ namespace Registration.Context
                     SecondName = "adminA",
                     LastName = "adminA",
                     BirthDay = DateTime.Now,
+                    PhoneNumber = "89873972200",
                     IsAgree = true
                 };
 
@@ -56,6 +57,7 @@ namespace Registration.Context
                     SecondName = "managU",
                     LastName = "managU",
                     BirthDay = DateTime.Now,
+                    PhoneNumber = "89873972201",
                     IsAgree = true
                 };
 
@@ -78,6 +80,7 @@ namespace Registration.Context
                     SecondName = "userU",
                     LastName = "userU",
                     BirthDay = DateTime.Now,
+                    PhoneNumber = "89873972202",
                     IsAgree = true
                 };
 

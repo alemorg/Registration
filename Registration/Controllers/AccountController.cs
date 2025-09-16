@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Registration.Context.Repository.UserRepository;
 using Registration.Model.Users;
@@ -8,10 +9,15 @@ namespace Registration.Controllers
 {
     public class AccountController : Controller
     {
+
         private readonly UserService userService;
-        public AccountController(UserService userService)
+        private readonly UserManager<AppUser> userManager;
+        private readonly SignInManager<AppUser> signInManager;
+        public AccountController(UserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             this.userService = userService;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         [HttpGet]
@@ -27,7 +33,14 @@ namespace Registration.Controllers
             {
                 var user = await userService.GetUserByEmailAsync(logUser.Email);
                 if (user != null)
-                { 
+                {
+                    var result = await userManager.CheckPasswordAsync(user, logUser.Password);
+                    if (result) 
+                    {
+                        await signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction(nameof(SuccessFul));
+                    }
+
                     return View(nameof(SuccessFul));
                 }
             }
@@ -36,7 +49,7 @@ namespace Registration.Controllers
 
         public IActionResult SuccessFul()
         {
-            return RedirectToAction(nameof(HomeController.HomePage), nameof(HomeController));
+            return RedirectToAction(nameof(HomeController.HomePage), "Home");
         }
 
         public IActionResult AccessDenied()
@@ -67,13 +80,14 @@ namespace Registration.Controllers
 
         public IActionResult CompletedRegistration()
         {
-            return RedirectToAction(nameof(HomeController.HomePage),nameof(HomeController));
+            return RedirectToAction(nameof(Login));
         }
 
-        public async Task<IActionResult> Logout ()
+        public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction(nameof(HomeController.HomePage),nameof(HomeController));
+            await signInManager.SignOutAsync();
+            
+            return RedirectToAction(nameof(HomeController.HomePage),"Home");
         }
     }
 }
