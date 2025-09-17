@@ -21,22 +21,25 @@
 		{
 			<li>
 				@* asp-route-id="" надо придумать как привязать ID отеля*@
-				<a asp-controller="Hotel" asp-action="Profile" >Комнаты</a> 
+				<a asp-controller="Hotel" asp-action="Rooms">Комнаты</a> 
 			</li>
 		}
 		
 
 		@if (User.Identity.IsAuthenticated)
 		{
-		<li>
-			<a asp-controller="Account" asp-action="Logout">Выйти</a>
-		</li>
+			<li>
+				<a asp-controller="Account" asp-action="Profile">Профиль</a>
+			</li>
+			<li>
+				<a asp-controller="Account" asp-action="Logout">Выйти</a>
+			</li>
 		}
 		else
 		{
-		<li>
-			<a asp-controller="Account" asp-action="Login">Авторизация</a>
-		</li>
+			<li>
+				<a asp-controller="Account" asp-action="Login">Авторизация</a>
+			</li>
 		}
 	</ul>
 </nav>

@@ -103,21 +103,10 @@ namespace Registration.Controllers
             var ListUsers = await userService.ListAllUsers();
             var usersViewModel = new List<UserViewModel>();
 
-            foreach (var  user in ListUsers)
+            foreach (var user in ListUsers)
             {
-                var roles = await userManager.GetRolesAsync(user);
-                usersViewModel.Add(new UserViewModel
-                {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    FirstName = user.FirstName,
-                    SecondName = user.SecondName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    BirthDay = user.BirthDay,
-                    PhoneNumber = user.PhoneNumber,
-                    Role = roles.FirstOrDefault()
-                });
+                var role = await userManager.GetRolesAsync(user);
+                usersViewModel.Add(await InitializeViewModel(user,role));
             }
 
             return View(usersViewModel);
@@ -130,23 +119,12 @@ namespace Registration.Controllers
             var user = await userManager.FindByIdAsync(id);
             var role = await userManager.GetRolesAsync(user);
 
-            var roles = await roleManager.Roles.ToListAsync();
-            ViewBag.Roles = roles.Select(r => r.Name).ToList();
-
             if (user != null)
             {
-                UserViewModel viewModel = new UserViewModel
-                {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    FirstName = user.FirstName,
-                    SecondName = user.SecondName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    BirthDay = user.BirthDay,
-                    PhoneNumber = user.PhoneNumber,
-                    Role = role.FirstOrDefault()
-                };
+                UserViewModel viewModel = await InitializeViewModel(user, role);
+
+                var roles = await roleManager.Roles.ToListAsync();
+                ViewBag.Roles = roles.Select(r => r.Name).ToList();
 
                 return View(viewModel);
             }
@@ -219,6 +197,36 @@ namespace Registration.Controllers
         public IActionResult ComleteCorrect()
         {
             return View();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            var user = await userManager.GetUserAsync(User);
+            var role = await userManager.GetRolesAsync(user);
+            if (user != null)
+            {
+                UserViewModel viewModel = await InitializeViewModel(user, role);
+                return View(viewModel);
+            }
+            else return NotFound();
+        }
+
+        private async Task<UserViewModel> InitializeViewModel(AppUser user, IList<string> role)
+        {
+            UserViewModel viewModel = new UserViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                SecondName = user.SecondName,
+                LastName = user.LastName,
+                Email = user.Email,
+                BirthDay = user.BirthDay,
+                PhoneNumber = user.PhoneNumber,
+                Role = role.FirstOrDefault()
+            };
+            return viewModel;
         }
     }
 }

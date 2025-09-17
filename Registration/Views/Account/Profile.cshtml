@@ -1,0 +1,24 @@
+﻿@using Registration.Model.Account
+@model UserViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+@if (User.IsInRole("Admin"))
+{
+    <li>ID: @Model.Id</li>
+}
+
+<li>UserName: @Model.UserName</li>
+<li>Email: @Model.Email</li>
+<li>Имя: @Model.FirstName</li>
+<li>Отчество: @Model.SecondName</li>
+<li>Фамилия: @Model.LastName</li>
+<li>День рождения: @Model.BirthDay</li>
+<li>Номер телефона: @Model.PhoneNumber</li>
+@if (User.IsInRole("Admin"))
+{
+    <li>Роль: @Model.Role</li>
+}
