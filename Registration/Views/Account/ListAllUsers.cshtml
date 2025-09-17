@@ -1,0 +1,43 @@
+﻿@using Registration.Model.Account
+@model IEnumerable<UserViewModel>
+
+@{
+    ViewData["Title"] = "ListAllUsers";
+}
+
+<h1>ListAllUsers</h1>
+
+@if (Model != null)
+{
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>BirthDay</th>
+            <th>PhoneNumber</th>
+            <th>UserRoles</th>
+        </tr>
+
+        @foreach(var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.BirthDay</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.Role</td>
+                <td><a asp-controller="Account" asp-action="EditProfile">Редактировать</a></td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>В базе данных отсутствуют пользователи</p>
+}

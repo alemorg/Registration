@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Registration.Context.Repository.UserRepository;
+using Registration.Model.Account;
 using Registration.Model.Users;
 
 
@@ -88,6 +90,32 @@ namespace Registration.Controllers
             await signInManager.SignOutAsync();
             
             return RedirectToAction(nameof(HomeController.HomePage),"Home");
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ListAllUsers()
+        {
+            var ListUsers = await userService.ListAllUsers();
+            var usersViewModel = new List<UserViewModel>();
+
+            foreach (var  user in ListUsers)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+                usersViewModel.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    BirthDay = user.BirthDay,
+                    PhoneNumber = user.PhoneNumber,
+                    Role = roles.FirstOrDefault()
+                });
+            }
+
+            return View(usersViewModel);
         }
     }
 }

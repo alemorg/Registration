@@ -32,5 +32,10 @@ namespace Registration.Context.Repository.UserRepository
         {
             return await repository.GetUserByEmailAsync(email);
         }
+
+        public async Task<IEnumerable<AppUser>> ListAllUsers()
+        {
+            return await repository.ListAllUsers();
+        }
     }
 }

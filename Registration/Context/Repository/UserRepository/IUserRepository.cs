@@ -9,5 +9,6 @@ namespace Registration.Context.Repository.UserRepository
         Task<IdentityResult> CorrectUserAsync(AppUser user);
         Task<IdentityResult> DeleteUserAsync(string id);
         Task<AppUser> GetUserByEmailAsync(string email);
+        Task<IEnumerable<AppUser>> ListAllUsers();
     }
 }

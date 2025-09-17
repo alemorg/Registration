@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Registration.Model.Users;
@@ -68,6 +69,11 @@ namespace Registration.Context.Repository.UserRepository
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
             return await userManager.FindByEmailAsync(email);
+        }
+
+        public async Task<IEnumerable<AppUser>> ListAllUsers()
+        {
+            return await userManager.Users.Include(u => u.UserRoles).ToListAsync();
         }
     }
 }
