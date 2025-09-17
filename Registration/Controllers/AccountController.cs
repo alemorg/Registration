@@ -48,7 +48,7 @@ namespace Registration.Controllers
                         return RedirectToAction(nameof(SuccessFul));
                     }
 
-                    return View(nameof(SuccessFul));
+                    return RedirectToAction(nameof(AccessDenied));
                 }
             }
             return View(logUser);
