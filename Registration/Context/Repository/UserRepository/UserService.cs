@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Registration.Model.Account;
 using Registration.Model.Hotels;
 using Registration.Model.Users;
 
@@ -18,9 +19,14 @@ namespace Registration.Context.Repository.UserRepository
             return await repository.CreateUserAsync(UserName, Email, Password, Role, FirstName, LastName,BirthDay, IsAgree, SecondName);
         }
 
-        public async Task<IdentityResult> CorrectUserAsync(AppUser user)
+        public async Task<IdentityResult> CorrectUserAsync(UserViewModel userViewModel)
         {
-            return await repository.CorrectUserAsync(user);
+            return await repository.CorrectUserAsync(userViewModel);
+        }
+
+        public async Task<IdentityResult> CorrectBirthDayAsync(UserViewModel userViewModel)
+        {
+            return await repository.CorrectBirthDayAsync(userViewModel);
         }
 
         public async Task<IdentityResult> DeleteUserAsync(string id)

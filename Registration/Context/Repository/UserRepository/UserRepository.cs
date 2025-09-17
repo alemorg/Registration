@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Registration.Model.Account;
 using Registration.Model.Users;
 
 namespace Registration.Context.Repository.UserRepository
@@ -46,15 +47,25 @@ namespace Registration.Context.Repository.UserRepository
             return result;
         }
 
-        public async Task<IdentityResult> CorrectUserAsync(AppUser user)
+        public async Task<IdentityResult> CorrectUserAsync(UserViewModel userViewModel)
         {
-            var UserDB = await userManager.FindByIdAsync(user.Id);
+            var UserDB = await userManager.FindByIdAsync(userViewModel.Id);
             if (UserDB == null) return IdentityResult.Failed();
 
-            UserDB.FirstName = user.FirstName;
-            UserDB.SecondName = user.SecondName;
-            UserDB.LastName = user.LastName;
+            UserDB.FirstName = userViewModel.FirstName;
+            UserDB.SecondName = userViewModel.SecondName;
+            UserDB.LastName = userViewModel.LastName;
 
+            return await userManager.UpdateAsync(UserDB);
+        }
+
+        public async Task<IdentityResult> CorrectBirthDayAsync(UserViewModel userViewModel)
+        {
+            var UserDB = await userManager.FindByIdAsync(userViewModel.Id);
+            if (UserDB == null) return IdentityResult.Failed();
+
+            UserDB.BirthDay = userViewModel.BirthDay;
+            
             return await userManager.UpdateAsync(UserDB);
         }
 

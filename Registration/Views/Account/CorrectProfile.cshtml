@@ -1,0 +1,61 @@
+﻿@using Registration.Model.Account
+@model UserViewModel
+
+@{
+    ViewData["Title"] = "CorrectProfile";
+}
+
+<h1>CorrectProfile</h1>
+
+<div class="registration_style">
+	<form asp-controller="Account" asp-action="CorrectProfile" method="post">
+
+		<div class="box-line">
+			<label asp-for="UserName" class="label-line"></label>
+			<input asp-for="UserName" class="input-line" />
+		</div>
+
+		<div class="box-line">
+			<label asp-for="Email" class="label-line"></label>
+			<input asp-for="Email" class="input-line" />
+		</div>
+
+		<div class="box-line">
+			<label asp-for="PhoneNumber" class="label-line"></label>
+			<input asp-for="PhoneNumber" class="input-line" />
+		</div>
+
+		<div class="box-line">
+			<label asp-for="FirstName" class="label-line"></label>
+			<input asp-for="FirstName" class="input-line" />
+		</div>
+
+		<div class="box-line">
+			<label asp-for="SecondName" class="label-line"></label>
+			<input asp-for="SecondName" class="input-line" />
+		</div>
+
+		<div class="box-line">
+			<label asp-for="LastName" class="label-line"></label>
+			<input asp-for="LastName" class="input-line" />
+		</div>
+
+		<div class="box-line">
+			<label asp-for="BirthDay" class="label-line"></label>
+			<input asp-for="BirthDay" class="input-line" />
+		</div>
+
+		<div class="box-line">
+			<label asp-for="Role" class="label-line"></label>
+			<select asp-for="Role" class="input-line">
+				@foreach (var role in ViewBag.Roles)
+				{
+				    var selected = Model.Role == role ? "selected" : "";
+				    <option value="@role" selected>@role</option>
+				}
+			</select>
+		</div>
+
+		<input type="submit" value="Изменить" class="btn-reg" />
+	</form>
+</div>
